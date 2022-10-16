@@ -1,191 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>搭建博客</title>
-    <url>/2022/10/16/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h3 id="Github操作"><a href="#Github操作" class="headerlink" title="Github操作"></a>Github操作</h3><p>先申请一个名字为 <code>&lt;username&gt;.github.io</code> 的<strong>公开</strong>仓库，readme.md随意加不加</p>
-<p>然后git bash绑定一下自己的账号，具体百度一堆</p>
-<h3 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h3><p>安装一下hexo的依赖：node.js和git</p>
-<p>找个地新建文件夹，在文件夹内右键打开git bash</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162028489.png" alt="image-20201220172655709"></p>
-<p>然后输入以下命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 hexo 框架</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"># 初始化文件夹</span><br><span class="line">hexo init</span><br><span class="line"># 安装 hexo 依赖包</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>（hexo init可能会卡在安装依赖上，挂个梯子，git上设置一下代理）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 设置代理</span><br><span class="line">git config --global http.proxy http://serverip:port</span><br><span class="line">git config --global https.proxy http:/serverip:port</span><br><span class="line"># 设置带用户名密码的代理</span><br><span class="line"># 注意：如果密码中带了特殊字符需要进行转义, 将特殊字符替换为下面对应的转义字符即可</span><br><span class="line">#  !   #   $   &amp;   &#x27;   (    )  *   +   ,   /   :   ;   =   ?   @   [   ]</span><br><span class="line"># %21 %23 %24 %26 %27 %28 %29 %2A %2B %2C %2F %3A %3B %3D %3F %40 %5B %5D</span><br><span class="line">npm config set proxy http://username:password@serverip:port</span><br><span class="line">npm confit set https-proxy http://username:password@serverip:port</span><br><span class="line"># 取消代理</span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
-
-<p>执行完成之后，目录大概是这样的</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162031068.png" alt="image-20221016203139039"></p>
-<p>然后在这个目录下用<code>cmd/git bash/powershell</code>执行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 生成静态网站</span><br><span class="line">hexo g</span><br><span class="line"># 启动服务器</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>然后访问<code>http://localhost:4000/</code>测试是否成功</p>
-<p>成功之后安装一下发布插件</p>
-<p>在git bash里输入<code>npm install hexo-deployer-git</code>，安装完配置一下根目录下<code>_config.yml</code>的文件，在deploy一栏填一下发布的类型，申请的仓库地址，分支</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162043684.png" alt="image-20221016204336663"></p>
-<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><p>执行一下<code>hexo d</code>就发布好了</p>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>国内网真是哈哈了，干啥都要挂梯子、换源，有问题百度+google然后C+V就完事了</p>
-]]></content>
-      <tags>
-        <tag>基础</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>响应包源代码</title>
-    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
-    <content><![CDATA[<p>打开URL发现是游戏</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
-<p>打开源代码发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
+    <title>302跳转</title>
+    <url>/2022/10/16/302%E8%B7%B3%E8%BD%AC/</url>
+    <content><![CDATA[<p>打开URL如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137392.png" alt="1"></p>
+<p>打开Intercept并进入HTTP history查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137699.png" alt="2"></p>
+<p>发现两处302跳转，查看得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137958.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>网站源码</title>
-    <url>/2022/10/16/%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81/</url>
-    <content><![CDATA[<h3 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h3><p>打开url发现提示给了常见的文件及后缀名</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155349.png" alt="1"></p>
-<p>进入bs浏览器，随便输一个，例如:web.tar尝试访问</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155308.png" alt="2"></p>
-<p>在历史记录中将该次访问发送到intruder中</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155837.png" alt="3"></p>
-<p>在源代码中选择攻击类型并选中web和tar</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155045.png" alt="4"></p>
-<p>payloads中载入要变化的文件名</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155514.png" alt="5"></p>
-<p>填写两个set后开始攻击，找到状态为200的文件，下载</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155141.png" alt="6"></p>
-<p>得到flag.txt</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155970.png" alt="7"></p>
-<p>将该文件放入浏览器中尝试打开得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155598.png" alt="flag"></p>
-<h3 id="法二-dirsearch"><a href="#法二-dirsearch" class="headerlink" title="法二:dirsearch"></a>法二:dirsearch</h3><p>在dirsearch目录中打开powershell，执行以下命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-584841b234301423.sandbox.ctfhub.com:10800 -e tar,tar.gz,zip,rar -x 502,503</span><br></pre></td></tr></table></figure>
-
-<p>执行完成后得到备份文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155127.png" alt="8"></p>
-<p>后续步骤同法一</p>
-<h3 id="法三-python"><a href="#法三-python" class="headerlink" title="法三:python"></a>法三:python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url=<span class="string">&quot;http://challenge-584841b234301423.sandbox.ctfhub.com:10800/&quot;</span></span><br><span class="line">list1=[<span class="string">&#x27;web&#x27;</span>, <span class="string">&#x27;website&#x27;</span>, <span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;back&#x27;</span>, <span class="string">&#x27;www&#x27;</span>, <span class="string">&#x27;wwwroot&#x27;</span>, <span class="string">&#x27;temp&#x27;</span>]</span><br><span class="line">list2=[<span class="string">&#x27;tar&#x27;</span>, <span class="string">&#x27;tar.gz&#x27;</span>, <span class="string">&#x27;zip&#x27;</span>, <span class="string">&#x27;rar&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list1:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> list2:</span><br><span class="line">        url_final=url+i+<span class="string">&quot;.&quot;</span>+j</span><br><span class="line">        r=requests.get(url_final)</span><br><span class="line">        <span class="keyword">if</span>(r.status_code == <span class="number">200</span>):</span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
-
+    <title>Cookie</title>
+    <url>/2022/10/16/Cookie/</url>
+    <content><![CDATA[<p>打开URL如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138827.png" alt="1"></p>
+<p>得知要使用admin登陆</p>
+<p>刷新拦截一下请求</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138275.png" alt="2"></p>
+<p>将admin&#x3D;0改为admin&#x3D;1并发送，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138254.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>弱口令</title>
-    <url>/2022/10/16/%E5%BC%B1%E5%8F%A3%E4%BB%A4/</url>
-    <content><![CDATA[<p>burp里抓包登陆请求，发送到爆破模组里</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134978.png" alt="1"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134686.png" alt="2"></p>
-<p>选上下面的用户密码，用集束炸弹方式攻击</p>
-<p>payload1,2分别使用简单的弱口令</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152135801.png" alt="3"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136869.png" alt="4"></p>
-<p>选中长度排序，得到爆破成功的的对应密码，查看response得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136843.png" alt="flag"></p>
+    <title>HG泄露</title>
+    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
+<p>发现部分404，但是在store-fncache中仍有文件显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
+<p>拼接url+flag得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>请求方式</title>
-    <url>/2022/10/16/%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147545.png" alt="1"></p>
-<p>注意到题中要求使用CTF**B Method，故在Burp-Suite将GET方式改为CTFHUB（区分大小写）。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147440.png" alt="2"></p>
-<p>将Intercept打开后打开浏览器并填入URL，将橙色标识中的GET方法改为CTFHUB后发送，得到如下flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147987.png" alt="flag"></p>
+    <title>.DS_Store</title>
+    <url>/2022/10/16/DS_Store/</url>
+    <content><![CDATA[<h3 id="法一-dirsearch-linux查看"><a href="#法一-dirsearch-linux查看" class="headerlink" title="法一:dirsearch+linux查看"></a>法一:dirsearch+linux查看</h3><p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153541.png" alt="1"></p>
+<p>得到.DS_Store文件，丢到浏览器下载后在linux内打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153667.png" alt="2"></p>
+<p>在看到.txt文件，丢到浏览器中打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153584.png" alt="flag"></p>
+<h3 id="法二-dirsearch-python-dsstore查看"><a href="#法二-dirsearch-python-dsstore查看" class="headerlink" title="法二:dirsearch+python dsstore查看"></a>法二:dirsearch+python dsstore查看</h3><p>同法一，得到DS_Store</p>
+<p>将得到的文件用dsstore打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153738.png" alt="3"></p>
+<p>得到.txt文件</p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>目录遍历</title>
-    <url>/2022/10/16/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
-    <content><![CDATA[<h3 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149039.png" alt="0"></p>
-<p>注意到目录为4*4的文件夹</p>
-<p>进入到最后一级目录，发送URL到intruder中</p>
-<p>分别选择攻击类型：cluster bomb，选择变化的位置，设置payload的sets和options</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149124.png" alt="1"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149552.png" alt="2"></p>
-<p>设置完成后开始</p>
-<p>在结果页中发现长度明显不一致的返回，查看返回内容</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150023.png" alt="3"></p>
-<p>从而得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150584.png" alt="flag"></p>
-<h3 id="法二：python"><a href="#法二：python" class="headerlink" title="法二：python"></a>法二：python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://challenge-0b7cf3fe1d9ef811.sandbox.ctfhub.com:10800/flag_in_here&quot;</span><span class="comment">#靶机url</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#i为0-4的数</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#j为0-4的数</span></span><br><span class="line">        url_final = url + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(i) + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(j)<span class="comment">#将最终的目录拼接出来</span></span><br><span class="line">        r = requests.get(url_final)<span class="comment">#获得服务器返回的Response</span></span><br><span class="line">        r.encoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">        get_file=r.text<span class="comment">#得到text内容</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> get_file:<span class="comment">#判断flag是否在返回值中</span></span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
+    <title>Index</title>
+    <url>/2022/10/16/Index/</url>
+    <content><![CDATA[<p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150785.png" alt="1"></p>
+<p>看到有.git文件，用githack抓出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 .\GitHack.py http://challenge-241983fae914b573.sandbox.ctfhub.com:10800/.git`</span><br></pre></td></tr></table></figure>
 
-<p>运行结果如下，得到flag目录</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150607.png" alt="4"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150576.png" alt="2"></p>
+<p>进入目录直接看到.txt文件，打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150144.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>基础认证</title>
-    <url>/2022/10/16/%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%81/</url>
-    <content><![CDATA[<p>打开URL点击click</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145795.png" alt="1"></p>
-<p>在HTTP history中查看response，注意到认证提示“Basic realm&#x3D;”Do u know admin ?””</p>
-<p>猜测登陆用户名为admin</p>
-<p>输入用户名密码后抓包，看到base64加密后的字符</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145934.png" alt="2"></p>
-<p>在解码器中发现是账号:密码的格式，而账号为admin</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146262.png" alt="3"></p>
-<p>使用爆破模块intruder</p>
-<p>将该请求发送到intruder，将basic后面的字符选中并点击右侧Add§</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146966.png" alt="4"></p>
-<p>进入payloads导入ctfhub给的密码本</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146548.png" alt="5"></p>
-<p>同时添加前缀admin:（注意中间的:）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146884.png" alt="6"></p>
-<p>添加base64编码</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146899.png" alt="7"></p>
-<p>取消url编码，不然&#x3D;会被转化为%3d</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146329.png" alt="8"></p>
-<p>开始爆破</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
-<p>筛选状态200并查看返回值，得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
+    <title>Log</title>
+    <url>/2022/10/16/Log/</url>
+    <content><![CDATA[<p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
+<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 Githuck.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
+<p>去到.git同级目录，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>得到历史文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
+<p>查看.txt文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
       </tags>
   </entry>
   <entry>
-    <title>vim缓存</title>
-    <url>/2022/10/16/vim%E7%BC%93%E5%AD%98/</url>
-    <content><![CDATA[<h3 id="法一-dirsearch"><a href="#法一-dirsearch" class="headerlink" title="法一:dirsearch"></a>法一:dirsearch</h3><p>打开URL得到提示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154166.png" alt="1"></p>
-<p>使用dirsearch扫描</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800 -e swp -x 502,503</span><br></pre></td></tr></table></figure>
-
-<p>主动选择.swp的后缀是因为-e *默认不包括swp文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154664.png" alt="2"></p>
-<p>下载index.php.swp后放入linux中使用vim打开</p>
-<p>先使用mv将index.php.swp改名为.index.php.swp</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv index.php.swp .index.php.swp</span><br></pre></td></tr></table></figure>
-
-<p>再使用vim打开index.php文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim index.php</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154013.png" alt="3"></p>
-<p>按R选择恢复得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154710.png" alt="flag"></p>
-<h3 id="法二-直接访问"><a href="#法二-直接访问" class="headerlink" title="法二:直接访问"></a>法二:直接访问</h3><p>由题目可得要求得到vim缓存文件</p>
-<p>故直接访问.index.php.swp(swp,swo,swn)</p>
-<p>得到index.php.swp文件后同法一</p>
-<h3 id="法三-curl（未成功）"><a href="#法三-curl（未成功）" class="headerlink" title="法三:curl（未成功）"></a>法三:curl（未成功）</h3><p>可以直接使用curl命令查看</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800/.index.php.swp</span><br></pre></td></tr></table></figure>
-
-<p>但出现问题：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154095.png" alt="4"></p>
+    <title>PHPINFO</title>
+    <url>/2022/10/16/PHPINFO/</url>
+    <content><![CDATA[<p>打开目标url，进入phpinfo界面</p>
+<p>搜索flag关键词得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148724.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -228,115 +152,33 @@
       </tags>
   </entry>
   <entry>
-    <title>PHPINFO</title>
-    <url>/2022/10/16/PHPINFO/</url>
-    <content><![CDATA[<p>打开目标url，进入phpinfo界面</p>
-<p>搜索flag关键词得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148724.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Log</title>
-    <url>/2022/10/16/Log/</url>
-    <content><![CDATA[<p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
-<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 Githuck.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
+    <title>vim缓存</title>
+    <url>/2022/10/16/vim%E7%BC%93%E5%AD%98/</url>
+    <content><![CDATA[<h3 id="法一-dirsearch"><a href="#法一-dirsearch" class="headerlink" title="法一:dirsearch"></a>法一:dirsearch</h3><p>打开URL得到提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154166.png" alt="1"></p>
+<p>使用dirsearch扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800 -e swp -x 502,503</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
-<p>去到.git同级目录，输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p>主动选择.swp的后缀是因为-e *默认不包括swp文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154664.png" alt="2"></p>
+<p>下载index.php.swp后放入linux中使用vim打开</p>
+<p>先使用mv将index.php.swp改名为.index.php.swp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv index.php.swp .index.php.swp</span><br></pre></td></tr></table></figure>
 
-<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+<p>再使用vim打开index.php文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim index.php</span><br></pre></td></tr></table></figure>
 
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154013.png" alt="3"></p>
+<p>按R选择恢复得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154710.png" alt="flag"></p>
+<h3 id="法二-直接访问"><a href="#法二-直接访问" class="headerlink" title="法二:直接访问"></a>法二:直接访问</h3><p>由题目可得要求得到vim缓存文件</p>
+<p>故直接访问.index.php.swp(swp,swo,swn)</p>
+<p>得到index.php.swp文件后同法一</p>
+<h3 id="法三-curl（未成功）"><a href="#法三-curl（未成功）" class="headerlink" title="法三:curl（未成功）"></a>法三:curl（未成功）</h3><p>可以直接使用curl命令查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800/.index.php.swp</span><br></pre></td></tr></table></figure>
 
-<p>得到历史文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
-<p>查看.txt文件得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Index</title>
-    <url>/2022/10/16/Index/</url>
-    <content><![CDATA[<p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150785.png" alt="1"></p>
-<p>看到有.git文件，用githack抓出来</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 .\GitHack.py http://challenge-241983fae914b573.sandbox.ctfhub.com:10800/.git`</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150576.png" alt="2"></p>
-<p>进入目录直接看到.txt文件，打开得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150144.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HG泄露</title>
-    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
-<p>发现部分404，但是在store-fncache中仍有文件显示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
-<p>拼接url+flag得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>.DS_Store</title>
-    <url>/2022/10/16/DS_Store/</url>
-    <content><![CDATA[<h3 id="法一-dirsearch-linux查看"><a href="#法一-dirsearch-linux查看" class="headerlink" title="法一:dirsearch+linux查看"></a>法一:dirsearch+linux查看</h3><p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153541.png" alt="1"></p>
-<p>得到.DS_Store文件，丢到浏览器下载后在linux内打开</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153667.png" alt="2"></p>
-<p>在看到.txt文件，丢到浏览器中打开得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153584.png" alt="flag"></p>
-<h3 id="法二-dirsearch-python-dsstore查看"><a href="#法二-dirsearch-python-dsstore查看" class="headerlink" title="法二:dirsearch+python dsstore查看"></a>法二:dirsearch+python dsstore查看</h3><p>同法一，得到DS_Store</p>
-<p>将得到的文件用dsstore打开</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153738.png" alt="3"></p>
-<p>得到.txt文件</p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cookie</title>
-    <url>/2022/10/16/Cookie/</url>
-    <content><![CDATA[<p>打开URL如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138827.png" alt="1"></p>
-<p>得知要使用admin登陆</p>
-<p>刷新拦截一下请求</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138275.png" alt="2"></p>
-<p>将admin&#x3D;0改为admin&#x3D;1并发送，得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138254.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>302跳转</title>
-    <url>/2022/10/16/302%E8%B7%B3%E8%BD%AC/</url>
-    <content><![CDATA[<p>打开URL如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137392.png" alt="1"></p>
-<p>打开Intercept并进入HTTP history查看</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137699.png" alt="2"></p>
-<p>发现两处302跳转，查看得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137958.png" alt="flag"></p>
+<p>但出现问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154095.png" alt="4"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -355,6 +197,164 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
 <p>直接下载.bak文件打开发现flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>响应包源代码</title>
+    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>打开URL发现是游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
+<p>打开源代码发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基础认证</title>
+    <url>/2022/10/16/%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%81/</url>
+    <content><![CDATA[<p>打开URL点击click</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145795.png" alt="1"></p>
+<p>在HTTP history中查看response，注意到认证提示“Basic realm&#x3D;”Do u know admin ?””</p>
+<p>猜测登陆用户名为admin</p>
+<p>输入用户名密码后抓包，看到base64加密后的字符</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145934.png" alt="2"></p>
+<p>在解码器中发现是账号:密码的格式，而账号为admin</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146262.png" alt="3"></p>
+<p>使用爆破模块intruder</p>
+<p>将该请求发送到intruder，将basic后面的字符选中并点击右侧Add§</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146966.png" alt="4"></p>
+<p>进入payloads导入ctfhub给的密码本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146548.png" alt="5"></p>
+<p>同时添加前缀admin:（注意中间的:）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146884.png" alt="6"></p>
+<p>添加base64编码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146899.png" alt="7"></p>
+<p>取消url编码，不然&#x3D;会被转化为%3d</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146329.png" alt="8"></p>
+<p>开始爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
+<p>筛选状态200并查看返回值，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>弱口令</title>
+    <url>/2022/10/16/%E5%BC%B1%E5%8F%A3%E4%BB%A4/</url>
+    <content><![CDATA[<p>burp里抓包登陆请求，发送到爆破模组里</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134978.png" alt="1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134686.png" alt="2"></p>
+<p>选上下面的用户密码，用集束炸弹方式攻击</p>
+<p>payload1,2分别使用简单的弱口令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152135801.png" alt="3"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136869.png" alt="4"></p>
+<p>选中长度排序，得到爆破成功的的对应密码，查看response得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136843.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建博客</title>
+    <url>/2022/10/16/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h3 id="Github操作"><a href="#Github操作" class="headerlink" title="Github操作"></a>Github操作</h3><p>先申请一个名字为 <code>&lt;username&gt;.github.io</code> 的<strong>公开</strong>仓库，readme.md随意加不加</p>
+<p>然后git bash绑定一下自己的账号，具体百度一堆</p>
+<h3 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h3><p>安装一下hexo的依赖：node.js和git</p>
+<p>找个地新建文件夹，在文件夹内右键打开git bash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162028489.png" alt="image-20201220172655709"></p>
+<p>然后输入以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 hexo 框架</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"># 初始化文件夹</span><br><span class="line">hexo init</span><br><span class="line"># 安装 hexo 依赖包</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>（hexo init可能会卡在安装依赖上，挂个梯子，git上设置一下代理）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 设置代理</span><br><span class="line">git config --global http.proxy http://serverip:port</span><br><span class="line">git config --global https.proxy http:/serverip:port</span><br><span class="line"># 设置带用户名密码的代理</span><br><span class="line"># 注意：如果密码中带了特殊字符需要进行转义, 将特殊字符替换为下面对应的转义字符即可</span><br><span class="line">#  !   #   $   &amp;   &#x27;   (    )  *   +   ,   /   :   ;   =   ?   @   [   ]</span><br><span class="line"># %21 %23 %24 %26 %27 %28 %29 %2A %2B %2C %2F %3A %3B %3D %3F %40 %5B %5D</span><br><span class="line">npm config set proxy http://username:password@serverip:port</span><br><span class="line">npm confit set https-proxy http://username:password@serverip:port</span><br><span class="line"># 取消代理</span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+
+<p>执行完成之后，目录大概是这样的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162031068.png" alt="image-20221016203139039"></p>
+<p>然后在这个目录下用<code>cmd/git bash/powershell</code>执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 生成静态网站</span><br><span class="line">hexo g</span><br><span class="line"># 启动服务器</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>然后访问<code>http://localhost:4000/</code>测试是否成功</p>
+<p>成功之后安装一下发布插件</p>
+<p>在git bash里输入<code>npm install hexo-deployer-git</code>，安装完配置一下根目录下<code>_config.yml</code>的文件，在deploy一栏填一下发布的类型，申请的仓库地址，分支</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162043684.png" alt="image-20221016204336663"></p>
+<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><p>执行一下<code>hexo d</code>就发布好了（每次重新发布记得<code>hexo clea &amp;&amp; hexo g</code>重建一下）</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>国内网真是哈哈了，干啥都要挂梯子、换源，有问题百度+google然后C+V就完事了</p>
+]]></content>
+      <tags>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>目录遍历</title>
+    <url>/2022/10/16/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<h3 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149039.png" alt="0"></p>
+<p>注意到目录为4*4的文件夹</p>
+<p>进入到最后一级目录，发送URL到intruder中</p>
+<p>分别选择攻击类型：cluster bomb，选择变化的位置，设置payload的sets和options</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149124.png" alt="1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149552.png" alt="2"></p>
+<p>设置完成后开始</p>
+<p>在结果页中发现长度明显不一致的返回，查看返回内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150023.png" alt="3"></p>
+<p>从而得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150584.png" alt="flag"></p>
+<h3 id="法二：python"><a href="#法二：python" class="headerlink" title="法二：python"></a>法二：python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://challenge-0b7cf3fe1d9ef811.sandbox.ctfhub.com:10800/flag_in_here&quot;</span><span class="comment">#靶机url</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#i为0-4的数</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#j为0-4的数</span></span><br><span class="line">        url_final = url + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(i) + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(j)<span class="comment">#将最终的目录拼接出来</span></span><br><span class="line">        r = requests.get(url_final)<span class="comment">#获得服务器返回的Response</span></span><br><span class="line">        r.encoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">        get_file=r.text<span class="comment">#得到text内容</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> get_file:<span class="comment">#判断flag是否在返回值中</span></span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下，得到flag目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150607.png" alt="4"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网站源码</title>
+    <url>/2022/10/16/%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81/</url>
+    <content><![CDATA[<h3 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h3><p>打开url发现提示给了常见的文件及后缀名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155349.png" alt="1"></p>
+<p>进入bs浏览器，随便输一个，例如:web.tar尝试访问</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155308.png" alt="2"></p>
+<p>在历史记录中将该次访问发送到intruder中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155837.png" alt="3"></p>
+<p>在源代码中选择攻击类型并选中web和tar</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155045.png" alt="4"></p>
+<p>payloads中载入要变化的文件名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155514.png" alt="5"></p>
+<p>填写两个set后开始攻击，找到状态为200的文件，下载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155141.png" alt="6"></p>
+<p>得到flag.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155970.png" alt="7"></p>
+<p>将该文件放入浏览器中尝试打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155598.png" alt="flag"></p>
+<h3 id="法二-dirsearch"><a href="#法二-dirsearch" class="headerlink" title="法二:dirsearch"></a>法二:dirsearch</h3><p>在dirsearch目录中打开powershell，执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-584841b234301423.sandbox.ctfhub.com:10800 -e tar,tar.gz,zip,rar -x 502,503</span><br></pre></td></tr></table></figure>
+
+<p>执行完成后得到备份文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155127.png" alt="8"></p>
+<p>后续步骤同法一</p>
+<h3 id="法三-python"><a href="#法三-python" class="headerlink" title="法三:python"></a>法三:python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url=<span class="string">&quot;http://challenge-584841b234301423.sandbox.ctfhub.com:10800/&quot;</span></span><br><span class="line">list1=[<span class="string">&#x27;web&#x27;</span>, <span class="string">&#x27;website&#x27;</span>, <span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;back&#x27;</span>, <span class="string">&#x27;www&#x27;</span>, <span class="string">&#x27;wwwroot&#x27;</span>, <span class="string">&#x27;temp&#x27;</span>]</span><br><span class="line">list2=[<span class="string">&#x27;tar&#x27;</span>, <span class="string">&#x27;tar.gz&#x27;</span>, <span class="string">&#x27;zip&#x27;</span>, <span class="string">&#x27;rar&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list1:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> list2:</span><br><span class="line">        url_final=url+i+<span class="string">&quot;.&quot;</span>+j</span><br><span class="line">        r=requests.get(url_final)</span><br><span class="line">        <span class="keyword">if</span>(r.status_code == <span class="number">200</span>):</span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>请求方式</title>
+    <url>/2022/10/16/%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147545.png" alt="1"></p>
+<p>注意到题中要求使用CTF**B Method，故在Burp-Suite将GET方式改为CTFHUB（区分大小写）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147440.png" alt="2"></p>
+<p>将Intercept打开后打开浏览器并填入URL，将橙色标识中的GET方法改为CTFHUB后发送，得到如下flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147987.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
