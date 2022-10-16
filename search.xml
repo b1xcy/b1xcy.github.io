@@ -78,6 +78,31 @@
       </tags>
   </entry>
   <entry>
+    <title>PHPINFO</title>
+    <url>/2022/10/16/PHPINFO/</url>
+    <content><![CDATA[<p>打开目标url，进入phpinfo界面</p>
+<p>搜索flag关键词得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148724.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SVN泄露</title>
+    <url>/2022/10/16/SVN%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<p>dirsearch扫出来有.svn目录，用dvcs-ripper找一下svn</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148622.png" alt="1"></p>
+<p>进入.svn目录（隐藏文件夹，要用ls -a查看），在pristine目录中有两个文件夹，找到旧版的（08）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148364.png" alt="2"></p>
+<p>cat查看文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148693.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Log</title>
     <url>/2022/10/16/Log/</url>
     <content><![CDATA[<p>dirsearch开扫</p>
@@ -99,31 +124,6 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
 <p>查看.txt文件得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PHPINFO</title>
-    <url>/2022/10/16/PHPINFO/</url>
-    <content><![CDATA[<p>打开目标url，进入phpinfo界面</p>
-<p>搜索flag关键词得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148724.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SVN泄露</title>
-    <url>/2022/10/16/SVN%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<p>dirsearch扫出来有.svn目录，用dvcs-ripper找一下svn</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148622.png" alt="1"></p>
-<p>进入.svn目录（隐藏文件夹，要用ls -a查看），在pristine目录中有两个文件夹，找到旧版的（08）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148364.png" alt="2"></p>
-<p>cat查看文件得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148693.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -164,18 +164,6 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
 <p>直接下载.bak文件打开发现flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>响应包源代码</title>
-    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
-    <content><![CDATA[<p>打开URL发现是游戏</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
-<p>打开源代码发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -240,6 +228,18 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
 <p>筛选状态200并查看返回值，得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>响应包源代码</title>
+    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>打开URL发现是游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
+<p>打开源代码发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
