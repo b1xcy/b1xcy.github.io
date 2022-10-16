@@ -30,20 +30,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HG泄露</title>
-    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
-<p>发现部分404，但是在store-fncache中仍有文件显示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
-<p>拼接url+flag得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>.DS_Store</title>
     <url>/2022/10/16/DS_Store/</url>
     <content><![CDATA[<h3 id="法一-dirsearch-linux查看"><a href="#法一-dirsearch-linux查看" class="headerlink" title="法一:dirsearch+linux查看"></a>法一:dirsearch+linux查看</h3><p>dirsearch开扫</p>
@@ -56,6 +42,20 @@
 <p>将得到的文件用dsstore打开</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153738.png" alt="3"></p>
 <p>得到.txt文件</p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HG泄露</title>
+    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
+<p>发现部分404，但是在store-fncache中仍有文件显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
+<p>拼接url+flag得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -152,6 +152,36 @@
       </tags>
   </entry>
   <entry>
+    <title>bak文件</title>
+    <url>/2022/10/16/bak%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>打开URL有：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154080.png" alt="1"></p>
+<p>使用dirsearch扫描文件</p>
+<p>在dirsearch目录执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-b2eb848d1933d253.sandbox.ctfhub.com:10800 -e * -x 502,503</span><br></pre></td></tr></table></figure>
+
+<p>等待扫描完成发现有index.php.bak文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
+<p>直接下载.bak文件打开发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>响应包源代码</title>
+    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>打开URL发现是游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
+<p>打开源代码发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vim缓存</title>
     <url>/2022/10/16/vim%E7%BC%93%E5%AD%98/</url>
     <content><![CDATA[<h3 id="法一-dirsearch"><a href="#法一-dirsearch" class="headerlink" title="法一:dirsearch"></a>法一:dirsearch</h3><p>打开URL得到提示</p>
@@ -179,36 +209,6 @@
 
 <p>但出现问题：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154095.png" alt="4"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bak文件</title>
-    <url>/2022/10/16/bak%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>打开URL有：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154080.png" alt="1"></p>
-<p>使用dirsearch扫描文件</p>
-<p>在dirsearch目录执行以下命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-b2eb848d1933d253.sandbox.ctfhub.com:10800 -e * -x 502,503</span><br></pre></td></tr></table></figure>
-
-<p>等待扫描完成发现有index.php.bak文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
-<p>直接下载.bak文件打开发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>响应包源代码</title>
-    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
-    <content><![CDATA[<p>打开URL发现是游戏</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
-<p>打开源代码发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -269,7 +269,7 @@
 <p>然后git bash绑定一下自己的账号，具体百度一堆</p>
 <h3 id="本地操作"><a href="#本地操作" class="headerlink" title="本地操作"></a>本地操作</h3><p>安装一下hexo的依赖：node.js和git</p>
 <p>找个地新建文件夹，在文件夹内右键打开git bash</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162028489.png" alt="image-20201220172655709"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162050819.png" alt="image-20221016205042788"></p>
 <p>然后输入以下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 hexo 框架</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line"># 初始化文件夹</span><br><span class="line">hexo init</span><br><span class="line"># 安装 hexo 依赖包</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 
