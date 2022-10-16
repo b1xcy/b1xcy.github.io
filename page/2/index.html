@@ -165,33 +165,7 @@
   <time datetime="2022-10-16T07:40:57.889Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
-<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 Githuck.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
-<p>去到.git同级目录，输入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-
-<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
-
-<p>得到历史文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
-<p>查看.txt文件得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -233,22 +207,7 @@
   <time datetime="2022-10-16T07:40:57.887Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150785.png" alt="1"></p>
-<p>看到有.git文件，用githack抓出来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 .\GitHack.py http://challenge-241983fae914b573.sandbox.ctfhub.com:10800/.git`</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150576.png" alt="2"></p>
-<p>进入目录直接看到.txt文件，打开得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150144.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -290,20 +249,7 @@
   <time datetime="2022-10-16T07:40:57.885Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
-<p>发现部分404，但是在store-fncache中仍有文件显示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
-<p>拼接url+flag得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -345,24 +291,7 @@
   <time datetime="2022-10-16T07:40:57.882Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <h3 id="法一-dirsearch-linux查看"><a href="#法一-dirsearch-linux查看" class="headerlink" title="法一:dirsearch+linux查看"></a>法一:dirsearch+linux查看</h3><p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153541.png" alt="1"></p>
-<p>得到.DS_Store文件，丢到浏览器下载后在linux内打开</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153667.png" alt="2"></p>
-<p>在看到.txt文件，丢到浏览器中打开得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153584.png" alt="flag"></p>
-<h3 id="法二-dirsearch-python-dsstore查看"><a href="#法二-dirsearch-python-dsstore查看" class="headerlink" title="法二:dirsearch+python dsstore查看"></a>法二:dirsearch+python dsstore查看</h3><p>同法一，得到DS_Store</p>
-<p>将得到的文件用dsstore打开</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153738.png" alt="3"></p>
-<p>得到.txt文件</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -404,21 +333,7 @@
   <time datetime="2022-10-16T07:40:57.880Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>打开URL如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138827.png" alt="1"></p>
-<p>得知要使用admin登陆</p>
-<p>刷新拦截一下请求</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138275.png" alt="2"></p>
-<p>将admin&#x3D;0改为admin&#x3D;1并发送，得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138254.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -460,20 +375,7 @@
   <time datetime="2022-10-16T07:40:57.877Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>打开URL如下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137392.png" alt="1"></p>
-<p>打开Intercept并进入HTTP history查看</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137699.png" alt="2"></p>
-<p>发现两处302跳转，查看得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137958.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
@@ -515,24 +417,7 @@
   <time datetime="2022-10-16T06:13:04.076Z" itemprop="datePublished">2022-10-16</time>
 </a>    
     </div>
-      
-    <div class="article-entry" itemprop="articleBody">
        
-  <p>打开URL有：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154080.png" alt="1"></p>
-<p>使用dirsearch扫描文件</p>
-<p>在dirsearch目录执行以下命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-b2eb848d1933d253.sandbox.ctfhub.com:10800 -e * -x 502,503</span><br></pre></td></tr></table></figure>
-
-<p>等待扫描完成发现有index.php.bak文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
-<p>直接下载.bak文件打开发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
 
     <!-- copyright -->
     
