@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Tag: ctfhub |  b1xcy&#39;s blog</title>
+      <title>搭建图床 |  b1xcy&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,211 +52,168 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-搭建图床"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">#&nbspctfhub</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2022" class="archive-year">2022</a>
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  搭建图床
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/10/16/%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BA%8A/" class="article-date">
+  <time datetime="2022-10-16T13:06:30.707Z" itemprop="datePublished">2022-10-16</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">273</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/Log/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.889Z" itemprop="datePublished">10/16</time>
-</a>
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/Log/"
-    >Log</a> 
-</h2>
+  <h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><h4 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h4><p>先在github上申请一个<strong>公开</strong>仓库</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162108241.png" alt="image-20221016210831200"></p>
+<p>随便填一填然后申请，记下来仓库名字</p>
+<h4 id="申请Token"><a href="#申请Token" class="headerlink" title="申请Token"></a>申请Token</h4><p>github中点开Setting-Developer settings</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162113745.png" alt="image-20221016211329717"></p>
+<p>左侧选择Personal access tokens</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162114646.png" alt="image-20221016211407617"></p>
+<p>权限里全选择repo，然后生成token，记下给出来的token</p>
+<h2 id="Pic-Go"><a href="#Pic-Go" class="headerlink" title="Pic Go"></a>Pic Go</h2><p>下载一个PicGo：<code>https://github.com/Molunerfinn/picgo/releases</code></p>
+<p>下载之后在图床设置-Github中如下设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162115272.png" alt="image-20221016211527242"></p>
+<p>仓库名选择刚刚申请的仓库，分支填master&#x2F;main，token填刚刚申请的token</p>
+<p>国内访问慢的话可以用jsdelivr的加速服务，具体百度</p>
+<p>填完点选确定就好了</p>
+<h2 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h2><p>在偏好设置-图像设置里如下设置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162117765.png" alt="image-20221016211742739"></p>
+<p>上传服务选PicGo(app)，路径选择PicGo的安装目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162118544.png" alt="image-20221016211820516"></p>
+<p>这样设置的话每次拖放图片就可以自动调用PicGo上传</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>不得不说一下，不清楚是不是国内网的问题，上传然后引用图床里的图片，每个都是image load failed.</p>
+<p>仓库设置公开也是这样，typora设置了代理也是这样，picgo里也是没法加载图片</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210162121720.png" alt="image-20221016212153691"></p>
+<p>真要玉玉了</p>
  
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/Index/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.887Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/Index/"
-    >Index</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/HG%E6%B3%84%E9%9C%B2/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.885Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/HG%E6%B3%84%E9%9C%B2/"
-    >HG泄露</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/DS_Store/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.882Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/DS_Store/"
-    >.DS_Store</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/Cookie/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.880Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/Cookie/"
-    >Cookie</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/302%E8%B7%B3%E8%BD%AC/" class="archive-article-date">
-  <time datetime="2022-10-16T07:40:57.877Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/302%E8%B7%B3%E8%BD%AC/"
-    >302跳转</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/10/16/bak%E6%96%87%E4%BB%B6/" class="archive-article-date">
-  <time datetime="2022-10-16T06:13:04.076Z" itemprop="datePublished">10/16</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/10/16/bak%E6%96%87%E4%BB%B6/"
-    >bak文件</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
-
-    
-  </div>
-</article>
-      
+      <!-- reward -->
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/tags/ctfhub/">上一页</a><a class="page-number" href="/tags/ctfhub/">1</a><span class="page-number current">2</span>
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/10/16/%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BA%8A/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/10/16/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">搭建博客</div>
+      </a>
+    
   </nav>
+
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -362,6 +319,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
