@@ -15,6 +15,20 @@
       </tags>
   </entry>
   <entry>
+    <title>HG泄露</title>
+    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
+<p>发现部分404，但是在store-fncache中仍有文件显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
+<p>拼接url+flag得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cookie</title>
     <url>/2022/10/16/Cookie/</url>
     <content><![CDATA[<p>打开URL如下</p>
@@ -48,14 +62,27 @@
       </tags>
   </entry>
   <entry>
-    <title>HG泄露</title>
-    <url>/2022/10/16/HG%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
-<p>发现部分404，但是在store-fncache中仍有文件显示</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
-<p>拼接url+flag得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
+    <title>Log</title>
+    <url>/2022/10/16/Log/</url>
+    <content><![CDATA[<p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
+<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 Githuck.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
+<p>去到.git同级目录，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>得到历史文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
+<p>查看.txt文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -89,47 +116,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SVN泄露</title>
-    <url>/2022/10/16/SVN%E6%B3%84%E9%9C%B2/</url>
-    <content><![CDATA[<p>dirsearch扫出来有.svn目录，用dvcs-ripper找一下svn</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148622.png" alt="1"></p>
-<p>进入.svn目录（隐藏文件夹，要用ls -a查看），在pristine目录中有两个文件夹，找到旧版的（08）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148364.png" alt="2"></p>
-<p>cat查看文件得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148693.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Log</title>
-    <url>/2022/10/16/Log/</url>
-    <content><![CDATA[<p>dirsearch开扫</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
-<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 Githuck.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
-<p>去到.git同级目录，输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-
-<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
-
-<p>得到历史文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
-<p>查看.txt文件得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Stash</title>
     <url>/2022/10/16/Stash/</url>
     <content><![CDATA[<h3 id="法一：git-differ"><a href="#法一：git-differ" class="headerlink" title="法一：git differ"></a>法一：git differ</h3><p>dirsearch开扫</p>
@@ -152,6 +138,20 @@
       </tags>
   </entry>
   <entry>
+    <title>SVN泄露</title>
+    <url>/2022/10/16/SVN%E6%B3%84%E9%9C%B2/</url>
+    <content><![CDATA[<p>dirsearch扫出来有.svn目录，用dvcs-ripper找一下svn</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148622.png" alt="1"></p>
+<p>进入.svn目录（隐藏文件夹，要用ls -a查看），在pristine目录中有两个文件夹，找到旧版的（08）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148364.png" alt="2"></p>
+<p>cat查看文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148693.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>bak文件</title>
     <url>/2022/10/16/bak%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>打开URL有：</p>
@@ -164,6 +164,35 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
 <p>直接下载.bak文件打开发现flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>响应包源代码</title>
+    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>打开URL发现是游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
+<p>打开源代码发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>弱口令</title>
+    <url>/2022/10/16/%E5%BC%B1%E5%8F%A3%E4%BB%A4/</url>
+    <content><![CDATA[<p>burp里抓包登陆请求，发送到爆破模组里</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134978.png" alt="1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134686.png" alt="2"></p>
+<p>选上下面的用户密码，用集束炸弹方式攻击</p>
+<p>payload1,2分别使用简单的弱口令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152135801.png" alt="3"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136869.png" alt="4"></p>
+<p>选中长度排序，得到爆破成功的的对应密码，查看response得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136843.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -197,66 +226,6 @@
 
 <p>但出现问题：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154095.png" alt="4"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基础认证</title>
-    <url>/2022/10/16/%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%81/</url>
-    <content><![CDATA[<p>打开URL点击click</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145795.png" alt="1"></p>
-<p>在HTTP history中查看response，注意到认证提示“Basic realm&#x3D;”Do u know admin ?””</p>
-<p>猜测登陆用户名为admin</p>
-<p>输入用户名密码后抓包，看到base64加密后的字符</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145934.png" alt="2"></p>
-<p>在解码器中发现是账号:密码的格式，而账号为admin</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146262.png" alt="3"></p>
-<p>使用爆破模块intruder</p>
-<p>将该请求发送到intruder，将basic后面的字符选中并点击右侧Add§</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146966.png" alt="4"></p>
-<p>进入payloads导入ctfhub给的密码本</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146548.png" alt="5"></p>
-<p>同时添加前缀admin:（注意中间的:）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146884.png" alt="6"></p>
-<p>添加base64编码</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146899.png" alt="7"></p>
-<p>取消url编码，不然&#x3D;会被转化为%3d</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146329.png" alt="8"></p>
-<p>开始爆破</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
-<p>筛选状态200并查看返回值，得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>响应包源代码</title>
-    <url>/2022/10/16/%E5%93%8D%E5%BA%94%E5%8C%85%E6%BA%90%E4%BB%A3%E7%A0%81/</url>
-    <content><![CDATA[<p>打开URL发现是游戏</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
-<p>打开源代码发现flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>弱口令</title>
-    <url>/2022/10/16/%E5%BC%B1%E5%8F%A3%E4%BB%A4/</url>
-    <content><![CDATA[<p>burp里抓包登陆请求，发送到爆破模组里</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134978.png" alt="1"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134686.png" alt="2"></p>
-<p>选上下面的用户密码，用集束炸弹方式攻击</p>
-<p>payload1,2分别使用简单的弱口令</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152135801.png" alt="3"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136869.png" alt="4"></p>
-<p>选中长度排序，得到爆破成功的的对应密码，查看response得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136843.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
@@ -316,6 +285,50 @@
       </tags>
   </entry>
   <entry>
+    <title>基础认证</title>
+    <url>/2022/10/16/%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%81/</url>
+    <content><![CDATA[<p>打开URL点击click</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145795.png" alt="1"></p>
+<p>在HTTP history中查看response，注意到认证提示“Basic realm&#x3D;”Do u know admin ?””</p>
+<p>猜测登陆用户名为admin</p>
+<p>输入用户名密码后抓包，看到base64加密后的字符</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145934.png" alt="2"></p>
+<p>在解码器中发现是账号:密码的格式，而账号为admin</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146262.png" alt="3"></p>
+<p>使用爆破模块intruder</p>
+<p>将该请求发送到intruder，将basic后面的字符选中并点击右侧Add§</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146966.png" alt="4"></p>
+<p>进入payloads导入ctfhub给的密码本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146548.png" alt="5"></p>
+<p>同时添加前缀admin:（注意中间的:）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146884.png" alt="6"></p>
+<p>添加base64编码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146899.png" alt="7"></p>
+<p>取消url编码，不然&#x3D;会被转化为%3d</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146329.png" alt="8"></p>
+<p>开始爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
+<p>筛选状态200并查看返回值，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>请求方式</title>
+    <url>/2022/10/16/%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147545.png" alt="1"></p>
+<p>注意到题中要求使用CTF**B Method，故在Burp-Suite将GET方式改为CTFHUB（区分大小写）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147440.png" alt="2"></p>
+<p>将Intercept打开后打开浏览器并填入URL，将橙色标识中的GET方法改为CTFHUB后发送，得到如下flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147987.png" alt="flag"></p>
+]]></content>
+      <tags>
+        <tag>ctfhub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网站源码</title>
     <url>/2022/10/16/%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81/</url>
     <content><![CDATA[<h3 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h3><p>打开url发现提示给了常见的文件及后缀名</p>
@@ -342,19 +355,6 @@
 <p>后续步骤同法一</p>
 <h3 id="法三-python"><a href="#法三-python" class="headerlink" title="法三:python"></a>法三:python</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url=<span class="string">&quot;http://challenge-584841b234301423.sandbox.ctfhub.com:10800/&quot;</span></span><br><span class="line">list1=[<span class="string">&#x27;web&#x27;</span>, <span class="string">&#x27;website&#x27;</span>, <span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;back&#x27;</span>, <span class="string">&#x27;www&#x27;</span>, <span class="string">&#x27;wwwroot&#x27;</span>, <span class="string">&#x27;temp&#x27;</span>]</span><br><span class="line">list2=[<span class="string">&#x27;tar&#x27;</span>, <span class="string">&#x27;tar.gz&#x27;</span>, <span class="string">&#x27;zip&#x27;</span>, <span class="string">&#x27;rar&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list1:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> list2:</span><br><span class="line">        url_final=url+i+<span class="string">&quot;.&quot;</span>+j</span><br><span class="line">        r=requests.get(url_final)</span><br><span class="line">        <span class="keyword">if</span>(r.status_code == <span class="number">200</span>):</span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <tags>
-        <tag>ctfhub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>请求方式</title>
-    <url>/2022/10/16/%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147545.png" alt="1"></p>
-<p>注意到题中要求使用CTF**B Method，故在Burp-Suite将GET方式改为CTFHUB（区分大小写）。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147440.png" alt="2"></p>
-<p>将Intercept打开后打开浏览器并填入URL，将橙色标识中的GET方法改为CTFHUB后发送，得到如下flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147987.png" alt="flag"></p>
 ]]></content>
       <tags>
         <tag>ctfhub</tag>
