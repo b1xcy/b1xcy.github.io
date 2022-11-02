@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>默认口令 |  b1xcy&#39;s blog</title>
+      <title>python入门 |  b1xcy&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-默认口令"
+  id="post-python入门"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  默认口令
+  python入门
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2022/10/19/%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4/" class="article-date">
-  <time datetime="2022-10-18T16:26:16.276Z" itemprop="datePublished">2022-10-19</time>
+      <a href="/2022/11/02/python%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2022-11-02T05:55:33.201Z" itemprop="datePublished">2022-11-02</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">95</span>
+            <span class="post-count">572</span>
         </span>
     </span>
 
@@ -89,28 +89,45 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>打开是网关登陆界面，还有验证码，那就没法用intruder爆破密码了</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190031447.png" alt="image-20221019003140324"></p>
-<p>随便试一个账号密码，显示用户不存在</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190032401.png" alt="image-20221019003216381"></p>
-<p>查看源代码发现是“亿邮邮件网关”，结合title的“默认口令”，试一下是否是出厂的默认设置</p>
-<p>直接搜该网关的管理用户</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190034857.png" alt="image-20221019003431841"></p>
-<p>丢进去登陆得到flag</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190035364.png" alt="image-20221019003507338"></p>
+  <h3 id="level0："><a href="#level0：" class="headerlink" title="level0："></a>level0：</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211021357361.png" alt="0"></p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hallo world!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="level1"><a href="#level1" class="headerlink" title="level1:"></a>level1:</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211021358848.png" alt="1"></p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="comment">#1-剪刀；2-石头；3-布</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line">count_pc=<span class="number">0</span></span><br><span class="line">count_per=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> count_per&lt;<span class="number">3</span> <span class="keyword">and</span> count_pc&lt;<span class="number">3</span>:</span><br><span class="line">    pc=random.randint(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">    per=<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;输入选择：1-剪刀；2-石头；3-布&quot;</span>))</span><br><span class="line">    <span class="keyword">if</span> per==<span class="number">1</span> <span class="keyword">and</span> pc==<span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;平&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">1</span> <span class="keyword">and</span> pc==<span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you lose&quot;</span>)</span><br><span class="line">        count_pc=count_pc+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">1</span> <span class="keyword">and</span> pc==<span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you win&quot;</span>)</span><br><span class="line">        count_per=count_per+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">2</span> <span class="keyword">and</span> pc==<span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you win&quot;</span>)</span><br><span class="line">        count_per=count_per+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">2</span> <span class="keyword">and</span> pc==<span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;平局&quot;</span>)</span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">2</span> <span class="keyword">and</span> pc==<span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you lose&quot;</span>)</span><br><span class="line">        count_pc=count_pc+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">3</span> <span class="keyword">and</span> pc==<span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you lose&quot;</span>)</span><br><span class="line">        count_pc=count_pc+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">3</span> <span class="keyword">and</span> pc==<span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;you win&quot;</span>)</span><br><span class="line">        count_per=count_per+<span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> per==<span class="number">3</span> <span class="keyword">and</span> pc==<span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;平局&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> count_pc==<span class="number">3</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;总比分为&#123;&#125;:&#123;&#125;,你输了&quot;</span>.<span class="built_in">format</span>(count_pc,count_per))</span><br><span class="line"><span class="keyword">elif</span> count_per==<span class="number">3</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;总比分为&#123;&#125;:&#123;&#125;,你赢了了&quot;</span>.<span class="built_in">format</span>(count_pc,count_per))</span><br></pre></td></tr></table></figure>
+
+<p>想不出来有啥其他算法简化了，就用最傻逼的elif好了</p>
+<h3 id="level2"><a href="#level2" class="headerlink" title="level2:"></a>level2:</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211021359596.png" alt="2"></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h4><p>mod:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">beautiful</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&#123;&#125; is beautiful&quot;</span>.<span class="built_in">format</span>(x))</span><br></pre></td></tr></table></figure>
+
+<p>main:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#coding=utf-8</span><br><span class="line">from mod import beautiful</span><br><span class="line">beautiful(&quot;python&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="level3"><a href="#level3" class="headerlink" title="level3:"></a>level3:</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211021400840.png" alt="3"></p>
+<p>代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#coding=utf-8</span><br><span class="line">import requests,re</span><br><span class="line"></span><br><span class="line">def del_join(del_content,list_content):</span><br><span class="line">    for i in list_content:</span><br><span class="line">        list=re.split(del_content,i)</span><br><span class="line">        str=&quot;&quot;</span><br><span class="line">        print(&quot;&#123;&#125;\t&quot;.format(str.join(list)),end=&quot;&quot;)</span><br><span class="line"></span><br><span class="line">url=&quot;https://www.tianqi.com/chongqing/7/&quot;</span><br><span class="line">headers=&#123;</span><br><span class="line">&quot;user-agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.52&quot;</span><br><span class="line">&#125;</span><br><span class="line">html=requests.get(url,headers=headers).text</span><br><span class="line"></span><br><span class="line">temp_ch=re.compile(r&#x27;&lt;div class=&quot;weaul_z&quot;&gt;&lt;span&gt;(.*?)&lt;/div&gt;&#x27;)</span><br><span class="line">date_ch=re.compile(r&#x27;&lt;span class=&quot;fl&quot;&gt;(.*?)&lt;/span&gt;&#x27;)</span><br><span class="line">week_ch=re.compile(r&#x27;&lt;span class=&quot;fr&quot;&gt;(.*?)&lt;/span&gt;&#x27;)</span><br><span class="line"></span><br><span class="line">temp=temp_ch.findall(html)</span><br><span class="line">date=date_ch.findall(html)</span><br><span class="line">week=week_ch.findall(html)</span><br><span class="line"></span><br><span class="line">for i in date:</span><br><span class="line">    print(&quot;&#123;&#125;\t&quot;.format(i),end=&quot;&quot;)</span><br><span class="line">print(&quot;\n&quot;)</span><br><span class="line">for i in week:</span><br><span class="line">    print(&quot;&#123;&#125;\t&quot;.format(i),end=&quot;&quot;)</span><br><span class="line">print(&quot;\n&quot;)</span><br><span class="line">del_join(&quot;&lt;span&gt;|&lt;/span&gt;&quot;,temp)</span><br></pre></td></tr></table></figure>
+
+<p>用requests和re模块，本来想用beautifulsoup，但爬出来会有乱码，放弃了</p>
+<p>re具体的筛选就用温度、日期前边的div类型，然后出来的是个list</p>
+<p>只有温度中间有其他的字符，就定义一个”del_join”函数，把温度中间的span和&#x2F;span删掉再拼接起来就好了</p>
+<h3 id="level4"><a href="#level4" class="headerlink" title="level4:"></a>level4:</h3><p>搭建novelai，显卡1066，搭了也没啥用，懒得搭了</p>
  
       <!-- reward -->
       
@@ -163,12 +180,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/10/19/%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/02/python%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
 
     </footer>
   </div>
@@ -176,19 +193,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2022/11/02/python%E5%85%A5%E9%97%A8/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            python入门
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/10/16/%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BA%8A/" class="article-nav-link">
+      <a href="/2022/10/19/%E9%BB%98%E8%AE%A4%E5%8F%A3%E4%BB%A4/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">搭建图床</div>
+        <div class="article-nav-title">默认口令</div>
       </a>
     
   </nav>
