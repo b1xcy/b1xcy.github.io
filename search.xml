@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>合并flv文件</title>
+    <url>/2022/11/05/%E5%90%88%E5%B9%B6flv/</url>
+    <content><![CDATA[<p>来源于我傻逼设置把每个视频切成10mb的小视频了，需要合并</p>
+<p>首先安装FFmpeg</p>
+<p>先把所需的所有视频下下来，按先后顺序排列</p>
+<p>在linux中重命名（更方便，重命名为1-x的顺序）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211052001576.png" alt="image-20221105200145494"></p>
+<p>这样选择，“文字”留空，“文字格式”选择“数字-文字”，确保新名称为类似01.flv的有顺序的名字</p>
+<p>在当前文件夹打开终端，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for f in *.flv; do echo &quot;file &#x27;$f&#x27;&quot; &gt;&gt; mylist.txt; done</span><br></pre></td></tr></table></figure>
+
+<p>会有如下的txt文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211052005882.png" alt="image-20221105200531854"></p>
+<p>然后继续在终端输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ffmpeg -f concat -i mylist.txt -c copy output.flv</span><br></pre></td></tr></table></figure>
+
+<p>等待完成，output.flv即为合并后的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211052013802.png" alt="image-20221105201307761"></p>
+]]></content>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python入门</title>
     <url>/2022/11/02/python%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h3 id="level0："><a href="#level0：" class="headerlink" title="level0："></a>level0：</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211021357361.png" alt="0"></p>
