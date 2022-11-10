@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>flv2mp4</title>
+    <url>/2022/11/10/flv2mp4/</url>
+    <content><![CDATA[<p>借助FFmpeg把flv封装为mp4文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202211101629273.png" alt="202211101629273.png"></p>
+<p>效果如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202211101629263.png" alt="202211101629263.png"></p>
+<p>相比其他的转码，速度更快更好</p>
+]]></content>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传入文件</title>
+    <url>/2022/11/10/%E4%BC%A0%E5%85%A5%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>记录一下windows环境下用批处理查看传入的文件详情</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211101622522.png" alt="image-20221110162240500"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@echo off </span><br><span class="line">	echo 文件全路径：	%1</span><br><span class="line">	echo 短路径名：	%~s1</span><br><span class="line">	echo 盘符+路径：	%~dp1</span><br><span class="line">	echo 盘符：		%~d1</span><br><span class="line">	echo 路径：		%~p1</span><br><span class="line">	echo 文件+后缀名：	%~nx1</span><br><span class="line">	echo 文件名：		%~n1</span><br><span class="line">	echo 后缀名：		%~x1</span><br><span class="line">	echo 文件属性：	%~a1</span><br><span class="line">	echo 日期/时间：	%~t1</span><br><span class="line">	echo 文件大小：	%~z1</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<p>拖入文件如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211101623462.png" alt="image-20221110162318445"></p>
+]]></content>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>合并flv文件</title>
     <url>/2022/11/05/%E5%90%88%E5%B9%B6flv/</url>
     <content><![CDATA[<p>来源于我傻逼设置把每个视频切成10mb的小视频了，需要合并</p>
