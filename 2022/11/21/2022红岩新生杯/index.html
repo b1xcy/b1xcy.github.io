@@ -74,7 +74,11 @@
     <div class="article-meta">
       <a href="/2022/11/21/2022%E7%BA%A2%E5%B2%A9%E6%96%B0%E7%94%9F%E6%9D%AF/" class="article-date">
   <time datetime="2022-11-21T07:04:57.708Z" itemprop="datePublished">2022-11-21</time>
-</a>   
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
@@ -111,7 +115,7 @@
 <p>ok，那手拼函数就完事了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201852336.png" alt="2"></p>
 <p>第三部分分了两个，分别解码一下就出来了两个方法</p>
-<p><img src="C:\Users\14468\Desktop\work\ctf\简单题，但是沃玛\3.png" alt="3"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211211539112.png" alt="3"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201853359.png" alt="4"></p>
 <p>写个c跑一下</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201903785.png" alt="5"></p>
@@ -143,12 +147,12 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201918214.png" alt="3"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redrock&#123;Php!sv2ryg004&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="RemindYourHead"><a href="#RemindYourHead" class="headerlink" title="RemindYourHead"></a>RemindYourHead</h2><p>把网址在burpsuite中打开一下，翻出来flag</p>
+<h3 id="RemindYourHead"><a href="#RemindYourHead" class="headerlink" title="RemindYourHead"></a>RemindYourHead</h3><p>把网址在burpsuite中打开一下，翻出来flag</p>
 <p>(这flag每次都不一样，我比赛截的图和复现截的图不是同一个)</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201921996.png" alt="1"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redrock&#123;820a5bf5-4df9-4058-84a4-054af00b3b78&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="Easy-upload"><a href="#Easy-upload" class="headerlink" title="Easy_upload"></a>Easy_upload</h2><p>看到hint，提示有两个flag</p>
+<h3 id="Easy-upload"><a href="#Easy-upload" class="headerlink" title="Easy_upload"></a>Easy_upload</h3><p>看到hint，提示有两个flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201924055.png" alt="0"></p>
 <p>看到是上传题，试一下一句话木马，但被拒绝了</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201925592.png" alt="1"></p>
@@ -175,10 +179,13 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201931669.png" alt="10"></p>
 <p>然后在蚁剑里新添加一个同样的数据，把3.jpg改成刚刚做成的.antproxy.php然后测试连接</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201934679.png" alt="11"></p>
-<h4 id="（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马"><a href="#（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马" class="headerlink" title="（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马"></a>（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马</h4><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201935439.png" alt="12"></p>
-<h4 id="然后重新制作-antproxy-php"><a href="#然后重新制作-antproxy-php" class="headerlink" title="然后重新制作.antproxy.php"></a>然后重新制作.antproxy.php</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="C:\Users\14468\Desktop\work\ctf\Easy_upload\13.png" alt="13"></h4><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936876.png" alt="14"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936689.png" alt="15"></p>
-<h4 id="）"><a href="#）" class="headerlink" title="）"></a>）</h4><p>反正不管怎么样总算是绕过了disable_function，那就进入终端，输入readflag里提示的</p>
+<p> <em>（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马</em></p>
+<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201935439.png" alt="12"></em></p>
+<p> <em>然后重新制作.antproxy.php</em></p>
+<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211211529491.png"></em></p>
+<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936876.png" alt="14"></em></p>
+<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936689.png" alt="15"></em><br><em>）</em></p>
+<p>反正不管怎么样总算是绕过了disable_function，那就进入终端，输入readflag里提示的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tac ./flag</span><br></pre></td></tr></table></figure>
 
 <p>得到flag</p>
@@ -190,7 +197,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201942248.jpg" alt="0"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redrock&#123;020804&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="芝士雪豹与只因"><a href="#芝士雪豹与只因" class="headerlink" title="芝士雪豹与只因"></a>芝士雪豹与只因</h2><p>hint是一个png，先丢到binwalk里看看有没有藏东西</p>
+<h3 id="芝士雪豹与只因"><a href="#芝士雪豹与只因" class="headerlink" title="芝士雪豹与只因"></a>芝士雪豹与只因</h3><p>hint是一个png，先丢到binwalk里看看有没有藏东西</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201952692.png" alt="0"></p>
 <p>有藏另一个图片文件，那就foremost提取出来</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201953102.png" alt="1"></p>
@@ -227,7 +234,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211202006493.png" alt="0-3"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211202006524.png" alt="0-4"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211202007221.png" alt="0-5"></p>
-<h2 id="你TM故意压缩flag是吧？"><a href="#你TM故意压缩flag是吧？" class="headerlink" title="你TM故意压缩flag是吧？"></a>你TM故意压缩flag是吧？</h2><p>显然，这是个有114514层的多层压缩，那就写个循环解压脚本</p>
+<h3 id="你TM故意压缩flag是吧？"><a href="#你TM故意压缩flag是吧？" class="headerlink" title="你TM故意压缩flag是吧？"></a>你TM故意压缩flag是吧？</h3><p>显然，这是个有114514层的多层压缩，那就写个循环解压脚本</p>
 <p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/brightendavid/article/details/115637957">递归解压zip文件_brightendavid的博客-CSDN博客</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=gbk</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"></span><br><span class="line"><span class="built_in">dir</span> = <span class="string">&quot;C:\\Users\\*****\\Desktop\\work\\ctf\\unzip\\&quot;</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">s2 = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jieya</span>():</span><br><span class="line">        i = <span class="string">&quot;14514.zip&quot;</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">114514</span>):</span><br><span class="line">            ss = i[:i.find(<span class="string">&quot;.&quot;</span>)]</span><br><span class="line">            <span class="built_in">print</span>(i)</span><br><span class="line">            zpf = zipfile.ZipFile(<span class="built_in">dir</span> + ss + <span class="string">&quot;.zip&quot;</span>)</span><br><span class="line">            <span class="built_in">list</span> = zpf.namelist()  <span class="comment"># 得到压缩包里所有文件</span></span><br><span class="line">            <span class="keyword">for</span> f <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">                zpf.extract(f, <span class="built_in">dir</span>, ss.encode(<span class="string">&#x27;utf-8&#x27;</span>))  <span class="comment"># 循环解压文件到指定目录</span></span><br><span class="line">            <span class="built_in">print</span>(ss + <span class="string">&quot;done&quot;</span> + <span class="built_in">str</span>(f))</span><br><span class="line">            i = <span class="built_in">str</span>(f)</span><br><span class="line"></span><br><span class="line">jieya()</span><br></pre></td></tr></table></figure>
 
@@ -342,7 +349,7 @@
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/crypto/" rel="tag">crypto</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/misc/" rel="tag">misc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
 
     </footer>
   </div>
