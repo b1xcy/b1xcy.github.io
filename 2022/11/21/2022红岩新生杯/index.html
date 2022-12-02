@@ -93,7 +93,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">6 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
@@ -173,26 +173,22 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201930699.png" alt="6"></p>
 <p>被禁用的函数有这么多</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201930096.png" alt="7"></p>
-<p>那就用蚁剑里的插件绕过一下</p>
+<h4 id="法一：蚁剑插件"><a href="#法一：蚁剑插件" class="headerlink" title="法一：蚁剑插件"></a>法一：蚁剑插件</h4><p>那就用蚁剑里的插件绕过一下</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201931865.png" alt="8"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201931362.png" alt="9"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201931669.png" alt="10"></p>
-<p>然后在蚁剑里新添加一个同样的数据，把3.jpg改成刚刚做成的.antproxy.php然后测试连接</p>
-<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201934679.png" alt="11"></p>
-<p> <em>（这里应该是直接就成功了，但是不知道是不是因为我变形马的问题，直接改就失败了，所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马</em></p>
-<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201935439.png" alt="12"></em></p>
-<p> <em>然后重新制作.antproxy.php</em></p>
-<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211211529491.png"></em></p>
-<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936876.png" alt="14"></em></p>
-<p><em><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936689.png" alt="15"></em><br><em>）</em></p>
-<p>反正不管怎么样总算是绕过了disable_function，那就进入终端，输入readflag里提示的</p>
+<p>由于<strong>LD_PRELOAD需要基于php连接才能绕过</strong>，所以我之前传的变形马是<strong>不能用</strong>的</p>
+<p>所以用蚁剑的上传功能，在上传根目录上传简单的一句话木马</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201935439.png" alt="12"></p>
+<p> 然后重新制作.antproxy.php</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211211529491.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201936689.png" alt="15"></p>
+<p>完成绕过了disable_function，那就进入终端，输入readflag里提示的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tac ./flag</span><br></pre></td></tr></table></figure>
 
 <p>得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201939704.png" alt="17"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redrock&#123;2315jih452ghu542o5431giu5214huiog35431hp&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="bug提示："><a href="#bug提示：" class="headerlink" title="bug提示："></a>bug提示：</h4><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201940810.png" alt="bug"></p>
+<h4 id="法二：LD-PRELOAD无插件版"><a href="#法二：LD-PRELOAD无插件版" class="headerlink" title="法二：LD_PRELOAD无插件版"></a>法二：LD_PRELOAD无插件版</h4><p>详情[<a target="_blank" rel="noopener" href="https://redrock.feishu.cn/wiki/wikcnXw7EpomHHepm1HGObUF4pC">web]Easy_upload - 飞书云文档 (feishu.cn)</a></p>
 <h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h3><p>RT</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img//202211201942248.jpg" alt="0"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redrock&#123;020804&#125;</span><br></pre></td></tr></table></figure>
