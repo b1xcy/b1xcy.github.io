@@ -162,7 +162,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$context = new SplFileObject(&#x27;/etc/passwd&#x27;);</span><br><span class="line">foreach($context as $f)&#123;</span><br><span class="line">    echo($f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="SoapClient"><a href="#SoapClient" class="headerlink" title="SoapClient"></a>SoapClient</h2><p>SoapClient类中内置了一个__call方法，触发该方法之后可以发送http和https请求。这个也可以被运用在ssrf中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public SoapClient :: SoapClient(mixed $wsdl [，array $options ])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public SoapClient :: SoapClient(mixed $wsdl [,array $options ])</span><br></pre></td></tr></table></figure>
 
 <p>第一个参数是用来指明是否是wsdl模式，将该值设为null则表示非wsdl模式。</p>
 <p>第二个参数为一个数组，如果在wsdl模式下，此参数可选；如果在非wsdl模式下，则必须设置location和uri选项，其中location是要将请求发送到的SOAP服务器的URL，而uri 是SOAP服务的目标命名空间。</p>
